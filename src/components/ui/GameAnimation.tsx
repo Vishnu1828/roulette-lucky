@@ -1,7 +1,7 @@
 import { extend } from "@pixi/react";
 import { AnimatedSprite, Assets, Rectangle, Texture } from "pixi.js";
 import { useEffect, useMemo, useRef } from "react";
-import { findAssetAlias } from "../utils/assets";
+import { findAssetAlias } from "../../utils/assets";
 
 extend({ AnimatedSprite });
 

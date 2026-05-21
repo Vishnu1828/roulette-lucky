@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Container, BitmapText as PixiBitmapText } from "pixi.js";
-import { extend } from "@pixi/react";
-import { sfx } from "../utils/audio";
-extend({ Container })
+import { useLayoutStore } from "../../store/useLayoutStore";
+import { BITMAP_FONT_FAMILY } from "../../utils/assets";
+
+
 type Props = {
     text: string;
     x?: number;
@@ -13,8 +14,7 @@ type Props = {
     alpha?: number;
     rotation?: number;
     anchor?: number;
-    fontFamily: string;
-
+    fontFamily?: string;
 };
 
 const BitmapText = ({
@@ -26,30 +26,30 @@ const BitmapText = ({
     rotation = 0,
     anchor = 0.5,
     alpha = 1,
-    fontFamily,
+    fontFamily
 }: Props) => {
     const rootRef = useRef<Container>(null);
     const uiRef = useRef<any>(null);
-
+    const { layoutMode } = useLayoutStore();
     useEffect(() => {
         const root = rootRef.current;
         if (!root) return;
 
+        const font = fontFamily ? fontFamily : layoutMode !== "desktop"
+            ? BITMAP_FONT_FAMILY.roulette.mobile
+            : BITMAP_FONT_FAMILY.roulette.desktop;
+
+
         const bitmapText = new PixiBitmapText({
             text,
             style: {
-                fontFamily,
+                fontFamily: font,
                 fontSize,
                 align: "center",
                 lineHeight: fontSize * 1.2,
             },
         });
         bitmapText.anchor = anchor;
-        bitmapText.eventMode = "static";
-        bitmapText.cursor = "pointer";
-        bitmapText.on("pointertap", () => {
-            sfx.play("sounds-casino-chips-1");
-        });
         root.addChild(bitmapText);
 
         uiRef.current = { bitmapText };
@@ -57,7 +57,7 @@ const BitmapText = ({
         return () => {
             root.removeChildren();
         };
-    }, [anchor, fontFamily, fontSize, text]);
+    }, []);
     useEffect(() => {
         const ui = uiRef.current;
         if (!ui) return;
@@ -72,8 +72,7 @@ const BitmapText = ({
         bitmapText.alpha = alpha;
         bitmapText.rotation = rotation;
 
-        bitmapText.style.fontFamily = fontFamily;
-    }, [text, fontSize, tint, alpha, rotation, fontFamily]);
+    }, [text, fontSize, tint, alpha, rotation]);
 
     return <pixiContainer ref={rootRef} x={x} y={y} />;
 };

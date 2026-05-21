@@ -1,6 +1,7 @@
 import { Assets, Sprite } from "pixi.js";
 
 import { extend } from "@pixi/react";
+import PixiSprite from "../pixi/PixiSprite";
 
 extend({ Sprite });
 
@@ -17,7 +18,7 @@ const RouletteBackground = ({ width, height }: { width: number, height: number }
     const scaledHeight = textureHeight * scale;
 
     return (
-        <pixiSprite
+        <PixiSprite
             texture={bgTexture}
             x={width / 2}
             y={height / 2}
