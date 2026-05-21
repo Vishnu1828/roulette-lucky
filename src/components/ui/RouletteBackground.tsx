@@ -2,11 +2,14 @@ import { Assets, Sprite } from "pixi.js";
 
 import { extend } from "@pixi/react";
 import PixiSprite from "../pixi/PixiSprite";
+import { useLayoutStore } from "../../store/useLayoutStore";
 
 extend({ Sprite });
 
-const RouletteBackground = ({ width, height }: { width: number, height: number }) => {
-    const bgTexture = Assets.get("background-bg-main");
+const RouletteBackground = () => {
+    const { width, height, layoutMode } = useLayoutStore();
+
+    const bgTexture = Assets.get(layoutMode === "mobile-portrait" ? "background-background-mobile-portrait" : "background-bg-desktop");
     if (!bgTexture) {
         return null;
     }

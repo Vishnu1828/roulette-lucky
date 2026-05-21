@@ -35,7 +35,7 @@ const PixiNineSliceSprite = ({
     height,
     x = 0,
     y = 0,
-    anchor = 0.5,
+    anchor = 0,
 
     leftWidth = 12,
     rightWidth = 12,
