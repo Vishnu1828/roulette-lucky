@@ -1,84 +1,87 @@
 import { extend } from "@pixi/react";
 import { Text, TextStyle, FillGradient, type FillInput } from "pixi.js";
+import { useMemo } from "react";
 
 extend({ Text });
 
 type Props = {
-    text: string;
+  text: string;
 
-    x?: number;
-    y?: number;
-    anchor?: number;
+  x?: number;
+  y?: number;
+  anchor?: number;
 
-    fontSize?: number;
-    fontFamily?: string;
-    fontWeight?: "normal" | "bold" | "bolder" | "lighter";
+  fontSize?: number;
+  fontFamily?: string;
+  fontWeight?: "normal" | "bold" | "bolder" | "lighter";
 
-    // normal solid color
-    fill?: FillInput;
+  // normal solid color
+  fill?: FillInput;
 
-    // optional gradient
-    gradient?: [number, number];
-    gradientDirection?: "horizontal" | "vertical";
+  // optional gradient
+  gradient?: [number, number];
+  gradientDirection?: "horizontal" | "vertical";
 
-    align?: "left" | "center" | "right";
-    alpha?: number;
+  align?: "left" | "center" | "right";
+  alpha?: number;
 
-    maxWidth?: number;
-    wordWrap?: boolean;
-    lineHeight?: number;
+  maxWidth?: number;
+  wordWrap?: boolean;
+  lineHeight?: number;
 
-    visible?: boolean;
+  visible?: boolean;
 };
 
 const PixiText = ({
-    text,
+  text,
 
-    x = 0,
-    y = 0,
-    anchor = 0,
+  x = 0,
+  y = 0,
+  anchor = 0,
 
-    fontSize = 16,
-    fontFamily = "Arial",
-    fontWeight = "normal",
+  fontSize = 16,
+  fontFamily = "Arial",
+  fontWeight = "normal",
 
-    fill = 0xffffff,
+  fill = 0xffffff,
 
-    gradient,
-    gradientDirection = "horizontal",
+  gradient,
+  gradientDirection = "horizontal",
 
-    align = "left",
-    alpha = 1,
+  align = "left",
+  alpha = 1,
 
-    maxWidth,
-    wordWrap = false,
-    lineHeight,
+  maxWidth,
+  wordWrap = false,
+  lineHeight,
 
-    visible = true,
+  visible = true,
 }: Props) => {
-    // build fill dynamically
-    const finalFill: FillInput = gradient
-        ? new FillGradient({
-            type: "linear",
-            start: { x: 0, y: 0 },
-            end:
-                gradientDirection === "horizontal"
-                    ? { x: 1, y: 0 }
-                    : { x: 0, y: 1 },
-            colorStops: [
-                {
-                    offset: 0,
-                    color: gradient[0],
-                },
-                {
-                    offset: 1,
-                    color: gradient[1],
-                },
-            ],
-        })
-        : fill;
+  // Memoize fill to prevent recreation on every render
+  const finalFill: FillInput = useMemo(() => {
+    if (!gradient) return fill;
 
-    const style = new TextStyle({
+    return new FillGradient({
+      type: "linear",
+      start: { x: 0, y: 0 },
+      end: gradientDirection === "horizontal" ? { x: 1, y: 0 } : { x: 0, y: 1 },
+      colorStops: [
+        {
+          offset: 0,
+          color: gradient[0],
+        },
+        {
+          offset: 1,
+          color: gradient[1],
+        },
+      ],
+    });
+  }, [gradient, gradientDirection, fill]);
+
+  // Memoize TextStyle to prevent recreation
+  const style = useMemo(
+    () =>
+      new TextStyle({
         fontFamily,
         fontSize,
         fontWeight,
@@ -87,19 +90,30 @@ const PixiText = ({
         wordWrap,
         wordWrapWidth: maxWidth,
         lineHeight,
-    });
+      }),
+    [
+      fontFamily,
+      fontSize,
+      fontWeight,
+      finalFill,
+      align,
+      wordWrap,
+      maxWidth,
+      lineHeight,
+    ],
+  );
 
-    return (
-        <pixiText
-            text={text}
-            x={x}
-            y={y}
-            anchor={anchor}
-            alpha={alpha}
-            visible={visible}
-            style={style}
-        />
-    );
+  return (
+    <pixiText
+      text={text}
+      x={x}
+      y={y}
+      anchor={anchor}
+      alpha={alpha}
+      visible={visible}
+      style={style}
+    />
+  );
 };
 
 export default PixiText;

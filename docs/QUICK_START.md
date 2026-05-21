@@ -41,18 +41,27 @@ The development server is running at: **http://localhost:5175/**
 - On a standard 1080p display: Zoom in/out and reload
 - Monitor the resolution indicator for changes
 
+### Method 3: Test Orientation Changes
+
+- Use device toolbar in DevTools
+- Click the rotate icon to switch portrait ↔ landscape
+- Layout should update instantly with no delay or glitching
+- Check console for `[Layout] Updated:` messages
+
 ## 📊 Resolution Logic
 
 Your game automatically selects:
 
-| Device          | Screen    | DPR | Resolution Loaded     |
-| --------------- | --------- | --- | --------------------- |
-| iPhone 14       | 390×844   | 3   | **4K** (high DPR)     |
-| MacBook Air     | 1470×956  | 2   | **4K** (Retina)       |
-| MacBook Pro 16" | 1728×1117 | 2   | **4K** (Retina)       |
-| Standard Laptop | 1920×1080 | 1   | **1080p**             |
-| Desktop 4K      | 3840×2160 | 1   | **4K** (large screen) |
-| iPad Pro        | 1024×1366 | 2   | **4K** (high DPR)     |
+| Device               | Screen    | DPR | Resolution Loaded       |
+| -------------------- | --------- | --- | ----------------------- |
+| iPhone 14            | 390×844   | 3   | **1080p** (mobile)      |
+| iPhone 14 Pro Max    | 430×932   | 3   | **1080p** (mobile)      |
+| iPad (portrait)      | 768×1024  | 2   | **1080p** (< 1024px)    |
+| MacBook Air          | 1470×956  | 2   | **4K** (Retina)         |
+| MacBook Pro 16"      | 1728×1117 | 2   | **4K** (Retina)         |
+| Standard Laptop      | 1920×1080 | 1   | **1080p**               |
+| Desktop 4K           | 3840×2160 | 1   | **4K** (large screen)   |
+| iPad Pro (landscape) | 1366×1024 | 2   | **4K** (large + Retina) |
 
 ## 🔍 Verify Implementation
 
@@ -96,7 +105,9 @@ public/assets/texture/
    - Total pixel count
 
 2. **Selects resolution**:
-   - Resolution 2 (4K) if DPR ≥ 2 **OR** screen dimension ≥ 2160px
+   - Resolution 1 (1080p) if screen < 1024px (all mobile devices)
+   - Resolution 2 (4K) if screen ≥ 1024px AND DPR ≥ 2 (Retina laptops/desktops)
+   - Resolution 2 (4K) if effective dimension ≥ 2160px (true 4K monitors)
    - Resolution 1 (1080p) otherwise
 
 3. **PixiJS loads** the appropriate texture automatically

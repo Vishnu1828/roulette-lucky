@@ -100,14 +100,17 @@ Look for these messages:
 ## 📊 Resolution Selection Logic
 
 ```
-IF (DPR >= 2)
-   OR (max screen dimension >= 2160px)
-   OR (total pixels >= 65% of 4K)
-THEN
-   Load 4K textures (resolution: 2)
+IF (screen < 1024px)
+   Load 1080p textures (resolution: 1)  // All mobile devices
+ELSE IF (screen >= 1024px AND DPR >= 2)
+   Load 4K textures (resolution: 2)     // Retina laptops/desktops
+ELSE IF (effective dimension >= 2160px)
+   Load 4K textures (resolution: 2)     // True 4K monitors
 ELSE
-   Load 1080p textures (resolution: 1)
+   Load 1080p textures (resolution: 1)  // Standard displays
 ```
+
+**Key Change:** Mobile devices (< 1024px) always get 1080p, even with high DPR, to save bandwidth and memory.
 
 ## 🎨 Asset Structure
 
@@ -200,7 +203,34 @@ Or pass `show={false}`:
 - Only shows in development mode by default
 - Pass `show={true}` to force show in production
 
-## 📚 Additional Resources
+## � Mobile & Performance Optimizations
+
+### Orientation Change Handling
+
+The application includes optimized handling for device orientation changes:
+
+- **Instant updates**: Portrait ↔ Landscape transitions happen immediately (no delay)
+- **Debounced resize**: Regular window resize uses 50ms debounce for performance
+- **Smooth transitions**: Uses `requestAnimationFrame` for smooth layout updates
+- **No UI glitches**: Proper event handling prevents visual artifacts during rotation
+
+### Mobile-Specific Improvements
+
+- **Fixed viewport**: Prevents browser URL bar from causing resize issues
+- **Touch controls**: `touch-action: none` prevents unwanted zoom gestures
+- **No scrolling**: Overflow hidden on body prevents page scrolling
+- **Position fixed**: Prevents mobile browser UI from affecting layout
+- **No user scaling**: Viewport meta tag prevents pinch-to-zoom
+
+### Layout Store Optimization
+
+- Only updates when dimensions actually change (prevents unnecessary re-renders)
+- Merges state updates efficiently
+- Logs changes for debugging in console
+
+These optimizations ensure smooth, responsive behavior across all devices and orientations.
+
+## �📚 Additional Resources
 
 - Full documentation: `docs/ASSET_LOADING.md`
 - PixiJS Assets API: https://pixijs.com/8.x/guides/components/assets

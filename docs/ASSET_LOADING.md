@@ -59,11 +59,15 @@ When the game loads, the system detects the optimal resolution based on:
 
 **4K Textures (resolution: 2) are loaded when:**
 
-- Device has DPR ≥ 2 (Retina displays, high-DPI screens)
-- OR maximum screen dimension ≥ 2160 pixels (4K displays)
-- OR total pixel count indicates a high-resolution display
+- Large screens (≥ 1024px) with high DPR (≥ 2) - Retina laptops/desktops
+- OR effective screen dimension ≥ 2160 pixels (true 4K displays)
 
-**1080p Textures (resolution: 1) are loaded otherwise**
+**1080p Textures (resolution: 1) are loaded when:**
+
+- Mobile devices (screen < 1024px) - regardless of DPR
+- Standard desktop displays (DPR < 2)
+
+**Mobile Priority:** All mobile devices load 1080p textures, even with high DPR (iPhone, Android). This prevents wasting bandwidth and memory on small screens.
 
 ### 4. Usage in Code
 
@@ -177,3 +181,28 @@ This system works with all modern browsers that support PixiJS:
 - Confirm 4K textures are exactly 2x the dimensions
 - Verify the resolution detection is working (check console)
 - Ensure assets are PNG files with no compression artifacts
+
+## Mobile & Orientation Handling
+
+The application includes optimizations for mobile devices and orientation changes:
+
+**Instant Orientation Changes:**
+
+- Portrait ↔ Landscape transitions are handled immediately (no debounce)
+- Smooth layout updates using `requestAnimationFrame`
+- No UI "glitching" or delays during rotation
+
+**Mobile-Specific Optimizations:**
+
+- Fixed positioning to prevent browser resize issues
+- Touch-action controls to prevent unwanted zoom gestures
+- Viewport configuration prevents scaling and zoom issues
+- Overflow hidden to prevent scrolling
+
+**Resize Handling:**
+
+- Window resize events are debounced (50ms) for performance
+- Orientation changes trigger immediate layout updates
+- Layout store only updates when dimensions actually change
+
+These optimizations ensure smooth performance across all devices and screen orientations.
