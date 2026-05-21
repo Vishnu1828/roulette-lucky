@@ -17,8 +17,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html,
 body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
+  position: fixed; /* Prevent mobile browser resize issues */
+}
+
+body {
   display: flex;
   place-items: center;
   min-width: 320px;
@@ -27,4 +36,14 @@ body {
 
 #root {
   width: 100%;
+  height: 100%;
+  overflow: hidden;
+  will-change: transform; /* Optimize for orientation changes */
+}
+
+/* Ensure canvas doesn't cause overflow */
+canvas {
+  display: block;
+  touch-action: none; /* Prevent touch gestures from zooming */
+  will-change: transform; /* Hint browser for better performance */
 }

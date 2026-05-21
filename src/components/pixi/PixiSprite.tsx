@@ -16,9 +16,10 @@ type PixiSpriteProps = {
     tint?: number;
     interactive?: boolean;
     onPointerDown?: (event: any) => void;
+    scale?: number;
 };
 
-const PixiSprite = ({ texture, x, y, width, height, anchor, angle, rotation, alpha, tint, interactive, onPointerDown }: PixiSpriteProps) => {
+const PixiSprite = ({ texture, x, y, width, height, anchor, angle, rotation, alpha, tint, interactive, onPointerDown, scale }: PixiSpriteProps) => {
     if (!texture) return null;
     return <pixiSprite
         texture={texture}
@@ -33,6 +34,8 @@ const PixiSprite = ({ texture, x, y, width, height, anchor, angle, rotation, alp
         tint={tint}
         interactive={interactive}
         onPointerDown={onPointerDown}
+        scale={scale}
+
     />
 }
 
