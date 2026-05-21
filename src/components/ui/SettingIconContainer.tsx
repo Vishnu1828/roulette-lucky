@@ -1,36 +1,54 @@
 import { Assets } from "pixi.js";
 import PixiContainer from "../pixi/PixiContainer";
 import PixiSprite from "../pixi/PixiSprite";
-import PixiNineSliceSprite from "../pixi/pixiNineSliceSprite";
 
-const SettingIconContainer = () => {
-    console.log(Assets.get("ui-sound-button-idle"), "uu")
-    return (
-        <PixiContainer x={0} y={0}>
-            <PixiSprite
-                texture={Assets.get("ui-sound-button-idle")}
-                x={0}
-                y={0}
-                scale={0.2}
-            />
+type Props = {
+  x?: number;
+  y?: number;
+};
 
-            {/* <PixiNineSliceSprite
-                texture="ui-sound-button-idle"
-                x={0}
-                y={0}
-                width={50}
-                height={50}
-            />
-            <PixiNineSliceSprite
-                texture="ui-sound-button-idle"
-                x={0}
-                y={0}
-                width={50}
-                height={50}
-            /> */}
+const SettingIconContainer = ({ x = 0, y = 0 }: Props) => {
+  const iconSize = 32;
+  const iconGap = 10;
 
-        </PixiContainer>
-    );
+  // Calculate positions for each icon
+  const soundIconX = 0;
+  const infoIconX = soundIconX + iconSize + iconGap;
+  const exitIconX = infoIconX + iconSize + iconGap;
+
+  return (
+    <PixiContainer x={x} y={y}>
+      {/* Sound Button */}
+      <PixiSprite
+        texture={Assets.get("ui-sound-button-idle")}
+        x={soundIconX}
+        y={0}
+        width={iconSize}
+        height={iconSize}
+        anchor={0}
+      />
+
+      {/* Info Button */}
+      <PixiSprite
+        texture={Assets.get("ui-info-button-idle")}
+        x={infoIconX}
+        y={0}
+        width={iconSize}
+        height={iconSize}
+        anchor={0}
+      />
+
+      {/* Exit Button */}
+      <PixiSprite
+        texture={Assets.get("ui-exit-button-idle")}
+        x={exitIconX}
+        y={0}
+        width={iconSize}
+        height={iconSize}
+        anchor={0}
+      />
+    </PixiContainer>
+  );
 };
 
 export default SettingIconContainer;

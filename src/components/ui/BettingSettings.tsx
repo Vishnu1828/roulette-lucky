@@ -2,6 +2,7 @@ import PixiContainer from "../pixi/PixiContainer";
 import { useLayoutStore } from "../../store/useLayoutStore";
 import PixiNineSliceSprite from "../pixi/pixiNineSliceSprite";
 import ValueContainer from "./ValueContainer";
+import SettingIconContainer from "./SettingIconContainer";
 
 const BettingSettings = () => {
   const { width, height, layoutMode } = useLayoutStore();
@@ -13,6 +14,7 @@ const BettingSettings = () => {
 
   // Calculate responsive positions
   const leftMargin = isDesktop ? width * 0.02 : isMobileLandscape ? 30 : 20;
+  const rightMargin = isDesktop ? width * 0.02 : 12;
   const verticalPadding = isDesktop ? 4 : isMobileLandscape ? 3 : 5;
 
   // Font sizes from ValueContainer (must match the component's logic)
@@ -34,6 +36,17 @@ const BettingSettings = () => {
 
   const balanceX = leftMargin;
   const totalBetX = balanceX + balanceContainerWidth + containerGap;
+
+  // Calculate SettingIconContainer dimensions and position
+  const settingIconSize = 32;
+  const settingIconGap = 12;
+  const settingIconContainerWidth = settingIconSize * 3 + settingIconGap * 2;
+
+  // Position on the right side
+  const settingIconX = width - rightMargin - settingIconContainerWidth;
+
+  // Center vertically in the footer
+  const settingIconY = (footerHeight - settingIconSize) / 2;
 
   return (
     <PixiContainer x={0} y={height - footerHeight}>
@@ -65,7 +78,8 @@ const BettingSettings = () => {
         valueFontSize={valueFontSize}
         labelFontSize={labelFontSize}
       />
-      {/* <SettingIconContainer /> */}
+
+      <SettingIconContainer x={settingIconX} y={settingIconY} />
     </PixiContainer>
   );
 };

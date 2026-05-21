@@ -33,7 +33,7 @@ const ValueContainer = ({
   const isMobileLandscape = layoutMode === "mobile-landscape";
 
   // Spacing adjusts based on font sizes
-  const labelY = 0;
+  const labelY = 3;
   const valueY = isDesktop ? 22 : isMobileLandscape ? 18 : 16;
   const iconX = isDesktop ? 65 : 50;
 
@@ -53,7 +53,7 @@ const ValueContainer = ({
           <PixiNineSliceSprite
             texture={iconTexture}
             x={iconX}
-            y={0}
+            y={labelY - 2} // Slightly adjust icon position to align with text
             width={iconSize}
             height={iconSize}
           />

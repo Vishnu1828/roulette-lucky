@@ -51,8 +51,11 @@ const PixiBitmapText = ({
     [resolvedFontFamily, fontSize],
   );
 
+  // Use key to force recreation when font family changes
+  // This ensures tint and other properties are properly applied with the new font
   return (
     <pixiBitmapText
+      key={resolvedFontFamily} // Force recreation on font change
       text={text}
       x={x}
       y={y}
