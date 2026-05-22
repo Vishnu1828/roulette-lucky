@@ -1,9 +1,8 @@
 import { Assets } from "pixi.js";
 import PixiContainer from "../pixi/PixiContainer";
 import PixiSprite from "../pixi/PixiSprite";
-import { sfx, audio } from "../../utils/audio";
-import { useVolumeSettingStore } from "../../store/useVolumeSettingStore";
 import { useNavigationStore } from "../../store/useNavigationStore";
+import { useSettingStore } from "../../store/useSettingStore";
 
 type Props = {
   x?: number;
@@ -11,7 +10,8 @@ type Props = {
 };
 
 const SettingIconContainer = ({ x = 0, y = 0 }: Props) => {
-  const { volumeVisible, setVolumeVisible } = useVolumeSettingStore();
+  const { volumeVisible, setVolumeVisible, infoVisible, setInfoVisible } =
+    useSettingStore();
   const iconSize = 32;
   const iconGap = 10;
   const { showOverlay } = useNavigationStore();
@@ -45,7 +45,9 @@ const SettingIconContainer = ({ x = 0, y = 0 }: Props) => {
 
       {/* Info Button */}
       <PixiSprite
-        texture={Assets.get("ui-info-button-idle")}
+        texture={Assets.get(
+          infoVisible ? "ui-info-button-pressed" : "ui-info-button-idle",
+        )}
         x={infoIconX}
         y={0}
         width={iconSize}
@@ -55,8 +57,8 @@ const SettingIconContainer = ({ x = 0, y = 0 }: Props) => {
         cursor="pointer"
         eventMode="static"
         onPointerDown={() => {
-          console.log("Info button tapped");
           showOverlay("info");
+          setInfoVisible(true);
         }}
       />
 

@@ -4,8 +4,6 @@ import { sfx } from "../utils/audio";
 interface VolumeSettingsState {
   sfxVolume: number;
   setSfxVolume: (v: number) => void;
-  volumeVisible: boolean;
-  setVolumeVisible: (visible: boolean) => void;
 }
 
 const DEFAULT_SFX_VOLUME = 60;
@@ -19,6 +17,4 @@ export const useVolumeSettingStore = create<VolumeSettingsState>((set) => ({
     sfx.setVolume(v / 100);
     set({ sfxVolume: v });
   },
-  volumeVisible: false,
-  setVolumeVisible: (visible: boolean) => set({ volumeVisible: visible }),
 }));

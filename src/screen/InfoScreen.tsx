@@ -7,6 +7,7 @@ import PixiBitmapText from "../components/pixi/PixiBitmapText";
 import InfoTab from "../components/ui/InfoTab";
 import Table from "../components/ui/Table";
 import { useLayoutStore } from "../store/useLayoutStore";
+import { useSettingStore } from "../store/useSettingStore";
 
 extend({ Graphics, Text });
 
@@ -17,6 +18,7 @@ interface InfoScreenProps {
 const InfoScreen: FC<InfoScreenProps> = ({
   onOverlayClick,
 }: InfoScreenProps) => {
+  const { setInfoVisible } = useSettingStore();
   const { width, height, layoutMode } = useLayoutStore();
   const [selectedTab, setSelectedTab] = useState<"payout" | "rules">("payout");
   const isMobilePortrait = layoutMode === "mobile-portrait";
@@ -95,6 +97,7 @@ const InfoScreen: FC<InfoScreenProps> = ({
           cursor="pointer"
           onPointerTap={() => {
             useNavigationStore.getState().hideOverlay();
+            setInfoVisible(false);
           }}
         />
         <PixiBitmapText
