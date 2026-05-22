@@ -3,6 +3,7 @@ import PixiContainer from "../pixi/PixiContainer";
 import PixiSprite from "../pixi/PixiSprite";
 import { sfx, audio } from "../../utils/audio";
 import { useVolumeSettingStore } from "../../store/useVolumeSettingStore";
+import { useNavigationStore } from "../../store/useNavigationStore";
 
 type Props = {
   x?: number;
@@ -13,6 +14,7 @@ const SettingIconContainer = ({ x = 0, y = 0 }: Props) => {
   const { volumeVisible, setVolumeVisible } = useVolumeSettingStore();
   const iconSize = 32;
   const iconGap = 10;
+  const { showOverlay } = useNavigationStore();
 
   // Calculate positions for each icon
   const soundIconX = 0;
@@ -54,6 +56,7 @@ const SettingIconContainer = ({ x = 0, y = 0 }: Props) => {
         eventMode="static"
         onPointerDown={() => {
           console.log("Info button tapped");
+          showOverlay("info");
         }}
       />
 
