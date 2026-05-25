@@ -18,6 +18,7 @@ type LabelSpriteProps = {
   alpha?: number;
   tint?: number;
   align?: "left" | "center" | "right";
+  labelY?: number;
 };
 
 const LabelSprite = ({
@@ -33,10 +34,12 @@ const LabelSprite = ({
   alpha,
   tint,
   align = "center",
+  labelY = height / 2,
 }: LabelSpriteProps) => {
   const { layoutMode } = useLayoutStore();
-  fontFamily =
-    layoutMode !== "desktop"
+  fontFamily = fontFamily
+    ? fontFamily
+    : layoutMode !== "desktop"
       ? BITMAP_FONT_FAMILY.roulette.mobile
       : BITMAP_FONT_FAMILY.roulette.desktop;
   return (
@@ -47,7 +50,7 @@ const LabelSprite = ({
         text={value.toString()}
         anchor={anchor}
         x={width / 2}
-        y={height / 2}
+        y={labelY}
         alpha={alpha}
         tint={tint}
         fontFamily={fontFamily}

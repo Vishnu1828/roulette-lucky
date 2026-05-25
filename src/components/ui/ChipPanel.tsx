@@ -75,6 +75,7 @@ const ChipPanel = ({
             value={chip.value}
             fontSize={Math.floor(chipWidth * 0.38)}
             anchor={0.5}
+            labelY={chipHeight * 0.55}
           />
         );
       })}

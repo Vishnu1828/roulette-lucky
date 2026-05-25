@@ -11,6 +11,7 @@ type VolumeSliderProps = {
   x?: number;
   y?: number;
   onChange?: (value: number) => void;
+  zIndex?: number;
 };
 
 export function VolumeSlider({
@@ -20,6 +21,7 @@ export function VolumeSlider({
   x = 0,
   y = 0,
   onChange,
+  zIndex,
 }: VolumeSliderProps) {
   const { layoutMode } = useLayoutStore();
   const [currentValue, setCurrentValue] = useState(value);
@@ -119,6 +121,7 @@ export function VolumeSlider({
       onPointerMove={handleContainerPointerMove}
       onPointerUp={handleKnobDragEnd}
       onPointerUpOutside={handleKnobDragEnd}
+      zIndex={zIndex}
     >
       {/* Background - non-interactive */}
       <PixiSprite

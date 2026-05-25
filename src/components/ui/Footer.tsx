@@ -87,6 +87,7 @@ const Footer = () => {
           y={sliderY}
           value={sfxVolume}
           onChange={setSfxVolume}
+          zIndex={3}
         />
       )}
     </PixiContainer>

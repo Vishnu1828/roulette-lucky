@@ -4,6 +4,7 @@ import PixiSprite from "../pixi/PixiSprite";
 import { Assets } from "pixi.js";
 import LabelSprite from "./LabelSprite";
 import ChipPanel from "./ChipPanel";
+import { BITMAP_FONT_FAMILY } from "../../utils/assets";
 
 type Props = {
   width: number;
@@ -148,8 +149,15 @@ const ChipAndSpinInterface = ({ width, x, zIndex = 1 }: Props) => {
           width={spinWidth}
           height={spinHeight}
           value={"SPIN"}
-          fontSize={isMobilePortrait ? spinHeight * 0.6 : spinHeight * 0.55}
+          fontSize={isMobilePortrait ? spinHeight * 0.7 : spinHeight * 0.65}
           align="center"
+          labelY={spinHeight * 0.65}
+          tint={0x007011}
+          fontFamily={
+            BITMAP_FONT_FAMILY.spinButton[
+              isMobilePortrait ? "mobile" : "desktop"
+            ]
+          }
         />
       </PixiContainer>
     </PixiContainer>
