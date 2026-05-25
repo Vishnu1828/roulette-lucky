@@ -21,6 +21,8 @@ type PixiContainerProps = {
   onPointerUp?: (e: any) => void;
   onPointerUpOutside?: (e: any) => void;
   onPointerTap?: (e: any) => void;
+  sortableChildren?: boolean;
+  zIndex?: number;
 };
 
 const PixiContainer = ({
@@ -40,6 +42,8 @@ const PixiContainer = ({
   onPointerUp,
   onPointerUpOutside,
   onPointerTap,
+  sortableChildren = false,
+  zIndex,
 }: PixiContainerProps) => {
   const ref = useRef<any>(null);
 
@@ -66,6 +70,8 @@ const PixiContainer = ({
       onPointerUp={onPointerUp}
       onPointerUpOutside={onPointerUpOutside}
       onPointerTap={onPointerTap}
+      sortableChildren={sortableChildren}
+      zIndex={zIndex}
     >
       {children}
     </pixiContainer>

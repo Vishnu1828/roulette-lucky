@@ -1,7 +1,8 @@
 import PixiContainer from "../pixi/PixiContainer";
 import PixiBitmapText from "../pixi/PixiBitmapText";
-import PixiNineSliceSprite from "../pixi/pixiNineSliceSprite";
 import { useLayoutStore } from "../../store/useLayoutStore";
+import PixiSprite from "../pixi/PixiSprite";
+import { Assets } from "pixi.js";
 
 type Props = {
   x?: number;
@@ -50,8 +51,8 @@ const ValueContainer = ({
         />
 
         {showIcon && (
-          <PixiNineSliceSprite
-            texture={iconTexture}
+          <PixiSprite
+            texture={Assets.get(iconTexture)}
             x={iconX}
             y={labelY - 2} // Slightly adjust icon position to align with text
             width={iconSize}

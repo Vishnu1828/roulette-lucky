@@ -17,6 +17,7 @@ type Props = {
   rotation?: number;
   anchor?: number;
   fontFamily?: string;
+  align?: "left" | "center" | "right";
 };
 
 const PixiBitmapText = ({
@@ -29,6 +30,7 @@ const PixiBitmapText = ({
   anchor = 0.5,
   alpha = 1,
   fontFamily,
+  align = "center",
 }: Props) => {
   const { layoutMode } = useLayoutStore();
 
@@ -45,10 +47,10 @@ const PixiBitmapText = ({
     () => ({
       fontFamily: resolvedFontFamily,
       fontSize,
-      align: "center" as const,
+      align: align ? align : ("center" as const),
       lineHeight: fontSize * 1.2,
     }),
-    [resolvedFontFamily, fontSize],
+    [resolvedFontFamily, fontSize, align],
   );
 
   // Force recreation on layout/style changes to avoid stale tint state after rotate
