@@ -1,0 +1,436 @@
+{
+  "sprites": [
+    {
+      "fileName": "coin_00.png",
+      "width": 500,
+      "height": 500,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "fileName": "coin_01.png",
+      "width": 500,
+      "height": 500,
+      "x": 500,
+      "y": 0
+    },
+    {
+      "fileName": "coin_02.png",
+      "width": 500,
+      "height": 500,
+      "x": 1000,
+      "y": 0
+    },
+    {
+      "fileName": "coin_03.png",
+      "width": 500,
+      "height": 500,
+      "x": 1500,
+      "y": 0
+    },
+    {
+      "fileName": "coin_04.png",
+      "width": 500,
+      "height": 500,
+      "x": 2000,
+      "y": 0
+    },
+    {
+      "fileName": "coin_05.png",
+      "width": 500,
+      "height": 500,
+      "x": 2500,
+      "y": 0
+    },
+    {
+      "fileName": "coin_06.png",
+      "width": 500,
+      "height": 500,
+      "x": 3000,
+      "y": 0
+    },
+    {
+      "fileName": "coin_07.png",
+      "width": 500,
+      "height": 500,
+      "x": 3500,
+      "y": 0
+    },
+    {
+      "fileName": "coin_08.png",
+      "width": 500,
+      "height": 500,
+      "x": 0,
+      "y": 500
+    },
+    {
+      "fileName": "coin_09.png",
+      "width": 500,
+      "height": 500,
+      "x": 500,
+      "y": 500
+    },
+    {
+      "fileName": "coin_10.png",
+      "width": 500,
+      "height": 500,
+      "x": 1000,
+      "y": 500
+    },
+    {
+      "fileName": "coin_11.png",
+      "width": 500,
+      "height": 500,
+      "x": 1500,
+      "y": 500
+    },
+    {
+      "fileName": "coin_12.png",
+      "width": 500,
+      "height": 500,
+      "x": 2000,
+      "y": 500
+    },
+    {
+      "fileName": "coin_13.png",
+      "width": 500,
+      "height": 500,
+      "x": 2500,
+      "y": 500
+    },
+    {
+      "fileName": "coin_14.png",
+      "width": 500,
+      "height": 500,
+      "x": 3000,
+      "y": 500
+    },
+    {
+      "fileName": "coin_15.png",
+      "width": 500,
+      "height": 500,
+      "x": 3500,
+      "y": 500
+    },
+    {
+      "fileName": "coin_16.png",
+      "width": 500,
+      "height": 500,
+      "x": 0,
+      "y": 1000
+    },
+    {
+      "fileName": "coin_17.png",
+      "width": 500,
+      "height": 500,
+      "x": 500,
+      "y": 1000
+    },
+    {
+      "fileName": "coin_18.png",
+      "width": 500,
+      "height": 500,
+      "x": 1000,
+      "y": 1000
+    },
+    {
+      "fileName": "coin_19.png",
+      "width": 500,
+      "height": 500,
+      "x": 1500,
+      "y": 1000
+    },
+    {
+      "fileName": "coin_20.png",
+      "width": 500,
+      "height": 500,
+      "x": 2000,
+      "y": 1000
+    },
+    {
+      "fileName": "coin_21.png",
+      "width": 500,
+      "height": 500,
+      "x": 2500,
+      "y": 1000
+    },
+    {
+      "fileName": "coin_22.png",
+      "width": 500,
+      "height": 500,
+      "x": 3000,
+      "y": 1000
+    },
+    {
+      "fileName": "coin_23.png",
+      "width": 500,
+      "height": 500,
+      "x": 3500,
+      "y": 1000
+    },
+    {
+      "fileName": "coin_24.png",
+      "width": 500,
+      "height": 500,
+      "x": 0,
+      "y": 1500
+    },
+    {
+      "fileName": "coin_25.png",
+      "width": 500,
+      "height": 500,
+      "x": 500,
+      "y": 1500
+    },
+    {
+      "fileName": "coin_26.png",
+      "width": 500,
+      "height": 500,
+      "x": 1000,
+      "y": 1500
+    },
+    {
+      "fileName": "coin_27.png",
+      "width": 500,
+      "height": 500,
+      "x": 1500,
+      "y": 1500
+    },
+    {
+      "fileName": "coin_28.png",
+      "width": 500,
+      "height": 500,
+      "x": 2000,
+      "y": 1500
+    },
+    {
+      "fileName": "coin_29.png",
+      "width": 500,
+      "height": 500,
+      "x": 2500,
+      "y": 1500
+    },
+    {
+      "fileName": "coin_30.png",
+      "width": 500,
+      "height": 500,
+      "x": 3000,
+      "y": 1500
+    },
+    {
+      "fileName": "coin_31.png",
+      "width": 500,
+      "height": 500,
+      "x": 3500,
+      "y": 1500
+    },
+    {
+      "fileName": "coin_32.png",
+      "width": 500,
+      "height": 500,
+      "x": 0,
+      "y": 2000
+    },
+    {
+      "fileName": "coin_33.png",
+      "width": 500,
+      "height": 500,
+      "x": 500,
+      "y": 2000
+    },
+    {
+      "fileName": "coin_34.png",
+      "width": 500,
+      "height": 500,
+      "x": 1000,
+      "y": 2000
+    },
+    {
+      "fileName": "coin_35.png",
+      "width": 500,
+      "height": 500,
+      "x": 1500,
+      "y": 2000
+    },
+    {
+      "fileName": "coin_36.png",
+      "width": 500,
+      "height": 500,
+      "x": 2000,
+      "y": 2000
+    },
+    {
+      "fileName": "coin_37.png",
+      "width": 500,
+      "height": 500,
+      "x": 2500,
+      "y": 2000
+    },
+    {
+      "fileName": "coin_38.png",
+      "width": 500,
+      "height": 500,
+      "x": 3000,
+      "y": 2000
+    },
+    {
+      "fileName": "coin_39.png",
+      "width": 500,
+      "height": 500,
+      "x": 3500,
+      "y": 2000
+    },
+    {
+      "fileName": "coin_40.png",
+      "width": 500,
+      "height": 500,
+      "x": 0,
+      "y": 2500
+    },
+    {
+      "fileName": "coin_41.png",
+      "width": 500,
+      "height": 500,
+      "x": 500,
+      "y": 2500
+    },
+    {
+      "fileName": "coin_42.png",
+      "width": 500,
+      "height": 500,
+      "x": 1000,
+      "y": 2500
+    },
+    {
+      "fileName": "coin_43.png",
+      "width": 500,
+      "height": 500,
+      "x": 1500,
+      "y": 2500
+    },
+    {
+      "fileName": "coin_44.png",
+      "width": 500,
+      "height": 500,
+      "x": 2000,
+      "y": 2500
+    },
+    {
+      "fileName": "coin_45.png",
+      "width": 500,
+      "height": 500,
+      "x": 2500,
+      "y": 2500
+    },
+    {
+      "fileName": "coin_46.png",
+      "width": 500,
+      "height": 500,
+      "x": 3000,
+      "y": 2500
+    },
+    {
+      "fileName": "coin_47.png",
+      "width": 500,
+      "height": 500,
+      "x": 3500,
+      "y": 2500
+    },
+    {
+      "fileName": "coin_48.png",
+      "width": 500,
+      "height": 500,
+      "x": 0,
+      "y": 3000
+    },
+    {
+      "fileName": "coin_49.png",
+      "width": 500,
+      "height": 500,
+      "x": 500,
+      "y": 3000
+    },
+    {
+      "fileName": "coin_50.png",
+      "width": 500,
+      "height": 500,
+      "x": 1000,
+      "y": 3000
+    },
+    {
+      "fileName": "coin_51.png",
+      "width": 500,
+      "height": 500,
+      "x": 1500,
+      "y": 3000
+    },
+    {
+      "fileName": "coin_52.png",
+      "width": 500,
+      "height": 500,
+      "x": 2000,
+      "y": 3000
+    },
+    {
+      "fileName": "coin_53.png",
+      "width": 500,
+      "height": 500,
+      "x": 2500,
+      "y": 3000
+    },
+    {
+      "fileName": "coin_54.png",
+      "width": 500,
+      "height": 500,
+      "x": 3000,
+      "y": 3000
+    },
+    {
+      "fileName": "coin_55.png",
+      "width": 500,
+      "height": 500,
+      "x": 3500,
+      "y": 3000
+    },
+    {
+      "fileName": "coin_56.png",
+      "width": 500,
+      "height": 500,
+      "x": 0,
+      "y": 3500
+    },
+    {
+      "fileName": "coin_57.png",
+      "width": 500,
+      "height": 500,
+      "x": 500,
+      "y": 3500
+    },
+    {
+      "fileName": "coin_58.png",
+      "width": 500,
+      "height": 500,
+      "x": 1000,
+      "y": 3500
+    },
+    {
+      "fileName": "coin_59.png",
+      "width": 500,
+      "height": 500,
+      "x": 1500,
+      "y": 3500
+    },
+    {
+      "fileName": "coin_60.png",
+      "width": 500,
+      "height": 500,
+      "x": 2000,
+      "y": 3500
+    }
+  ],
+  "packMode": "grid",
+  "padding": 0,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "spriteSheetWidth": 4000,
+  "spriteSheetHeight": 4000
+}

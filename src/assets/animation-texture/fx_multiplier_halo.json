@@ -1,0 +1,429 @@
+{
+  "sprites": [
+    {
+      "fileName": "fx_multiplier_halo00.png",
+      "width": 900,
+      "height": 900,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_halo01.png",
+      "width": 900,
+      "height": 900,
+      "x": 900,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_halo02.png",
+      "width": 900,
+      "height": 900,
+      "x": 1800,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_halo03.png",
+      "width": 900,
+      "height": 900,
+      "x": 2700,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_halo04.png",
+      "width": 900,
+      "height": 900,
+      "x": 3600,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_halo05.png",
+      "width": 900,
+      "height": 900,
+      "x": 4500,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_halo06.png",
+      "width": 900,
+      "height": 900,
+      "x": 5400,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_halo07.png",
+      "width": 900,
+      "height": 900,
+      "x": 6300,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_halo08.png",
+      "width": 900,
+      "height": 900,
+      "x": 0,
+      "y": 900
+    },
+    {
+      "fileName": "fx_multiplier_halo09.png",
+      "width": 900,
+      "height": 900,
+      "x": 900,
+      "y": 900
+    },
+    {
+      "fileName": "fx_multiplier_halo10.png",
+      "width": 900,
+      "height": 900,
+      "x": 1800,
+      "y": 900
+    },
+    {
+      "fileName": "fx_multiplier_halo11.png",
+      "width": 900,
+      "height": 900,
+      "x": 2700,
+      "y": 900
+    },
+    {
+      "fileName": "fx_multiplier_halo12.png",
+      "width": 900,
+      "height": 900,
+      "x": 3600,
+      "y": 900
+    },
+    {
+      "fileName": "fx_multiplier_halo13.png",
+      "width": 900,
+      "height": 900,
+      "x": 4500,
+      "y": 900
+    },
+    {
+      "fileName": "fx_multiplier_halo14.png",
+      "width": 900,
+      "height": 900,
+      "x": 5400,
+      "y": 900
+    },
+    {
+      "fileName": "fx_multiplier_halo15.png",
+      "width": 900,
+      "height": 900,
+      "x": 6300,
+      "y": 900
+    },
+    {
+      "fileName": "fx_multiplier_halo16.png",
+      "width": 900,
+      "height": 900,
+      "x": 0,
+      "y": 1800
+    },
+    {
+      "fileName": "fx_multiplier_halo17.png",
+      "width": 900,
+      "height": 900,
+      "x": 900,
+      "y": 1800
+    },
+    {
+      "fileName": "fx_multiplier_halo18.png",
+      "width": 900,
+      "height": 900,
+      "x": 1800,
+      "y": 1800
+    },
+    {
+      "fileName": "fx_multiplier_halo19.png",
+      "width": 900,
+      "height": 900,
+      "x": 2700,
+      "y": 1800
+    },
+    {
+      "fileName": "fx_multiplier_halo20.png",
+      "width": 900,
+      "height": 900,
+      "x": 3600,
+      "y": 1800
+    },
+    {
+      "fileName": "fx_multiplier_halo21.png",
+      "width": 900,
+      "height": 900,
+      "x": 4500,
+      "y": 1800
+    },
+    {
+      "fileName": "fx_multiplier_halo22.png",
+      "width": 900,
+      "height": 900,
+      "x": 5400,
+      "y": 1800
+    },
+    {
+      "fileName": "fx_multiplier_halo23.png",
+      "width": 900,
+      "height": 900,
+      "x": 6300,
+      "y": 1800
+    },
+    {
+      "fileName": "fx_multiplier_halo24.png",
+      "width": 900,
+      "height": 900,
+      "x": 0,
+      "y": 2700
+    },
+    {
+      "fileName": "fx_multiplier_halo25.png",
+      "width": 900,
+      "height": 900,
+      "x": 900,
+      "y": 2700
+    },
+    {
+      "fileName": "fx_multiplier_halo26.png",
+      "width": 900,
+      "height": 900,
+      "x": 1800,
+      "y": 2700
+    },
+    {
+      "fileName": "fx_multiplier_halo27.png",
+      "width": 900,
+      "height": 900,
+      "x": 2700,
+      "y": 2700
+    },
+    {
+      "fileName": "fx_multiplier_halo28.png",
+      "width": 900,
+      "height": 900,
+      "x": 3600,
+      "y": 2700
+    },
+    {
+      "fileName": "fx_multiplier_halo29.png",
+      "width": 900,
+      "height": 900,
+      "x": 4500,
+      "y": 2700
+    },
+    {
+      "fileName": "fx_multiplier_halo30.png",
+      "width": 900,
+      "height": 900,
+      "x": 5400,
+      "y": 2700
+    },
+    {
+      "fileName": "fx_multiplier_halo31.png",
+      "width": 900,
+      "height": 900,
+      "x": 6300,
+      "y": 2700
+    },
+    {
+      "fileName": "fx_multiplier_halo32.png",
+      "width": 900,
+      "height": 900,
+      "x": 0,
+      "y": 3600
+    },
+    {
+      "fileName": "fx_multiplier_halo33.png",
+      "width": 900,
+      "height": 900,
+      "x": 900,
+      "y": 3600
+    },
+    {
+      "fileName": "fx_multiplier_halo34.png",
+      "width": 900,
+      "height": 900,
+      "x": 1800,
+      "y": 3600
+    },
+    {
+      "fileName": "fx_multiplier_halo35.png",
+      "width": 900,
+      "height": 900,
+      "x": 2700,
+      "y": 3600
+    },
+    {
+      "fileName": "fx_multiplier_halo36.png",
+      "width": 900,
+      "height": 900,
+      "x": 3600,
+      "y": 3600
+    },
+    {
+      "fileName": "fx_multiplier_halo37.png",
+      "width": 900,
+      "height": 900,
+      "x": 4500,
+      "y": 3600
+    },
+    {
+      "fileName": "fx_multiplier_halo38.png",
+      "width": 900,
+      "height": 900,
+      "x": 5400,
+      "y": 3600
+    },
+    {
+      "fileName": "fx_multiplier_halo39.png",
+      "width": 900,
+      "height": 900,
+      "x": 6300,
+      "y": 3600
+    },
+    {
+      "fileName": "fx_multiplier_halo40.png",
+      "width": 900,
+      "height": 900,
+      "x": 0,
+      "y": 4500
+    },
+    {
+      "fileName": "fx_multiplier_halo41.png",
+      "width": 900,
+      "height": 900,
+      "x": 900,
+      "y": 4500
+    },
+    {
+      "fileName": "fx_multiplier_halo42.png",
+      "width": 900,
+      "height": 900,
+      "x": 1800,
+      "y": 4500
+    },
+    {
+      "fileName": "fx_multiplier_halo43.png",
+      "width": 900,
+      "height": 900,
+      "x": 2700,
+      "y": 4500
+    },
+    {
+      "fileName": "fx_multiplier_halo44.png",
+      "width": 900,
+      "height": 900,
+      "x": 3600,
+      "y": 4500
+    },
+    {
+      "fileName": "fx_multiplier_halo45.png",
+      "width": 900,
+      "height": 900,
+      "x": 4500,
+      "y": 4500
+    },
+    {
+      "fileName": "fx_multiplier_halo46.png",
+      "width": 900,
+      "height": 900,
+      "x": 5400,
+      "y": 4500
+    },
+    {
+      "fileName": "fx_multiplier_halo47.png",
+      "width": 900,
+      "height": 900,
+      "x": 6300,
+      "y": 4500
+    },
+    {
+      "fileName": "fx_multiplier_halo48.png",
+      "width": 900,
+      "height": 900,
+      "x": 0,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_multiplier_halo49.png",
+      "width": 900,
+      "height": 900,
+      "x": 900,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_multiplier_halo50.png",
+      "width": 900,
+      "height": 900,
+      "x": 1800,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_multiplier_halo51.png",
+      "width": 900,
+      "height": 900,
+      "x": 2700,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_multiplier_halo52.png",
+      "width": 900,
+      "height": 900,
+      "x": 3600,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_multiplier_halo53.png",
+      "width": 900,
+      "height": 900,
+      "x": 4500,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_multiplier_halo54.png",
+      "width": 900,
+      "height": 900,
+      "x": 5400,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_multiplier_halo55.png",
+      "width": 900,
+      "height": 900,
+      "x": 6300,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_multiplier_halo56.png",
+      "width": 900,
+      "height": 900,
+      "x": 0,
+      "y": 6300
+    },
+    {
+      "fileName": "fx_multiplier_halo57.png",
+      "width": 900,
+      "height": 900,
+      "x": 900,
+      "y": 6300
+    },
+    {
+      "fileName": "fx_multiplier_halo58.png",
+      "width": 900,
+      "height": 900,
+      "x": 1800,
+      "y": 6300
+    },
+    {
+      "fileName": "fx_multiplier_halo59.png",
+      "width": 900,
+      "height": 900,
+      "x": 2700,
+      "y": 6300
+    }
+  ],
+  "packMode": "grid",
+  "padding": 0,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "spriteSheetWidth": 7200,
+  "spriteSheetHeight": 7200
+}

@@ -1,0 +1,219 @@
+{
+  "sprites": [
+    {
+      "fileName": "fx_chip_selected000.png",
+      "width": 150,
+      "height": 150,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "fileName": "fx_chip_selected001.png",
+      "width": 150,
+      "height": 150,
+      "x": 150,
+      "y": 0
+    },
+    {
+      "fileName": "fx_chip_selected002.png",
+      "width": 150,
+      "height": 150,
+      "x": 300,
+      "y": 0
+    },
+    {
+      "fileName": "fx_chip_selected003.png",
+      "width": 150,
+      "height": 150,
+      "x": 450,
+      "y": 0
+    },
+    {
+      "fileName": "fx_chip_selected004.png",
+      "width": 150,
+      "height": 150,
+      "x": 600,
+      "y": 0
+    },
+    {
+      "fileName": "fx_chip_selected005.png",
+      "width": 150,
+      "height": 150,
+      "x": 750,
+      "y": 0
+    },
+    {
+      "fileName": "fx_chip_selected006.png",
+      "width": 150,
+      "height": 150,
+      "x": 0,
+      "y": 150
+    },
+    {
+      "fileName": "fx_chip_selected007.png",
+      "width": 150,
+      "height": 150,
+      "x": 150,
+      "y": 150
+    },
+    {
+      "fileName": "fx_chip_selected008.png",
+      "width": 150,
+      "height": 150,
+      "x": 300,
+      "y": 150
+    },
+    {
+      "fileName": "fx_chip_selected009.png",
+      "width": 150,
+      "height": 150,
+      "x": 450,
+      "y": 150
+    },
+    {
+      "fileName": "fx_chip_selected010.png",
+      "width": 150,
+      "height": 150,
+      "x": 600,
+      "y": 150
+    },
+    {
+      "fileName": "fx_chip_selected011.png",
+      "width": 150,
+      "height": 150,
+      "x": 750,
+      "y": 150
+    },
+    {
+      "fileName": "fx_chip_selected012.png",
+      "width": 150,
+      "height": 150,
+      "x": 0,
+      "y": 300
+    },
+    {
+      "fileName": "fx_chip_selected013.png",
+      "width": 150,
+      "height": 150,
+      "x": 150,
+      "y": 300
+    },
+    {
+      "fileName": "fx_chip_selected014.png",
+      "width": 150,
+      "height": 150,
+      "x": 300,
+      "y": 300
+    },
+    {
+      "fileName": "fx_chip_selected015.png",
+      "width": 150,
+      "height": 150,
+      "x": 450,
+      "y": 300
+    },
+    {
+      "fileName": "fx_chip_selected016.png",
+      "width": 150,
+      "height": 150,
+      "x": 600,
+      "y": 300
+    },
+    {
+      "fileName": "fx_chip_selected017.png",
+      "width": 150,
+      "height": 150,
+      "x": 750,
+      "y": 300
+    },
+    {
+      "fileName": "fx_chip_selected018.png",
+      "width": 150,
+      "height": 150,
+      "x": 0,
+      "y": 450
+    },
+    {
+      "fileName": "fx_chip_selected019.png",
+      "width": 150,
+      "height": 150,
+      "x": 150,
+      "y": 450
+    },
+    {
+      "fileName": "fx_chip_selected020.png",
+      "width": 150,
+      "height": 150,
+      "x": 300,
+      "y": 450
+    },
+    {
+      "fileName": "fx_chip_selected021.png",
+      "width": 150,
+      "height": 150,
+      "x": 450,
+      "y": 450
+    },
+    {
+      "fileName": "fx_chip_selected022.png",
+      "width": 150,
+      "height": 150,
+      "x": 600,
+      "y": 450
+    },
+    {
+      "fileName": "fx_chip_selected023.png",
+      "width": 150,
+      "height": 150,
+      "x": 750,
+      "y": 450
+    },
+    {
+      "fileName": "fx_chip_selected024.png",
+      "width": 150,
+      "height": 150,
+      "x": 0,
+      "y": 600
+    },
+    {
+      "fileName": "fx_chip_selected025.png",
+      "width": 150,
+      "height": 150,
+      "x": 150,
+      "y": 600
+    },
+    {
+      "fileName": "fx_chip_selected026.png",
+      "width": 150,
+      "height": 150,
+      "x": 300,
+      "y": 600
+    },
+    {
+      "fileName": "fx_chip_selected027.png",
+      "width": 150,
+      "height": 150,
+      "x": 450,
+      "y": 600
+    },
+    {
+      "fileName": "fx_chip_selected028.png",
+      "width": 150,
+      "height": 150,
+      "x": 600,
+      "y": 600
+    },
+    {
+      "fileName": "fx_chip_selected029.png",
+      "width": 150,
+      "height": 150,
+      "x": 750,
+      "y": 600
+    }
+  ],
+  "packMode": "grid",
+  "padding": 0,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "spriteSheetWidth": 900,
+  "spriteSheetHeight": 750
+}

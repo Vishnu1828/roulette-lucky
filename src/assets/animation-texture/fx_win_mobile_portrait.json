@@ -1,0 +1,436 @@
+{
+  "sprites": [
+    {
+      "fileName": "fx_win_mobile_portrait00.png",
+      "width": 780,
+      "height": 1688,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_mobile_portrait01.png",
+      "width": 780,
+      "height": 1688,
+      "x": 780,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_mobile_portrait02.png",
+      "width": 780,
+      "height": 1688,
+      "x": 1560,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_mobile_portrait03.png",
+      "width": 780,
+      "height": 1688,
+      "x": 2340,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_mobile_portrait04.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3120,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_mobile_portrait05.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3900,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_mobile_portrait06.png",
+      "width": 780,
+      "height": 1688,
+      "x": 4680,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_mobile_portrait07.png",
+      "width": 780,
+      "height": 1688,
+      "x": 5460,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_mobile_portrait08.png",
+      "width": 780,
+      "height": 1688,
+      "x": 0,
+      "y": 1688
+    },
+    {
+      "fileName": "fx_win_mobile_portrait09.png",
+      "width": 780,
+      "height": 1688,
+      "x": 780,
+      "y": 1688
+    },
+    {
+      "fileName": "fx_win_mobile_portrait10.png",
+      "width": 780,
+      "height": 1688,
+      "x": 1560,
+      "y": 1688
+    },
+    {
+      "fileName": "fx_win_mobile_portrait11.png",
+      "width": 780,
+      "height": 1688,
+      "x": 2340,
+      "y": 1688
+    },
+    {
+      "fileName": "fx_win_mobile_portrait12.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3120,
+      "y": 1688
+    },
+    {
+      "fileName": "fx_win_mobile_portrait13.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3900,
+      "y": 1688
+    },
+    {
+      "fileName": "fx_win_mobile_portrait14.png",
+      "width": 780,
+      "height": 1688,
+      "x": 4680,
+      "y": 1688
+    },
+    {
+      "fileName": "fx_win_mobile_portrait15.png",
+      "width": 780,
+      "height": 1688,
+      "x": 5460,
+      "y": 1688
+    },
+    {
+      "fileName": "fx_win_mobile_portrait16.png",
+      "width": 780,
+      "height": 1688,
+      "x": 0,
+      "y": 3376
+    },
+    {
+      "fileName": "fx_win_mobile_portrait17.png",
+      "width": 780,
+      "height": 1688,
+      "x": 780,
+      "y": 3376
+    },
+    {
+      "fileName": "fx_win_mobile_portrait18.png",
+      "width": 780,
+      "height": 1688,
+      "x": 1560,
+      "y": 3376
+    },
+    {
+      "fileName": "fx_win_mobile_portrait19.png",
+      "width": 780,
+      "height": 1688,
+      "x": 2340,
+      "y": 3376
+    },
+    {
+      "fileName": "fx_win_mobile_portrait20.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3120,
+      "y": 3376
+    },
+    {
+      "fileName": "fx_win_mobile_portrait21.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3900,
+      "y": 3376
+    },
+    {
+      "fileName": "fx_win_mobile_portrait22.png",
+      "width": 780,
+      "height": 1688,
+      "x": 4680,
+      "y": 3376
+    },
+    {
+      "fileName": "fx_win_mobile_portrait23.png",
+      "width": 780,
+      "height": 1688,
+      "x": 5460,
+      "y": 3376
+    },
+    {
+      "fileName": "fx_win_mobile_portrait24.png",
+      "width": 780,
+      "height": 1688,
+      "x": 0,
+      "y": 5064
+    },
+    {
+      "fileName": "fx_win_mobile_portrait25.png",
+      "width": 780,
+      "height": 1688,
+      "x": 780,
+      "y": 5064
+    },
+    {
+      "fileName": "fx_win_mobile_portrait26.png",
+      "width": 780,
+      "height": 1688,
+      "x": 1560,
+      "y": 5064
+    },
+    {
+      "fileName": "fx_win_mobile_portrait27.png",
+      "width": 780,
+      "height": 1688,
+      "x": 2340,
+      "y": 5064
+    },
+    {
+      "fileName": "fx_win_mobile_portrait28.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3120,
+      "y": 5064
+    },
+    {
+      "fileName": "fx_win_mobile_portrait29.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3900,
+      "y": 5064
+    },
+    {
+      "fileName": "fx_win_mobile_portrait30.png",
+      "width": 780,
+      "height": 1688,
+      "x": 4680,
+      "y": 5064
+    },
+    {
+      "fileName": "fx_win_mobile_portrait31.png",
+      "width": 780,
+      "height": 1688,
+      "x": 5460,
+      "y": 5064
+    },
+    {
+      "fileName": "fx_win_mobile_portrait32.png",
+      "width": 780,
+      "height": 1688,
+      "x": 0,
+      "y": 6752
+    },
+    {
+      "fileName": "fx_win_mobile_portrait33.png",
+      "width": 780,
+      "height": 1688,
+      "x": 780,
+      "y": 6752
+    },
+    {
+      "fileName": "fx_win_mobile_portrait34.png",
+      "width": 780,
+      "height": 1688,
+      "x": 1560,
+      "y": 6752
+    },
+    {
+      "fileName": "fx_win_mobile_portrait35.png",
+      "width": 780,
+      "height": 1688,
+      "x": 2340,
+      "y": 6752
+    },
+    {
+      "fileName": "fx_win_mobile_portrait36.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3120,
+      "y": 6752
+    },
+    {
+      "fileName": "fx_win_mobile_portrait37.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3900,
+      "y": 6752
+    },
+    {
+      "fileName": "fx_win_mobile_portrait38.png",
+      "width": 780,
+      "height": 1688,
+      "x": 4680,
+      "y": 6752
+    },
+    {
+      "fileName": "fx_win_mobile_portrait39.png",
+      "width": 780,
+      "height": 1688,
+      "x": 5460,
+      "y": 6752
+    },
+    {
+      "fileName": "fx_win_mobile_portrait40.png",
+      "width": 780,
+      "height": 1688,
+      "x": 0,
+      "y": 8440
+    },
+    {
+      "fileName": "fx_win_mobile_portrait41.png",
+      "width": 780,
+      "height": 1688,
+      "x": 780,
+      "y": 8440
+    },
+    {
+      "fileName": "fx_win_mobile_portrait42.png",
+      "width": 780,
+      "height": 1688,
+      "x": 1560,
+      "y": 8440
+    },
+    {
+      "fileName": "fx_win_mobile_portrait43.png",
+      "width": 780,
+      "height": 1688,
+      "x": 2340,
+      "y": 8440
+    },
+    {
+      "fileName": "fx_win_mobile_portrait44.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3120,
+      "y": 8440
+    },
+    {
+      "fileName": "fx_win_mobile_portrait45.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3900,
+      "y": 8440
+    },
+    {
+      "fileName": "fx_win_mobile_portrait46.png",
+      "width": 780,
+      "height": 1688,
+      "x": 4680,
+      "y": 8440
+    },
+    {
+      "fileName": "fx_win_mobile_portrait47.png",
+      "width": 780,
+      "height": 1688,
+      "x": 5460,
+      "y": 8440
+    },
+    {
+      "fileName": "fx_win_mobile_portrait48.png",
+      "width": 780,
+      "height": 1688,
+      "x": 0,
+      "y": 10128
+    },
+    {
+      "fileName": "fx_win_mobile_portrait49.png",
+      "width": 780,
+      "height": 1688,
+      "x": 780,
+      "y": 10128
+    },
+    {
+      "fileName": "fx_win_mobile_portrait50.png",
+      "width": 780,
+      "height": 1688,
+      "x": 1560,
+      "y": 10128
+    },
+    {
+      "fileName": "fx_win_mobile_portrait51.png",
+      "width": 780,
+      "height": 1688,
+      "x": 2340,
+      "y": 10128
+    },
+    {
+      "fileName": "fx_win_mobile_portrait52.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3120,
+      "y": 10128
+    },
+    {
+      "fileName": "fx_win_mobile_portrait53.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3900,
+      "y": 10128
+    },
+    {
+      "fileName": "fx_win_mobile_portrait54.png",
+      "width": 780,
+      "height": 1688,
+      "x": 4680,
+      "y": 10128
+    },
+    {
+      "fileName": "fx_win_mobile_portrait55.png",
+      "width": 780,
+      "height": 1688,
+      "x": 5460,
+      "y": 10128
+    },
+    {
+      "fileName": "fx_win_mobile_portrait56.png",
+      "width": 780,
+      "height": 1688,
+      "x": 0,
+      "y": 11816
+    },
+    {
+      "fileName": "fx_win_mobile_portrait57.png",
+      "width": 780,
+      "height": 1688,
+      "x": 780,
+      "y": 11816
+    },
+    {
+      "fileName": "fx_win_mobile_portrait58.png",
+      "width": 780,
+      "height": 1688,
+      "x": 1560,
+      "y": 11816
+    },
+    {
+      "fileName": "fx_win_mobile_portrait59.png",
+      "width": 780,
+      "height": 1688,
+      "x": 2340,
+      "y": 11816
+    },
+    {
+      "fileName": "fx_win_mobile_portrait60.png",
+      "width": 780,
+      "height": 1688,
+      "x": 3120,
+      "y": 11816
+    }
+  ],
+  "packMode": "grid",
+  "padding": 0,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "spriteSheetWidth": 6240,
+  "spriteSheetHeight": 13504
+}

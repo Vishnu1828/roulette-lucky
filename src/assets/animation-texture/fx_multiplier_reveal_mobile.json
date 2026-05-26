@@ -1,0 +1,429 @@
+{
+  "sprites": [
+    {
+      "fileName": "multiplier_reveal_mobile00.png",
+      "width": 132,
+      "height": 75,
+      "x": 2,
+      "y": 2
+    },
+    {
+      "fileName": "multiplier_reveal_mobile01.png",
+      "width": 132,
+      "height": 75,
+      "x": 138,
+      "y": 2
+    },
+    {
+      "fileName": "multiplier_reveal_mobile02.png",
+      "width": 132,
+      "height": 75,
+      "x": 274,
+      "y": 2
+    },
+    {
+      "fileName": "multiplier_reveal_mobile03.png",
+      "width": 132,
+      "height": 75,
+      "x": 410,
+      "y": 2
+    },
+    {
+      "fileName": "multiplier_reveal_mobile04.png",
+      "width": 132,
+      "height": 75,
+      "x": 546,
+      "y": 2
+    },
+    {
+      "fileName": "multiplier_reveal_mobile05.png",
+      "width": 132,
+      "height": 75,
+      "x": 682,
+      "y": 2
+    },
+    {
+      "fileName": "multiplier_reveal_mobile06.png",
+      "width": 132,
+      "height": 75,
+      "x": 818,
+      "y": 2
+    },
+    {
+      "fileName": "multiplier_reveal_mobile07.png",
+      "width": 132,
+      "height": 75,
+      "x": 954,
+      "y": 2
+    },
+    {
+      "fileName": "multiplier_reveal_mobile08.png",
+      "width": 132,
+      "height": 75,
+      "x": 2,
+      "y": 81
+    },
+    {
+      "fileName": "multiplier_reveal_mobile09.png",
+      "width": 132,
+      "height": 75,
+      "x": 138,
+      "y": 81
+    },
+    {
+      "fileName": "multiplier_reveal_mobile10.png",
+      "width": 132,
+      "height": 75,
+      "x": 274,
+      "y": 81
+    },
+    {
+      "fileName": "multiplier_reveal_mobile11.png",
+      "width": 132,
+      "height": 75,
+      "x": 410,
+      "y": 81
+    },
+    {
+      "fileName": "multiplier_reveal_mobile12.png",
+      "width": 132,
+      "height": 75,
+      "x": 546,
+      "y": 81
+    },
+    {
+      "fileName": "multiplier_reveal_mobile13.png",
+      "width": 132,
+      "height": 75,
+      "x": 682,
+      "y": 81
+    },
+    {
+      "fileName": "multiplier_reveal_mobile14.png",
+      "width": 132,
+      "height": 75,
+      "x": 818,
+      "y": 81
+    },
+    {
+      "fileName": "multiplier_reveal_mobile15.png",
+      "width": 132,
+      "height": 75,
+      "x": 954,
+      "y": 81
+    },
+    {
+      "fileName": "multiplier_reveal_mobile16.png",
+      "width": 132,
+      "height": 75,
+      "x": 2,
+      "y": 160
+    },
+    {
+      "fileName": "multiplier_reveal_mobile17.png",
+      "width": 132,
+      "height": 75,
+      "x": 138,
+      "y": 160
+    },
+    {
+      "fileName": "multiplier_reveal_mobile18.png",
+      "width": 132,
+      "height": 75,
+      "x": 274,
+      "y": 160
+    },
+    {
+      "fileName": "multiplier_reveal_mobile19.png",
+      "width": 132,
+      "height": 75,
+      "x": 410,
+      "y": 160
+    },
+    {
+      "fileName": "multiplier_reveal_mobile20.png",
+      "width": 132,
+      "height": 75,
+      "x": 546,
+      "y": 160
+    },
+    {
+      "fileName": "multiplier_reveal_mobile21.png",
+      "width": 132,
+      "height": 75,
+      "x": 682,
+      "y": 160
+    },
+    {
+      "fileName": "multiplier_reveal_mobile22.png",
+      "width": 132,
+      "height": 75,
+      "x": 818,
+      "y": 160
+    },
+    {
+      "fileName": "multiplier_reveal_mobile23.png",
+      "width": 132,
+      "height": 75,
+      "x": 954,
+      "y": 160
+    },
+    {
+      "fileName": "multiplier_reveal_mobile24.png",
+      "width": 132,
+      "height": 75,
+      "x": 2,
+      "y": 239
+    },
+    {
+      "fileName": "multiplier_reveal_mobile25.png",
+      "width": 132,
+      "height": 75,
+      "x": 138,
+      "y": 239
+    },
+    {
+      "fileName": "multiplier_reveal_mobile26.png",
+      "width": 132,
+      "height": 75,
+      "x": 274,
+      "y": 239
+    },
+    {
+      "fileName": "multiplier_reveal_mobile27.png",
+      "width": 132,
+      "height": 75,
+      "x": 410,
+      "y": 239
+    },
+    {
+      "fileName": "multiplier_reveal_mobile28.png",
+      "width": 132,
+      "height": 75,
+      "x": 546,
+      "y": 239
+    },
+    {
+      "fileName": "multiplier_reveal_mobile29.png",
+      "width": 132,
+      "height": 75,
+      "x": 682,
+      "y": 239
+    },
+    {
+      "fileName": "multiplier_reveal_mobile30.png",
+      "width": 132,
+      "height": 75,
+      "x": 818,
+      "y": 239
+    },
+    {
+      "fileName": "multiplier_reveal_mobile31.png",
+      "width": 132,
+      "height": 75,
+      "x": 954,
+      "y": 239
+    },
+    {
+      "fileName": "multiplier_reveal_mobile32.png",
+      "width": 132,
+      "height": 75,
+      "x": 2,
+      "y": 318
+    },
+    {
+      "fileName": "multiplier_reveal_mobile33.png",
+      "width": 132,
+      "height": 75,
+      "x": 138,
+      "y": 318
+    },
+    {
+      "fileName": "multiplier_reveal_mobile34.png",
+      "width": 132,
+      "height": 75,
+      "x": 274,
+      "y": 318
+    },
+    {
+      "fileName": "multiplier_reveal_mobile35.png",
+      "width": 132,
+      "height": 75,
+      "x": 410,
+      "y": 318
+    },
+    {
+      "fileName": "multiplier_reveal_mobile36.png",
+      "width": 132,
+      "height": 75,
+      "x": 546,
+      "y": 318
+    },
+    {
+      "fileName": "multiplier_reveal_mobile37.png",
+      "width": 132,
+      "height": 75,
+      "x": 682,
+      "y": 318
+    },
+    {
+      "fileName": "multiplier_reveal_mobile38.png",
+      "width": 132,
+      "height": 75,
+      "x": 818,
+      "y": 318
+    },
+    {
+      "fileName": "multiplier_reveal_mobile39.png",
+      "width": 132,
+      "height": 75,
+      "x": 954,
+      "y": 318
+    },
+    {
+      "fileName": "multiplier_reveal_mobile40.png",
+      "width": 132,
+      "height": 75,
+      "x": 2,
+      "y": 397
+    },
+    {
+      "fileName": "multiplier_reveal_mobile41.png",
+      "width": 132,
+      "height": 75,
+      "x": 138,
+      "y": 397
+    },
+    {
+      "fileName": "multiplier_reveal_mobile42.png",
+      "width": 132,
+      "height": 75,
+      "x": 274,
+      "y": 397
+    },
+    {
+      "fileName": "multiplier_reveal_mobile43.png",
+      "width": 132,
+      "height": 75,
+      "x": 410,
+      "y": 397
+    },
+    {
+      "fileName": "multiplier_reveal_mobile44.png",
+      "width": 132,
+      "height": 75,
+      "x": 546,
+      "y": 397
+    },
+    {
+      "fileName": "multiplier_reveal_mobile45.png",
+      "width": 132,
+      "height": 75,
+      "x": 682,
+      "y": 397
+    },
+    {
+      "fileName": "multiplier_reveal_mobile46.png",
+      "width": 132,
+      "height": 75,
+      "x": 818,
+      "y": 397
+    },
+    {
+      "fileName": "multiplier_reveal_mobile47.png",
+      "width": 132,
+      "height": 75,
+      "x": 954,
+      "y": 397
+    },
+    {
+      "fileName": "multiplier_reveal_mobile48.png",
+      "width": 132,
+      "height": 75,
+      "x": 2,
+      "y": 476
+    },
+    {
+      "fileName": "multiplier_reveal_mobile49.png",
+      "width": 132,
+      "height": 75,
+      "x": 138,
+      "y": 476
+    },
+    {
+      "fileName": "multiplier_reveal_mobile50.png",
+      "width": 132,
+      "height": 75,
+      "x": 274,
+      "y": 476
+    },
+    {
+      "fileName": "multiplier_reveal_mobile51.png",
+      "width": 132,
+      "height": 75,
+      "x": 410,
+      "y": 476
+    },
+    {
+      "fileName": "multiplier_reveal_mobile52.png",
+      "width": 132,
+      "height": 75,
+      "x": 546,
+      "y": 476
+    },
+    {
+      "fileName": "multiplier_reveal_mobile53.png",
+      "width": 132,
+      "height": 75,
+      "x": 682,
+      "y": 476
+    },
+    {
+      "fileName": "multiplier_reveal_mobile54.png",
+      "width": 132,
+      "height": 75,
+      "x": 818,
+      "y": 476
+    },
+    {
+      "fileName": "multiplier_reveal_mobile55.png",
+      "width": 132,
+      "height": 75,
+      "x": 954,
+      "y": 476
+    },
+    {
+      "fileName": "multiplier_reveal_mobile56.png",
+      "width": 132,
+      "height": 75,
+      "x": 2,
+      "y": 555
+    },
+    {
+      "fileName": "multiplier_reveal_mobile57.png",
+      "width": 132,
+      "height": 75,
+      "x": 138,
+      "y": 555
+    },
+    {
+      "fileName": "multiplier_reveal_mobile58.png",
+      "width": 132,
+      "height": 75,
+      "x": 274,
+      "y": 555
+    },
+    {
+      "fileName": "multiplier_reveal_mobile59.png",
+      "width": 132,
+      "height": 75,
+      "x": 410,
+      "y": 555
+    }
+  ],
+  "packMode": "grid",
+  "padding": 2,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "spriteSheetWidth": 1088,
+  "spriteSheetHeight": 632
+}

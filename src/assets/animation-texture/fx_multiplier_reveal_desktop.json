@@ -1,0 +1,429 @@
+{
+  "sprites": [
+    {
+      "fileName": "fx_multiplier_reveal_desktop00.png",
+      "width": 140,
+      "height": 214,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop01.png",
+      "width": 140,
+      "height": 214,
+      "x": 140,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop02.png",
+      "width": 140,
+      "height": 214,
+      "x": 280,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop03.png",
+      "width": 140,
+      "height": 214,
+      "x": 420,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop04.png",
+      "width": 140,
+      "height": 214,
+      "x": 560,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop05.png",
+      "width": 140,
+      "height": 214,
+      "x": 700,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop06.png",
+      "width": 140,
+      "height": 214,
+      "x": 840,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop07.png",
+      "width": 140,
+      "height": 214,
+      "x": 980,
+      "y": 0
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop08.png",
+      "width": 140,
+      "height": 214,
+      "x": 0,
+      "y": 214
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop09.png",
+      "width": 140,
+      "height": 214,
+      "x": 140,
+      "y": 214
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop10.png",
+      "width": 140,
+      "height": 214,
+      "x": 280,
+      "y": 214
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop11.png",
+      "width": 140,
+      "height": 214,
+      "x": 420,
+      "y": 214
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop12.png",
+      "width": 140,
+      "height": 214,
+      "x": 560,
+      "y": 214
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop13.png",
+      "width": 140,
+      "height": 214,
+      "x": 700,
+      "y": 214
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop14.png",
+      "width": 140,
+      "height": 214,
+      "x": 840,
+      "y": 214
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop15.png",
+      "width": 140,
+      "height": 214,
+      "x": 980,
+      "y": 214
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop16.png",
+      "width": 140,
+      "height": 214,
+      "x": 0,
+      "y": 428
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop17.png",
+      "width": 140,
+      "height": 214,
+      "x": 140,
+      "y": 428
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop18.png",
+      "width": 140,
+      "height": 214,
+      "x": 280,
+      "y": 428
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop19.png",
+      "width": 140,
+      "height": 214,
+      "x": 420,
+      "y": 428
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop20.png",
+      "width": 140,
+      "height": 214,
+      "x": 560,
+      "y": 428
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop21.png",
+      "width": 140,
+      "height": 214,
+      "x": 700,
+      "y": 428
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop22.png",
+      "width": 140,
+      "height": 214,
+      "x": 840,
+      "y": 428
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop23.png",
+      "width": 140,
+      "height": 214,
+      "x": 980,
+      "y": 428
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop24.png",
+      "width": 140,
+      "height": 214,
+      "x": 0,
+      "y": 642
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop25.png",
+      "width": 140,
+      "height": 214,
+      "x": 140,
+      "y": 642
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop26.png",
+      "width": 140,
+      "height": 214,
+      "x": 280,
+      "y": 642
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop27.png",
+      "width": 140,
+      "height": 214,
+      "x": 420,
+      "y": 642
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop28.png",
+      "width": 140,
+      "height": 214,
+      "x": 560,
+      "y": 642
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop29.png",
+      "width": 140,
+      "height": 214,
+      "x": 700,
+      "y": 642
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop30.png",
+      "width": 140,
+      "height": 214,
+      "x": 840,
+      "y": 642
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop31.png",
+      "width": 140,
+      "height": 214,
+      "x": 980,
+      "y": 642
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop32.png",
+      "width": 140,
+      "height": 214,
+      "x": 0,
+      "y": 856
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop33.png",
+      "width": 140,
+      "height": 214,
+      "x": 140,
+      "y": 856
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop34.png",
+      "width": 140,
+      "height": 214,
+      "x": 280,
+      "y": 856
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop35.png",
+      "width": 140,
+      "height": 214,
+      "x": 420,
+      "y": 856
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop36.png",
+      "width": 140,
+      "height": 214,
+      "x": 560,
+      "y": 856
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop37.png",
+      "width": 140,
+      "height": 214,
+      "x": 700,
+      "y": 856
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop38.png",
+      "width": 140,
+      "height": 214,
+      "x": 840,
+      "y": 856
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop39.png",
+      "width": 140,
+      "height": 214,
+      "x": 980,
+      "y": 856
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop40.png",
+      "width": 140,
+      "height": 214,
+      "x": 0,
+      "y": 1070
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop41.png",
+      "width": 140,
+      "height": 214,
+      "x": 140,
+      "y": 1070
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop42.png",
+      "width": 140,
+      "height": 214,
+      "x": 280,
+      "y": 1070
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop43.png",
+      "width": 140,
+      "height": 214,
+      "x": 420,
+      "y": 1070
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop44.png",
+      "width": 140,
+      "height": 214,
+      "x": 560,
+      "y": 1070
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop45.png",
+      "width": 140,
+      "height": 214,
+      "x": 700,
+      "y": 1070
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop46.png",
+      "width": 140,
+      "height": 214,
+      "x": 840,
+      "y": 1070
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop47.png",
+      "width": 140,
+      "height": 214,
+      "x": 980,
+      "y": 1070
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop48.png",
+      "width": 140,
+      "height": 214,
+      "x": 0,
+      "y": 1284
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop49.png",
+      "width": 140,
+      "height": 214,
+      "x": 140,
+      "y": 1284
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop50.png",
+      "width": 140,
+      "height": 214,
+      "x": 280,
+      "y": 1284
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop51.png",
+      "width": 140,
+      "height": 214,
+      "x": 420,
+      "y": 1284
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop52.png",
+      "width": 140,
+      "height": 214,
+      "x": 560,
+      "y": 1284
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop53.png",
+      "width": 140,
+      "height": 214,
+      "x": 700,
+      "y": 1284
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop54.png",
+      "width": 140,
+      "height": 214,
+      "x": 840,
+      "y": 1284
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop55.png",
+      "width": 140,
+      "height": 214,
+      "x": 980,
+      "y": 1284
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop56.png",
+      "width": 140,
+      "height": 214,
+      "x": 0,
+      "y": 1498
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop57.png",
+      "width": 140,
+      "height": 214,
+      "x": 140,
+      "y": 1498
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop58.png",
+      "width": 140,
+      "height": 214,
+      "x": 280,
+      "y": 1498
+    },
+    {
+      "fileName": "fx_multiplier_reveal_desktop59.png",
+      "width": 140,
+      "height": 214,
+      "x": 420,
+      "y": 1498
+    }
+  ],
+  "packMode": "grid",
+  "padding": 0,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "spriteSheetWidth": 1120,
+  "spriteSheetHeight": 1712
+}

@@ -1,0 +1,331 @@
+{
+  "sprites": [
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait00.png",
+      "width": 176,
+      "height": 100,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait01.png",
+      "width": 176,
+      "height": 100,
+      "x": 176,
+      "y": 0
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait02.png",
+      "width": 176,
+      "height": 100,
+      "x": 352,
+      "y": 0
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait03.png",
+      "width": 176,
+      "height": 100,
+      "x": 528,
+      "y": 0
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait04.png",
+      "width": 176,
+      "height": 100,
+      "x": 704,
+      "y": 0
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait05.png",
+      "width": 176,
+      "height": 100,
+      "x": 880,
+      "y": 0
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait06.png",
+      "width": 176,
+      "height": 100,
+      "x": 1056,
+      "y": 0
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait07.png",
+      "width": 176,
+      "height": 100,
+      "x": 0,
+      "y": 100
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait08.png",
+      "width": 176,
+      "height": 100,
+      "x": 176,
+      "y": 100
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait09.png",
+      "width": 176,
+      "height": 100,
+      "x": 352,
+      "y": 100
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait10.png",
+      "width": 176,
+      "height": 100,
+      "x": 528,
+      "y": 100
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait11.png",
+      "width": 176,
+      "height": 100,
+      "x": 704,
+      "y": 100
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait12.png",
+      "width": 176,
+      "height": 100,
+      "x": 880,
+      "y": 100
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait13.png",
+      "width": 176,
+      "height": 100,
+      "x": 1056,
+      "y": 100
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait14.png",
+      "width": 176,
+      "height": 100,
+      "x": 0,
+      "y": 200
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait15.png",
+      "width": 176,
+      "height": 100,
+      "x": 176,
+      "y": 200
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait16.png",
+      "width": 176,
+      "height": 100,
+      "x": 352,
+      "y": 200
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait17.png",
+      "width": 176,
+      "height": 100,
+      "x": 528,
+      "y": 200
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait18.png",
+      "width": 176,
+      "height": 100,
+      "x": 704,
+      "y": 200
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait19.png",
+      "width": 176,
+      "height": 100,
+      "x": 880,
+      "y": 200
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait20.png",
+      "width": 176,
+      "height": 100,
+      "x": 1056,
+      "y": 200
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait21.png",
+      "width": 176,
+      "height": 100,
+      "x": 0,
+      "y": 300
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait22.png",
+      "width": 176,
+      "height": 100,
+      "x": 176,
+      "y": 300
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait23.png",
+      "width": 176,
+      "height": 100,
+      "x": 352,
+      "y": 300
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait24.png",
+      "width": 176,
+      "height": 100,
+      "x": 528,
+      "y": 300
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait25.png",
+      "width": 176,
+      "height": 100,
+      "x": 704,
+      "y": 300
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait26.png",
+      "width": 176,
+      "height": 100,
+      "x": 880,
+      "y": 300
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait27.png",
+      "width": 176,
+      "height": 100,
+      "x": 1056,
+      "y": 300
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait28.png",
+      "width": 176,
+      "height": 100,
+      "x": 0,
+      "y": 400
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait29.png",
+      "width": 176,
+      "height": 100,
+      "x": 176,
+      "y": 400
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait30.png",
+      "width": 176,
+      "height": 100,
+      "x": 352,
+      "y": 400
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait31.png",
+      "width": 176,
+      "height": 100,
+      "x": 528,
+      "y": 400
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait32.png",
+      "width": 176,
+      "height": 100,
+      "x": 704,
+      "y": 400
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait33.png",
+      "width": 176,
+      "height": 100,
+      "x": 880,
+      "y": 400
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait34.png",
+      "width": 176,
+      "height": 100,
+      "x": 1056,
+      "y": 400
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait35.png",
+      "width": 176,
+      "height": 100,
+      "x": 0,
+      "y": 500
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait36.png",
+      "width": 176,
+      "height": 100,
+      "x": 176,
+      "y": 500
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait37.png",
+      "width": 176,
+      "height": 100,
+      "x": 352,
+      "y": 500
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait38.png",
+      "width": 176,
+      "height": 100,
+      "x": 528,
+      "y": 500
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait39.png",
+      "width": 176,
+      "height": 100,
+      "x": 704,
+      "y": 500
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait40.png",
+      "width": 176,
+      "height": 100,
+      "x": 880,
+      "y": 500
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait41.png",
+      "width": 176,
+      "height": 100,
+      "x": 1056,
+      "y": 500
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait42.png",
+      "width": 176,
+      "height": 100,
+      "x": 0,
+      "y": 600
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait43.png",
+      "width": 176,
+      "height": 100,
+      "x": 176,
+      "y": 600
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait44.png",
+      "width": 176,
+      "height": 100,
+      "x": 352,
+      "y": 600
+    },
+    {
+      "fileName": "fx_lucky_number_selection_mobile_portrait45.png",
+      "width": 176,
+      "height": 100,
+      "x": 528,
+      "y": 600
+    }
+  ],
+  "packMode": "grid",
+  "padding": 0,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "spriteSheetWidth": 1232,
+  "spriteSheetHeight": 700
+}

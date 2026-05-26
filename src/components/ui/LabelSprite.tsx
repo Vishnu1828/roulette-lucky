@@ -19,6 +19,7 @@ type LabelSpriteProps = {
   tint?: number;
   align?: "left" | "center" | "right";
   labelY?: number;
+  onPointerTap?: () => void;
 };
 
 const LabelSprite = ({
@@ -35,6 +36,7 @@ const LabelSprite = ({
   tint,
   align = "center",
   labelY = height / 2,
+  onPointerTap,
 }: LabelSpriteProps) => {
   const { layoutMode } = useLayoutStore();
   fontFamily = fontFamily
@@ -43,7 +45,13 @@ const LabelSprite = ({
       ? BITMAP_FONT_FAMILY.roulette.mobile
       : BITMAP_FONT_FAMILY.roulette.desktop;
   return (
-    <PixiContainer x={x} y={y}>
+    <PixiContainer
+      x={x}
+      y={y}
+      onPointerTap={onPointerTap}
+      interactive={!!onPointerTap}
+      cursor={onPointerTap ? "pointer" : "default"}
+    >
       <PixiSprite texture={texture} width={width} height={height} />
 
       <PixiBitmapText

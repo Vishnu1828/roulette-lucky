@@ -1,0 +1,436 @@
+{
+  "sprites": [
+    {
+      "fileName": "fx_win_desktop00.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_desktop01.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 1920,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_desktop02.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 3840,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_desktop03.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 5760,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_desktop04.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 7680,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_desktop05.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 9600,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_desktop06.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 11520,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_desktop07.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 13440,
+      "y": 0
+    },
+    {
+      "fileName": "fx_win_desktop08.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 0,
+      "y": 1080
+    },
+    {
+      "fileName": "fx_win_desktop09.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 1920,
+      "y": 1080
+    },
+    {
+      "fileName": "fx_win_desktop10.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 3840,
+      "y": 1080
+    },
+    {
+      "fileName": "fx_win_desktop11.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 5760,
+      "y": 1080
+    },
+    {
+      "fileName": "fx_win_desktop12.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 7680,
+      "y": 1080
+    },
+    {
+      "fileName": "fx_win_desktop13.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 9600,
+      "y": 1080
+    },
+    {
+      "fileName": "fx_win_desktop14.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 11520,
+      "y": 1080
+    },
+    {
+      "fileName": "fx_win_desktop15.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 13440,
+      "y": 1080
+    },
+    {
+      "fileName": "fx_win_desktop16.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 0,
+      "y": 2160
+    },
+    {
+      "fileName": "fx_win_desktop17.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 1920,
+      "y": 2160
+    },
+    {
+      "fileName": "fx_win_desktop18.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 3840,
+      "y": 2160
+    },
+    {
+      "fileName": "fx_win_desktop19.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 5760,
+      "y": 2160
+    },
+    {
+      "fileName": "fx_win_desktop20.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 7680,
+      "y": 2160
+    },
+    {
+      "fileName": "fx_win_desktop21.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 9600,
+      "y": 2160
+    },
+    {
+      "fileName": "fx_win_desktop22.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 11520,
+      "y": 2160
+    },
+    {
+      "fileName": "fx_win_desktop23.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 13440,
+      "y": 2160
+    },
+    {
+      "fileName": "fx_win_desktop24.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 0,
+      "y": 3240
+    },
+    {
+      "fileName": "fx_win_desktop25.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 1920,
+      "y": 3240
+    },
+    {
+      "fileName": "fx_win_desktop26.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 3840,
+      "y": 3240
+    },
+    {
+      "fileName": "fx_win_desktop27.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 5760,
+      "y": 3240
+    },
+    {
+      "fileName": "fx_win_desktop28.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 7680,
+      "y": 3240
+    },
+    {
+      "fileName": "fx_win_desktop29.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 9600,
+      "y": 3240
+    },
+    {
+      "fileName": "fx_win_desktop30.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 11520,
+      "y": 3240
+    },
+    {
+      "fileName": "fx_win_desktop31.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 13440,
+      "y": 3240
+    },
+    {
+      "fileName": "fx_win_desktop32.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 0,
+      "y": 4320
+    },
+    {
+      "fileName": "fx_win_desktop33.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 1920,
+      "y": 4320
+    },
+    {
+      "fileName": "fx_win_desktop34.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 3840,
+      "y": 4320
+    },
+    {
+      "fileName": "fx_win_desktop35.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 5760,
+      "y": 4320
+    },
+    {
+      "fileName": "fx_win_desktop36.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 7680,
+      "y": 4320
+    },
+    {
+      "fileName": "fx_win_desktop37.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 9600,
+      "y": 4320
+    },
+    {
+      "fileName": "fx_win_desktop38.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 11520,
+      "y": 4320
+    },
+    {
+      "fileName": "fx_win_desktop39.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 13440,
+      "y": 4320
+    },
+    {
+      "fileName": "fx_win_desktop40.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 0,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_win_desktop41.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 1920,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_win_desktop42.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 3840,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_win_desktop43.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 5760,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_win_desktop44.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 7680,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_win_desktop45.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 9600,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_win_desktop46.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 11520,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_win_desktop47.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 13440,
+      "y": 5400
+    },
+    {
+      "fileName": "fx_win_desktop48.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 0,
+      "y": 6480
+    },
+    {
+      "fileName": "fx_win_desktop49.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 1920,
+      "y": 6480
+    },
+    {
+      "fileName": "fx_win_desktop50.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 3840,
+      "y": 6480
+    },
+    {
+      "fileName": "fx_win_desktop51.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 5760,
+      "y": 6480
+    },
+    {
+      "fileName": "fx_win_desktop52.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 7680,
+      "y": 6480
+    },
+    {
+      "fileName": "fx_win_desktop53.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 9600,
+      "y": 6480
+    },
+    {
+      "fileName": "fx_win_desktop54.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 11520,
+      "y": 6480
+    },
+    {
+      "fileName": "fx_win_desktop55.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 13440,
+      "y": 6480
+    },
+    {
+      "fileName": "fx_win_desktop56.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 0,
+      "y": 7560
+    },
+    {
+      "fileName": "fx_win_desktop57.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 1920,
+      "y": 7560
+    },
+    {
+      "fileName": "fx_win_desktop58.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 3840,
+      "y": 7560
+    },
+    {
+      "fileName": "fx_win_desktop59.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 5760,
+      "y": 7560
+    },
+    {
+      "fileName": "fx_win_desktop60.png",
+      "width": 1920,
+      "height": 1080,
+      "x": 7680,
+      "y": 7560
+    }
+  ],
+  "packMode": "grid",
+  "padding": 0,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "spriteSheetWidth": 15360,
+  "spriteSheetHeight": 8640
+}
