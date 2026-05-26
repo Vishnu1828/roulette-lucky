@@ -3,7 +3,7 @@ import PixiContainer from "../pixi/PixiContainer";
 import PixiSprite from "../pixi/PixiSprite";
 import LabelSprite from "./LabelSprite";
 import { useLayoutStore } from "../../store/useLayoutStore";
-import { CHIP_DATA } from "../../constants/chipConstants";
+import { CHIP_DATA } from "../../constants/chips";
 import { ChipValue } from "../../types/chipTypes";
 import { useChipStore } from "../../store/useChipStore";
 import { useState } from "react";

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { ChipValue } from "../types/chipTypes";
-import { CHIP_VALUES } from "../constants/chipConstants";
+import { CHIP_VALUES } from "../constants/chips";
 
 interface ChipState {
   selectedChip: ChipValue | null;

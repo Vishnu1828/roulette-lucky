@@ -20,6 +20,7 @@ type LabelSpriteProps = {
   align?: "left" | "center" | "right";
   labelY?: number;
   onPointerTap?: () => void;
+  zIndex?: number;
 };
 
 const LabelSprite = ({
@@ -37,6 +38,7 @@ const LabelSprite = ({
   align = "center",
   labelY = height / 2,
   onPointerTap,
+  zIndex = 1,
 }: LabelSpriteProps) => {
   const { layoutMode } = useLayoutStore();
   fontFamily = fontFamily
@@ -51,6 +53,7 @@ const LabelSprite = ({
       onPointerTap={onPointerTap}
       interactive={!!onPointerTap}
       cursor={onPointerTap ? "pointer" : "default"}
+      zIndex={zIndex}
     >
       <PixiSprite texture={texture} width={width} height={height} />
 
