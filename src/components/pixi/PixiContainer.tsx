@@ -1,11 +1,12 @@
 import { extend } from "@pixi/react";
-import { Container } from "pixi.js";
+import { Container, FederatedPointerEvent } from "pixi.js";
 import { useRef, useEffect } from "react";
+import type { ReactNode } from "react";
 
 extend({ Container });
 
 type PixiContainerProps = {
-  children?: any;
+  children?: ReactNode;
   x?: number;
   y?: number;
   offsetX?: number;
@@ -16,11 +17,11 @@ type PixiContainerProps = {
   interactive?: boolean;
   eventMode?: "none" | "passive" | "auto" | "static" | "dynamic";
   cursor?: string;
-  onPointerDown?: (e: any) => void;
-  onPointerMove?: (e: any) => void;
-  onPointerUp?: (e: any) => void;
-  onPointerUpOutside?: (e: any) => void;
-  onPointerTap?: (e: any) => void;
+  onPointerDown?: (e: FederatedPointerEvent) => void;
+  onPointerMove?: (e: FederatedPointerEvent) => void;
+  onPointerUp?: (e: FederatedPointerEvent) => void;
+  onPointerUpOutside?: (e: FederatedPointerEvent) => void;
+  onPointerTap?: (e: FederatedPointerEvent) => void;
   sortableChildren?: boolean;
   zIndex?: number;
 };
@@ -45,7 +46,9 @@ const PixiContainer = ({
   sortableChildren = false,
   zIndex,
 }: PixiContainerProps) => {
-  const ref = useRef<any>(null);
+  const ref = useRef<
+    (Container & { offsetX?: number; offsetY?: number }) | null
+  >(null);
 
   useEffect(() => {
     if (ref.current) {

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { Assets } from "pixi.js";
+import { Assets, Container, FederatedPointerEvent } from "pixi.js";
 import PixiContainer from "../pixi/PixiContainer";
 import PixiSprite from "../pixi/PixiSprite";
 import { useLayoutStore } from "../../store/useLayoutStore";
@@ -97,7 +97,7 @@ export function VolumeSlider({
   }, []);
 
   const handleContainerPointerMove = useCallback(
-    (e: any) => {
+    (e: FederatedPointerEvent) => {
       if (isDragging && e.getLocalPosition) {
         const pos = e.getLocalPosition(e.currentTarget);
         updateValue(pos.x);
@@ -152,10 +152,13 @@ export function VolumeSlider({
         interactive
         cursor="pointer"
         eventMode="static"
-        onPointerDown={(e: any) => {
-          if (e.getLocalPosition && e.currentTarget.parent) {
+        onPointerDown={(e: FederatedPointerEvent) => {
+          const currentTarget = e.currentTarget as Container;
+          const parent = currentTarget.parent as Container | null;
+
+          if (e.getLocalPosition && parent) {
             // Get position relative to container (parent)
-            const pos = e.getLocalPosition(e.currentTarget.parent);
+            const pos = e.getLocalPosition(parent);
             updateValue(pos.x);
           }
         }}
@@ -173,10 +176,13 @@ export function VolumeSlider({
           interactive
           cursor="pointer"
           eventMode="static"
-          onPointerDown={(e: any) => {
-            if (e.getLocalPosition && e.currentTarget.parent) {
+          onPointerDown={(e: FederatedPointerEvent) => {
+            const currentTarget = e.currentTarget as Container;
+            const parent = currentTarget.parent as Container | null;
+
+            if (e.getLocalPosition && parent) {
               // Get position relative to container (parent)
-              const pos = e.getLocalPosition(e.currentTarget.parent);
+              const pos = e.getLocalPosition(parent);
               updateValue(pos.x);
             }
           }}

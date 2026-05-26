@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { Graphics } from "pixi.js";
+import { FederatedPointerEvent, FederatedWheelEvent, Graphics } from "pixi.js";
 import { WINNING_NUMBERS } from "../../constants/winningNumbers";
 import PixiContainer from "../pixi/PixiContainer";
 import PixiNineSliceSprite from "../pixi/pixiNineSliceSprite";
@@ -53,7 +53,7 @@ const WinningNumberContainer = ({
   const contentOriginY = -stripHeight / 2 + verticalPadding;
 
   const onWheel = useCallback(
-    (e: any) => {
+    (e: FederatedWheelEvent) => {
       if (maxScroll <= 0) return;
       const dy = e.deltaY ?? 0;
       setScrollY((prev) => Math.max(0, Math.min(maxScroll, prev + dy)));
@@ -62,7 +62,7 @@ const WinningNumberContainer = ({
   );
 
   const onPointerDown = useCallback(
-    (e: any) => {
+    (e: FederatedPointerEvent) => {
       if (maxScroll <= 0) return;
       dragData.current.isDragging = true;
       dragData.current.startY = e.global.y;
@@ -72,7 +72,7 @@ const WinningNumberContainer = ({
   );
 
   const onPointerMove = useCallback(
-    (e: any) => {
+    (e: FederatedPointerEvent) => {
       if (!dragData.current.isDragging) return;
       const dy = e.global.y - dragData.current.startY;
       const next = dragData.current.startScrollY - dy;

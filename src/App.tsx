@@ -1,17 +1,30 @@
 import { Application } from "@pixi/react";
 import { useEffect, useState, useRef } from "react";
-import { loadAssets } from "./utils/assets";
+import { loadAssets, loadLoadingAssets } from "./utils/assets";
 import { useLayoutStore } from "./store/useLayoutStore";
 import PixiNavigation from "./navigation/PixiNavigation";
-import ResolutionIndicator from "./components/ui/ResolutionIndicator";
+import LoadingScreen from "./screen/LoadingScreen";
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
+  const [loadingAssetsReady, setLoadingAssetsReady] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const { updateLayout } = useLayoutStore();
   const resizeTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
-    loadAssets().then(() => setLoaded(true));
+    void (async () => {
+      try {
+        await loadLoadingAssets();
+        setLoadingAssetsReady(true);
+        await loadAssets();
+        setLoaded(true);
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : "Failed to load assets";
+        setLoadError(message);
+      }
+    })();
 
     // Handle orientation changes immediately (no debounce)
     const handleOrientationChange = () => {
@@ -72,6 +85,12 @@ export default function App() {
         resolution={window.devicePixelRatio || 1}
       >
         {loaded && <PixiNavigation />}
+        {!loaded && (
+          <LoadingScreen
+            loadingAssetsReady={loadingAssetsReady}
+            errorMessage={loadError}
+          />
+        )}
       </Application>
       {/* <ResolutionIndicator /> */}
     </>

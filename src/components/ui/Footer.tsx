@@ -34,7 +34,7 @@ const Footer = () => {
     if (infoVisible && volumeVisible) {
       setVolumeVisible(false);
     }
-  }, [infoVisible]);
+  }, [infoVisible, setVolumeVisible, volumeVisible]);
   const handleFooterLayout = useCallback(
     ({
       twoValueContainersTotalWidth,

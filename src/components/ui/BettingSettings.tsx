@@ -9,7 +9,7 @@ import { useEffect } from "react";
 const estimateTextWidth = (text: string, fontSize: number) =>
   text.length * fontSize * 0.6;
 
-export const getBettingSettingsLayoutValues = ({
+const getBettingSettingsLayoutValues = ({
   width,
   height,
   layoutMode,

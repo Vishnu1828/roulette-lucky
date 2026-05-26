@@ -1,5 +1,5 @@
 import { extend } from "@pixi/react";
-import { Sprite, Texture } from "pixi.js";
+import { FederatedPointerEvent, PointData, Sprite, Texture } from "pixi.js";
 
 extend({ Sprite });
 
@@ -9,7 +9,7 @@ type PixiSpriteProps = {
   y?: number;
   width?: number;
   height?: number;
-  anchor?: number | { x: number; y: number } | [number, number];
+  anchor?: number | PointData;
   angle?: number;
   rotation?: number;
   alpha?: number;
@@ -17,9 +17,9 @@ type PixiSpriteProps = {
   interactive?: boolean;
   cursor?: string;
   eventMode?: "none" | "passive" | "auto" | "static" | "dynamic";
-  onPointerDown?: (event: any) => void;
-  onPointerMove?: (event: any) => void;
-  onPointerTap?: (event: any) => void;
+  onPointerDown?: (event: FederatedPointerEvent) => void;
+  onPointerMove?: (event: FederatedPointerEvent) => void;
+  onPointerTap?: (event: FederatedPointerEvent) => void;
   scale?: number;
 };
 
@@ -50,7 +50,7 @@ const PixiSprite = ({
       y={y}
       width={width}
       height={height}
-      anchor={anchor as any}
+      anchor={anchor}
       angle={angle}
       rotation={rotation}
       alpha={alpha}

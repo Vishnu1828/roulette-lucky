@@ -46,6 +46,8 @@ type AssetPackManifest = {
 };
 
 let assetLoadPromise: Promise<void> | null = null;
+let manifestInitPromise: Promise<void> | null = null;
+let loadingBundleLoadPromise: Promise<void> | null = null;
 const loadedBitmapFontFamilies = new Set<string>();
 let loadedManifest: AssetPackManifest | null = null;
 let assetsVersion = 0;
@@ -96,48 +98,90 @@ function getTextureResolution(): 1 | 2 {
 }
 
 /**
- * Loads all assets from the manifest and handles font registration.
+ * Initializes Pixi assets with manifest and resolution preference.
+ */
+async function ensureAssetsInitialized() {
+  if (!manifestInitPromise) {
+    manifestInitPromise = (async () => {
+      const response = await fetch("/assets/assetPack.json");
+      const manifest = (await response.json()) as AssetPackManifest;
+      loadedManifest = manifest;
+
+      const resolution = getTextureResolution();
+      const resolutionLabel = resolution === 2 ? "4K (2x)" : "1080p (1x)";
+      const dpr = window.devicePixelRatio || 1;
+      const maxDim = Math.max(window.innerWidth, window.innerHeight);
+      const isMobile = maxDim < 1024;
+
+      await Assets.init({
+        manifest,
+        texturePreference: {
+          resolution,
+        },
+      });
+
+      console.log(
+        `[AssetLoader] Loading textures at ${resolutionLabel} resolution`,
+      );
+      console.log(
+        `[AssetLoader] Screen: ${window.innerWidth}×${window.innerHeight}px, DPR: ${dpr}x`,
+      );
+      console.log(
+        `[AssetLoader] Device type: ${isMobile ? "Mobile/Tablet" : "Desktop/Large tablet"} (${maxDim < 768 ? "Portrait mobile" : maxDim < 1024 ? "Landscape mobile/tablet" : "Desktop"})`,
+      );
+    })().catch((error) => {
+      manifestInitPromise = null;
+      throw error;
+    });
+  }
+
+  await manifestInitPromise;
+}
+
+/**
+ * Loads only the loading-screen bundle so startup visuals can show early.
+ */
+export async function loadLoadingAssets() {
+  if (!loadingBundleLoadPromise) {
+    loadingBundleLoadPromise = (async () => {
+      await ensureAssetsInitialized();
+
+      const bundles = loadedManifest?.bundles ?? [];
+      const loadingBundle = bundles.find((bundle) => bundle.name === "loading");
+
+      if (!loadingBundle) {
+        return;
+      }
+
+      await Assets.loadBundle(loadingBundle.name);
+      console.log("[AssetLoader] Preloaded loading bundle");
+    })().catch((error) => {
+      loadingBundleLoadPromise = null;
+      throw error;
+    });
+  }
+
+  await loadingBundleLoadPromise;
+}
+
+/**
+ * Loads all non-loading assets from the manifest and handles font registration.
  */
 export async function loadAssets() {
   if (!assetLoadPromise) {
     assetLoadPromise = (async () => {
       try {
-        const response = await fetch("/assets/assetPack.json");
-        const manifest = (await response.json()) as AssetPackManifest;
-        loadedManifest = manifest;
-        const resolution = getTextureResolution();
-        const resolutionLabel = resolution === 2 ? "4K (2x)" : "1080p (1x)";
+        await ensureAssetsInitialized();
 
-        await Assets.init({
-          manifest,
-          texturePreference: {
-            resolution,
-          },
-        });
-
-        const dpr = window.devicePixelRatio || 1;
-        const maxDim = Math.max(window.innerWidth, window.innerHeight);
-        const isMobile = maxDim < 1024;
-
-        console.log(
-          `[AssetLoader] Loading textures at ${resolutionLabel} resolution`,
-        );
-        console.log(
-          `[AssetLoader] Screen: ${window.innerWidth}×${window.innerHeight}px, DPR: ${dpr}x`,
-        );
-        console.log(
-          `[AssetLoader] Device type: ${isMobile ? "Mobile/Tablet" : "Desktop/Large tablet"} (${maxDim < 768 ? "Portrait mobile" : maxDim < 1024 ? "Landscape mobile/tablet" : "Desktop"})`,
-        );
-
-        const bundles = manifest.bundles ?? [];
+        const bundles = loadedManifest?.bundles ?? [];
 
         // Separate font bundles for special handling
         const fontBundles = bundles.filter((bundle) => bundle.name === "fonts");
         const nonFontBundles = bundles.filter(
-          (bundle) => bundle.name !== "fonts",
+          (bundle) => bundle.name !== "fonts" && bundle.name !== "loading",
         );
 
-        // Load all non-font bundles
+        // Load all non-font, non-loading bundles
         for (const bundle of nonFontBundles) {
           await Assets.loadBundle(bundle.name);
         }

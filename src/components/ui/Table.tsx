@@ -1,5 +1,5 @@
 import { FC, useCallback, useRef, useState } from "react";
-import { Graphics } from "pixi.js";
+import { FederatedPointerEvent, FederatedWheelEvent, Graphics } from "pixi.js";
 import PixiText from "../pixi/PixiText";
 
 type Column = {
@@ -68,7 +68,7 @@ const Table: FC<Props> = ({
   const maxScroll = Math.max(0, rowsTotalHeight - contentHeight);
 
   const onWheel = useCallback(
-    (e: any) => {
+    (e: FederatedWheelEvent) => {
       if (!height || maxScroll <= 0) return;
       const dy = e.deltaY;
       setScrollY((prev) => Math.max(0, Math.min(maxScroll, prev + dy)));
@@ -77,7 +77,7 @@ const Table: FC<Props> = ({
   );
 
   const onPointerDown = useCallback(
-    (e: any) => {
+    (e: FederatedPointerEvent) => {
       if (!height || maxScroll <= 0) return;
       dragData.current.isDragging = true;
       dragData.current.startY = e.global.y;
@@ -87,7 +87,7 @@ const Table: FC<Props> = ({
   );
 
   const onPointerMove = useCallback(
-    (e: any) => {
+    (e: FederatedPointerEvent) => {
       if (!dragData.current.isDragging) return;
       const dy = e.global.y - dragData.current.startY;
       setScrollY(
