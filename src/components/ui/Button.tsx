@@ -17,6 +17,10 @@ type Props = {
   texture: string;
 
   onClick?: () => void;
+  horizontalSlice?: number;
+  verticalSlice?: number;
+  onPointerDown?: () => void;
+  onPointerUp?: () => void;
 };
 
 const Button = ({
@@ -28,10 +32,13 @@ const Button = ({
   disabled = false,
   texture,
   onClick,
+  horizontalSlice = Math.max(6, Math.min(14, Math.floor(width / 2) - 1)),
+  verticalSlice = Math.max(6, Math.min(12, Math.floor(height / 2) - 1)),
+  onPointerDown,
+  onPointerUp,
 }: Props) => {
   const fontSize = Math.min(width * 0.15, 16);
-  const horizontalSlice = Math.max(6, Math.min(14, Math.floor(width / 2) - 1));
-  const verticalSlice = Math.max(6, Math.min(12, Math.floor(height / 2) - 1));
+
   const isInfoTabTexture = texture.startsWith("ui-info-header-");
 
   return (
@@ -46,6 +53,8 @@ const Button = ({
           eventMode={disabled ? "none" : "static"}
           cursor={disabled ? "default" : "pointer"}
           onPointerTap={onClick}
+          onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
         />
       ) : (
         <PixiNineSliceSprite
@@ -61,6 +70,8 @@ const Button = ({
           onPointerTap={onClick}
           eventMode={disabled ? "none" : "static"}
           cursor={disabled ? "default" : "pointer"}
+          onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
         />
       )}
 

@@ -1,20 +1,26 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-export type ScreenID = 'game';
-export type OverlayID = 'settings' | 'module' | 'info' | 'none';
+export type ScreenID = "game";
+export type OverlayID =
+  | "settings"
+  | "quit"
+  | "info"
+  | "inactive"
+  | "balance"
+  | "none";
 
 interface NavigationState {
-    currentScreen: ScreenID;
-    activeOverlay: OverlayID;
-    setScreen: (screen: ScreenID) => void;
-    showOverlay: (overlay: OverlayID) => void;
-    hideOverlay: () => void;
+  currentScreen: ScreenID;
+  activeOverlay: OverlayID;
+  setScreen: (screen: ScreenID) => void;
+  showOverlay: (overlay: OverlayID) => void;
+  hideOverlay: () => void;
 }
 
 export const useNavigationStore = create<NavigationState>((set) => ({
-    currentScreen: 'game',
-    activeOverlay: 'none',
-    setScreen: (screen) => set({ currentScreen: screen }),
-    showOverlay: (overlay) => set({ activeOverlay: overlay }),
-    hideOverlay: () => set({ activeOverlay: 'none' }),
+  currentScreen: "game",
+  activeOverlay: "none",
+  setScreen: (screen) => set({ currentScreen: screen }),
+  showOverlay: (overlay) => set({ activeOverlay: overlay }),
+  hideOverlay: () => set({ activeOverlay: "none" }),
 }));

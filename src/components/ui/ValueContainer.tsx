@@ -37,6 +37,7 @@ const ValueContainer = ({
   const labelY = 3;
   const valueY = isDesktop ? 22 : isMobileLandscape ? 18 : 16;
   const iconX = isDesktop ? 65 : 50;
+  console.log("ValueContainer render", { label, value, layoutMode });
 
   return (
     <PixiContainer x={x} y={y}>
@@ -63,7 +64,7 @@ const ValueContainer = ({
 
       {/* Bottom value */}
       <PixiBitmapText
-        text={value}
+        text={`$${value}`} // Ensure value is prefixed with $
         x={0}
         y={valueY}
         fontSize={valueFontSize}

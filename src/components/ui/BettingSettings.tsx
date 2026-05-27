@@ -5,6 +5,7 @@ import ValueContainer from "./ValueContainer";
 import SettingIconContainer from "./SettingIconContainer";
 import { LayoutMode } from "../../helper/layoutMode";
 import { useEffect } from "react";
+import { useWalletStore } from "../../store/useWalletStore";
 
 const estimateTextWidth = (text: string, fontSize: number) =>
   text.length * fontSize * 0.6;
@@ -19,8 +20,8 @@ const getBettingSettingsLayoutValues = ({
   width: number;
   height: number;
   layoutMode: LayoutMode;
-  balanceValue: string;
-  totalBetValue: string;
+  balanceValue: number;
+  totalBetValue: number;
 }) => {
   const isDesktop = layoutMode === "desktop";
   const isMobileLandscape = layoutMode === "mobile-landscape";
@@ -35,23 +36,41 @@ const getBettingSettingsLayoutValues = ({
 
   const iconSize = 14;
   const balanceIconX = isDesktop ? 65 : 50;
+  // Minimum container widths: wide enough to always show the label text
+  // "BALANCE" = 7 chars, "TOTAL BET" = 9 chars
+  const minBalanceContainerWidth =
+    estimateTextWidth("BALANCE", labelFontSize) + 16;
+  const minTotalBetContainerWidth =
+    estimateTextWidth("TOTAL BET", labelFontSize) + 16;
+  // Gap between the two value containers so they never collide
+  const containerGap = isDesktop ? 24 : 16;
 
-  const balanceValueWidth = estimateTextWidth(balanceValue, valueFontSize);
-  const totalBetValueWidth = estimateTextWidth(totalBetValue, valueFontSize);
+  const balanceValueWidth = estimateTextWidth(
+    String(balanceValue),
+    valueFontSize,
+  );
+  const totalBetValueWidth = estimateTextWidth(
+    String(totalBetValue),
+    valueFontSize,
+  );
 
   const balanceContainerWidth = Math.max(
     balanceValueWidth,
     balanceIconX + iconSize + 16,
+    minBalanceContainerWidth,
   );
-  const totalBetContainerWidth = totalBetValueWidth;
+  const totalBetContainerWidth = Math.max(
+    totalBetValueWidth,
+    minTotalBetContainerWidth,
+  );
   const twoValueContainersTotalWidth =
-    balanceContainerWidth + totalBetContainerWidth;
+    balanceContainerWidth + containerGap + totalBetContainerWidth;
   const settingIconSize = 32;
   const settingIconGap = 10;
   const settingIconContainerWidth = settingIconSize * 3 + settingIconGap * 2;
 
   const balanceX = leftMargin;
-  const totalBetX = balanceX + balanceContainerWidth;
+  const totalBetX = balanceX + balanceContainerWidth + containerGap;
   const settingIconX = width - rightMargin - settingIconContainerWidth;
   const settingIconY = (footerHeight - settingIconSize) / 2;
 
@@ -87,8 +106,10 @@ const BettingSettings = ({
   zIndex?: number;
 }) => {
   const { width, height, layoutMode } = useLayoutStore();
-  const balanceValue = "$100.00";
-  const totalBetValue = "$10.000";
+  const { balance, totalBet } = useWalletStore();
+  // Use whole numbers — bitmap font does not include a decimal point glyph
+  const balanceDisplay = String(Math.floor(balance));
+  const totalBetDisplay = String(Math.floor(totalBet));
 
   const {
     footerHeight,
@@ -106,9 +127,8 @@ const BettingSettings = ({
     width,
     height,
     layoutMode,
-    balanceValue,
-    totalBetValue,
-    // Not needed here since we're using absolute positioning
+    balanceValue: Math.floor(balance),
+    totalBetValue: Math.floor(totalBet),
   });
 
   useEffect(() => {
@@ -141,7 +161,7 @@ const BettingSettings = ({
         x={balanceX}
         y={verticalPadding}
         label="BALANCE"
-        value={balanceValue}
+        value={balanceDisplay}
         showIcon
         valueFontSize={valueFontSize}
         iconSize={iconSize}
@@ -152,7 +172,7 @@ const BettingSettings = ({
         x={totalBetX}
         y={verticalPadding}
         label="TOTAL BET"
-        value={totalBetValue}
+        value={totalBetDisplay}
         valueFontSize={valueFontSize}
         labelFontSize={labelFontSize}
       />

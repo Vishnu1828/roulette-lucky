@@ -9,9 +9,9 @@ import ChipAndSpinInterface from "./ChipAndSpinInterface";
 
 const Footer = () => {
   const { width, height, layoutMode } = useLayoutStore();
-  const [chipInterfaceLayout, setChipInterfaceLayout] = useState({
-    width: 0,
-    x: 0,
+  const [chipBoundaries, setChipBoundaries] = useState({
+    leftBoundary: 0,
+    rightBoundary: 0,
   });
 
   const { sfxVolume, setSfxVolume } = useVolumeSettingStore();
@@ -43,32 +43,24 @@ const Footer = () => {
       twoValueContainersTotalWidth: number;
       settingIconContainerWidth: number;
     }) => {
-      if (isMobilePortrait) {
-        setChipInterfaceLayout((prev) =>
-          prev.width === width && prev.x === 0 ? prev : { width, x: 0 },
-        );
-        return;
-      }
+      // Minimum gap between the chip bar and the left/right content areas
+      const minGap = isDesktop ? 24 : 16;
 
-      const slotPadding = 24;
-      const usedWidth =
-        twoValueContainersTotalWidth + settingIconContainerWidth;
-      const availableSlotWidth = Math.max(
-        0,
-        width - usedWidth - slotPadding * 2,
-      );
-      const nextX = twoValueContainersTotalWidth + slotPadding;
+      const nextLeft = isMobilePortrait
+        ? 0
+        : twoValueContainersTotalWidth + minGap;
 
-      setChipInterfaceLayout((prev) =>
-        prev.width === availableSlotWidth && prev.x === nextX
+      const nextRight = isMobilePortrait
+        ? width
+        : width - settingIconContainerWidth - minGap;
+
+      setChipBoundaries((prev) =>
+        prev.leftBoundary === nextLeft && prev.rightBoundary === nextRight
           ? prev
-          : {
-              width: availableSlotWidth,
-              x: nextX,
-            },
+          : { leftBoundary: nextLeft, rightBoundary: nextRight },
       );
     },
-    [isMobilePortrait, width],
+    [isMobilePortrait, isDesktop, width],
   );
   return (
     <PixiContainer x={0} y={0} sortableChildren={true}>
@@ -77,8 +69,9 @@ const Footer = () => {
         zIndex={isMobilePortrait ? 2 : 0}
       />
       <ChipAndSpinInterface
-        width={chipInterfaceLayout.width}
-        x={chipInterfaceLayout.x}
+        width={width}
+        leftBoundary={chipBoundaries.leftBoundary}
+        rightBoundary={chipBoundaries.rightBoundary}
         zIndex={1}
       />
       {volumeVisible && (

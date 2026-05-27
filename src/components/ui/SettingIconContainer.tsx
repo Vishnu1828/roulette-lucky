@@ -74,7 +74,7 @@ const SettingIconContainer = ({ x = 0, y = 0 }: Props) => {
         cursor="pointer"
         eventMode="static"
         onPointerDown={() => {
-          console.log("Exit button tapped");
+          showOverlay("quit");
         }}
       />
     </PixiContainer>

@@ -20,6 +20,7 @@ type PixiSpriteProps = {
   onPointerDown?: (event: FederatedPointerEvent) => void;
   onPointerMove?: (event: FederatedPointerEvent) => void;
   onPointerTap?: (event: FederatedPointerEvent) => void;
+  onPointerUp?: (event: FederatedPointerEvent) => void;
   scale?: number;
 };
 
@@ -40,6 +41,7 @@ const PixiSprite = ({
   onPointerDown,
   onPointerMove,
   onPointerTap,
+  onPointerUp,
   scale,
 }: PixiSpriteProps) => {
   if (!texture) return null;
@@ -62,6 +64,7 @@ const PixiSprite = ({
       onPointerMove={onPointerMove}
       scale={scale}
       onPointerTap={onPointerTap}
+      onPointerUp={onPointerUp}
     />
   );
 };

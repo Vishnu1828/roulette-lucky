@@ -7,38 +7,53 @@ import ChipPanel from "./ChipPanel";
 import { BITMAP_FONT_FAMILY } from "../../utils/assets";
 
 type Props = {
+  // Total screen width — used for centering. Bar size is driven by footerHeight,
+  // NOT by this value, so it never shrinks when balance/totalBet grow.
   width: number;
-  x: number;
+  // Left boundary where safe content starts (after balance + totalBet area)
+  leftBoundary: number;
+  // Right boundary where safe content ends (before settings icons area)
+  rightBoundary: number;
   zIndex?: number;
 };
 
-const ChipAndSpinInterface = ({ width, x, zIndex = 1 }: Props) => {
+const ChipAndSpinInterface = ({
+  width,
+  leftBoundary,
+  rightBoundary,
+  zIndex = 1,
+}: Props) => {
   const { layoutMode, height } = useLayoutStore();
   const isMobilePortrait = layoutMode === "mobile-portrait";
   const isMobileLandscape = layoutMode === "mobile-landscape";
   const desktopBarAspectRatio = 161 / 1108;
   const mobilePortraitBarAspectRatio = 207 / 392;
 
-  const availableWidth = Math.max(0, width);
-
+  // Bar width is driven by the full screen width (fixed fraction), so it
+  // never changes when balance/totalBet content grows or shrinks.
+  // Bar height derives from barWidth via the image aspect ratio.
+  const maxBarWidth = isMobileLandscape ? 760 : 900;
   const barWidth = isMobilePortrait
-    ? availableWidth
-    : isMobileLandscape
-      ? Math.min(availableWidth * 0.9, 760)
-      : Math.min(availableWidth, 900);
+    ? width
+    : Math.min(width * 0.55, maxBarWidth);
 
   const barHeight = isMobilePortrait
     ? barWidth * mobilePortraitBarAspectRatio
     : barWidth * desktopBarAspectRatio;
 
+  // Center the bar in the safe zone between leftBoundary and rightBoundary.
+  // If the bar is wider than the safe zone it simply overflows — that is
+  // intentional; the bar visually covers the footer and extends over content.
+  const safeZoneStart = isMobilePortrait ? 0 : leftBoundary;
+  const safeZoneEnd = isMobilePortrait ? width : rightBoundary;
+  const safeZoneWidth = Math.max(0, safeZoneEnd - safeZoneStart);
+  const barX = safeZoneStart + (safeZoneWidth - barWidth) / 2;
+
   const containerY = height - barHeight;
-  const barX = isMobilePortrait
-    ? 0
-    : Math.max(0, (availableWidth - barWidth) / 2);
   const innerX = barX;
   const innerY = 0;
 
-  if (availableWidth <= 0 || barHeight <= 0) {
+  if (barHeight <= 0 || barWidth <= 0) {
     return null;
   }
 
@@ -80,7 +95,7 @@ const ChipAndSpinInterface = ({ width, x, zIndex = 1 }: Props) => {
     ? barHeight * 0.01
     : middleRowY - chipPanelHeight * 0.75;
   return (
-    <PixiContainer y={containerY} x={x} zIndex={zIndex}>
+    <PixiContainer y={containerY} x={0} zIndex={zIndex}>
       <PixiSprite
         texture={Assets.get(
           isMobilePortrait ? "ui-bar-mobile-portrait" : "ui-bar-desktop",
