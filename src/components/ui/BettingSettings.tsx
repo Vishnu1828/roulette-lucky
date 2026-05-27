@@ -27,8 +27,8 @@ const getBettingSettingsLayoutValues = ({
   const isMobileLandscape = layoutMode === "mobile-landscape";
 
   const footerHeight = Math.max(48, height * 0.06);
-  const leftMargin = isDesktop ? width * 0.02 : isMobileLandscape ? 30 : 20;
-  const rightMargin = isDesktop ? width * 0.02 : 12;
+  const leftMargin = isDesktop ? width * 0.02 : isMobileLandscape ? 16 : 20;
+  const rightMargin = isDesktop ? width * 0.02 : 2;
   const verticalPadding = isDesktop ? 4 : isMobileLandscape ? 3 : 5;
 
   const valueFontSize = isDesktop ? 18 : 16;
@@ -43,7 +43,7 @@ const getBettingSettingsLayoutValues = ({
   const minTotalBetContainerWidth =
     estimateTextWidth("TOTAL BET", labelFontSize) + 16;
   // Gap between the two value containers so they never collide
-  const containerGap = isDesktop ? 24 : 16;
+  const containerGap = isDesktop ? 24 : 6;
 
   const balanceValueWidth = estimateTextWidth(
     String(balanceValue),

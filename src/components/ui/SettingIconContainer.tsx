@@ -3,6 +3,7 @@ import PixiContainer from "../pixi/PixiContainer";
 import PixiSprite from "../pixi/PixiSprite";
 import { useNavigationStore } from "../../store/useNavigationStore";
 import { useSettingStore } from "../../store/useSettingStore";
+import { useLayoutStore } from "../../store/useLayoutStore";
 
 type Props = {
   x?: number;
@@ -10,10 +11,11 @@ type Props = {
 };
 
 const SettingIconContainer = ({ x = 0, y = 0 }: Props) => {
+  const { layoutMode } = useLayoutStore();
   const { volumeVisible, setVolumeVisible, infoVisible, setInfoVisible } =
     useSettingStore();
   const iconSize = 32;
-  const iconGap = 10;
+  const iconGap = layoutMode === "desktop" ? 12 : 6;
   const { showOverlay } = useNavigationStore();
 
   // Calculate positions for each icon
