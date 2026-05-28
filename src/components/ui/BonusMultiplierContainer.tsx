@@ -8,9 +8,12 @@ const HEADER_BOTTOM_MOBILE = 24 + 32 / 2; // 40
 const HEADER_GAP = 32;
 const SIDE_PADDING = 32;
 const TABLE_GAP = 8;
+const clamp = (value: number, min: number, max: number) =>
+  Math.max(min, Math.min(max, value));
 // Badge size caps per layout
-const MAX_BADGE_MOBILE = 75;
-const MAX_BADGE_DESKTOP = 150;
+const MAX_BADGE_MOBILE = 92;
+const MAX_BADGE_MOBILE_PORTRAIT = 112;
+const MAX_BADGE_DESKTOP = 180;
 
 // Sample data — replace with real game data as needed
 const MULTIPLIERS: {
@@ -34,7 +37,7 @@ const BonusMultiplierContainer = () => {
   const isMobilePortrait = layoutMode === "mobile-portrait";
   const isMobileLandscape = layoutMode === "mobile-landscape";
   const isDesktop = layoutMode === "desktop";
-  const isMobile = isMobilePortrait || isMobileLandscape;
+  void isMobileLandscape;
 
   // --- Available game-area bounds ---
   const headerBottom = isDesktop ? HEADER_BOTTOM_DESKTOP : HEADER_BOTTOM_MOBILE;
@@ -44,17 +47,43 @@ const BonusMultiplierContainer = () => {
   // In bonus state chip bar is hidden, only BettingSettings footer remains
   const footerTop = height - bettingSettingsHeight - TABLE_GAP;
 
-  // --- Badge size: fit 3 across in row 1, capped by max ---
-  // In bonus state there is no wheel, so use the full game area
-  // Portrait: full width below header (strip above footer)
-  // Landscape/Desktop: full width from side padding
+  // Left panel area that complements RouletteTable's right panel.
   const areaX = SIDE_PADDING;
-  const areaY = isMobilePortrait ? gameAreaTop + TABLE_GAP : height * 0.25;
-  const areaW = width - SIDE_PADDING * 2;
-  const areaH = footerTop - areaY;
+  let areaY = gameAreaTop + TABLE_GAP;
+  let areaW = width - SIDE_PADDING * 2;
+  let areaH = footerTop - areaY;
+
+  if (isMobilePortrait) {
+    // Place the portrait bonus block slightly lower than default top.
+    areaY = gameAreaTop + 28;
+    const tableW = Math.round(clamp(width * 0.46, 200, 280));
+    const tableH = Math.round(clamp(tableW * 1.72, 320, 500));
+    const preferredCY = gameAreaTop + (footerTop - gameAreaTop) * 0.72;
+    const footerSafeCY = footerTop - tableH / 2 - 10;
+    const tableCY = Math.min(preferredCY, footerSafeCY);
+    const tableTop = tableCY - tableH / 2;
+    areaH = Math.max(0, tableTop - 16 - areaY);
+  } else {
+    const rightMargin = isDesktop ? 24 : 14;
+    const tableW = Math.round(
+      clamp(
+        width * (isDesktop ? 0.37 : 0.39),
+        isDesktop ? 400 : 250,
+        isDesktop ? 560 : 320,
+      ),
+    );
+    const tableLeft = width - rightMargin - tableW;
+    areaW = Math.max(0, tableLeft - 20 - areaX);
+    areaY = gameAreaTop + 12;
+    areaH = footerTop - areaY;
+  }
 
   // --- Badge size: fit 3 across in row 1, capped by max ---
-  const maxBadge = isMobile ? MAX_BADGE_MOBILE : MAX_BADGE_DESKTOP;
+  const maxBadge = isDesktop
+    ? MAX_BADGE_DESKTOP
+    : isMobilePortrait
+      ? MAX_BADGE_MOBILE_PORTRAIT
+      : MAX_BADGE_MOBILE;
   // Each badge also renders a multiplier label below (≈ size * 0.1 * 1.2 * 2 ≈ size * 0.35 extra)
   const badgeTotalH = (size: number) => size + Math.round(size * 0.1) * 1.4;
 
@@ -68,18 +97,17 @@ const BonusMultiplierContainer = () => {
   // --- Grid positions (centre-based, relative to container origin) ---
   // Portrait: rows centred across areaW
   // Landscape/Desktop: rows left-aligned
-  const row1Y = totalH / 2;
+  const usedHeight = totalH * 2 + ITEM_GAP;
+  const verticalOffset = isDesktop ? Math.max(0, (areaH - usedHeight) / 2) : 0;
+
+  const row1Y = verticalOffset + totalH / 2;
   const row1TotalW = badgeSize * 3 + ITEM_GAP * 2;
-  const row1StartX = isMobilePortrait
-    ? (areaW - row1TotalW) / 2 + badgeSize / 2
-    : badgeSize / 2;
+  const row1StartX = (areaW - row1TotalW) / 2 + badgeSize / 2;
 
   // Row 2: 2 items
-  const row2Y = totalH + ITEM_GAP + totalH / 2;
+  const row2Y = verticalOffset + totalH + ITEM_GAP + totalH / 2;
   const row2TotalW = badgeSize * 2 + ITEM_GAP;
-  const row2StartX = isMobilePortrait
-    ? (areaW - row2TotalW) / 2 + badgeSize / 2
-    : badgeSize / 2;
+  const row2StartX = (areaW - row2TotalW) / 2 + badgeSize / 2;
 
   const positions = [
     { x: row1StartX, y: row1Y }, // 1
