@@ -106,7 +106,7 @@ const WinningNumberContainer = ({
   return (
     <PixiContainer x={x} y={y}>
       <PixiNineSliceSprite
-        texture="recent-winner-assets-strip"
+        texture="recent-winner-strip"
         width={stripWidth}
         height={stripHeight}
         anchor={0.5}

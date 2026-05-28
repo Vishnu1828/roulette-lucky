@@ -25,15 +25,15 @@ const WinningNumber = ({
   const winningNumberTexture =
     winNumberData.number === 0
       ? winNumberData?.latest
-        ? "recent-winner-assets-latest-green"
-        : "recent-winner-assets-green"
+        ? "recent-winner-latest-green"
+        : "recent-winner-green"
       : FindNumberColor(winNumberData?.number)
         ? winNumberData?.latest
-          ? "recent-winner-assets-latest-red"
-          : "recent-winner-assets-red"
+          ? "recent-winner-latest-red"
+          : "recent-winner-red"
         : winNumberData?.latest
-          ? "recent-winner-assets-latest-black"
-          : "recent-winner-assets-black";
+          ? "recent-winner-latest-black"
+          : "recent-winner-black";
 
   const multiplierHeight = size * (21 / 80);
   const multiplierText = winNumberData.multiplier?.trim();
@@ -43,7 +43,7 @@ const WinningNumber = ({
     <PixiContainer x={x} y={y} sortableChildren={true}>
       {multiplierText && (
         <LabelSprite
-          texture={Assets.get("recent-winner-assets-multiplier")}
+          texture={Assets.get("recent-winner-multiplier")}
           value={multiplierText}
           width={size}
           height={multiplierHeight}
