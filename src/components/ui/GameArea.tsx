@@ -1,5 +1,6 @@
 import { useLayoutStore } from "../../store/useLayoutStore";
 import PixiContainer from "../pixi/PixiContainer";
+import RouletteWheel from "./RouletteWheel";
 import WinningNumberContainer from "./WinningNumberContainer";
 
 const GameArea = () => {
@@ -16,6 +17,7 @@ const GameArea = () => {
 
   return (
     <PixiContainer x={0} y={0}>
+      <RouletteWheel />
       <WinningNumberContainer
         x={winningPanelX}
         y={winningPanelY}

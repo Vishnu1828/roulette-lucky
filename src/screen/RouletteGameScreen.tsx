@@ -10,7 +10,9 @@ const RouletteGameScreen = () => {
   const { balance } = useWalletStore();
   const { showOverlay } = useNavigationStore();
   useEffect(() => {
-    showOverlay("balance");
+    if (balance === 0) {
+      showOverlay("balance");
+    }
   }, [balance]);
   return (
     <>

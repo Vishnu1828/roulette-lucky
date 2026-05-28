@@ -5,7 +5,7 @@ import PixiText from "../pixi/PixiText";
 const Header = ({ text }: { text: string }) => {
   const { width, layoutMode } = useLayoutStore();
   const fontSize = layoutMode === "desktop" ? 60 : 32;
-  const y = 42;
+  const y = layoutMode === "desktop" ? 42 : 24;
   return (
     <PixiContainer x={width / 2} y={y}>
       <PixiText
