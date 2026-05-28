@@ -16,6 +16,9 @@ type GameAnimationProps = {
   animationSpeed?: number;
   restartKey?: string | number;
   tint?: number;
+  onComplete?: () => void;
+  /** Called every frame change with (currentFrame, totalFrames) */
+  onFrameChange?: (currentFrame: number, totalFrames: number) => void;
 };
 
 type SpriteData = {
@@ -43,6 +46,8 @@ const GameAnimation = ({
   animationSpeed = 0.45,
   restartKey,
   tint = 0xffffff,
+  onComplete,
+  onFrameChange,
 }: GameAnimationProps) => {
   const spriteRef = useRef<AnimatedSprite | null>(null);
 
@@ -87,6 +92,17 @@ const GameAnimation = ({
     sprite.animationSpeed = animationSpeed;
     sprite.gotoAndPlay(0);
   }, [animationSpeed, animationTextures, loop, restartKey]);
+
+  // Keep onComplete / onFrameChange up-to-date via ref so they never trigger a replay
+  useEffect(() => {
+    const sprite = spriteRef.current;
+    if (sprite) {
+      sprite.onComplete = onComplete;
+      sprite.onFrameChange = onFrameChange
+        ? (frame: number) => onFrameChange(frame, sprite.totalFrames)
+        : undefined;
+    }
+  }, [onComplete, onFrameChange]);
 
   if (animationTextures.length === 0) {
     return null;

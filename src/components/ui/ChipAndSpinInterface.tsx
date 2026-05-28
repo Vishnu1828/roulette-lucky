@@ -5,6 +5,7 @@ import { Assets } from "pixi.js";
 import LabelSprite from "./LabelSprite";
 import ChipPanel from "./ChipPanel";
 import { BITMAP_FONT_FAMILY } from "../../utils/assets";
+import { useGameStateStore } from "../../store/useGameStateStore";
 
 type Props = {
   // Total screen width — used for centering. Bar size is driven by footerHeight,
@@ -24,6 +25,7 @@ const ChipAndSpinInterface = ({
   zIndex = 1,
 }: Props) => {
   const { layoutMode, height } = useLayoutStore();
+  const { setGameState } = useGameStateStore();
   const isMobilePortrait = layoutMode === "mobile-portrait";
   const isMobileLandscape = layoutMode === "mobile-landscape";
   const desktopBarAspectRatio = 161 / 1108;
@@ -173,6 +175,9 @@ const ChipAndSpinInterface = ({
               isMobilePortrait ? "mobile" : "desktop"
             ]
           }
+          onPointerTap={() => {
+            setGameState("bonus");
+          }}
         />
       </PixiContainer>
     </PixiContainer>

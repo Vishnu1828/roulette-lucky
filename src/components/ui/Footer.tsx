@@ -6,9 +6,11 @@ import PixiContainer from "../pixi/PixiContainer";
 import BettingSettings from "./BettingSettings";
 import { VolumeSlider } from "./VolumeSlider";
 import ChipAndSpinInterface from "./ChipAndSpinInterface";
+import { useGameStateStore } from "../../store/useGameStateStore";
 
 const Footer = () => {
   const { width, height, layoutMode } = useLayoutStore();
+  const { gameState } = useGameStateStore();
   const [chipBoundaries, setChipBoundaries] = useState({
     leftBoundary: 0,
     rightBoundary: 0,
@@ -68,12 +70,14 @@ const Footer = () => {
         handleFooterLayout={handleFooterLayout}
         zIndex={isMobilePortrait ? 2 : 0}
       />
-      <ChipAndSpinInterface
-        width={width}
-        leftBoundary={chipBoundaries.leftBoundary}
-        rightBoundary={chipBoundaries.rightBoundary}
-        zIndex={1}
-      />
+      {gameState === "betting" && (
+        <ChipAndSpinInterface
+          width={width}
+          leftBoundary={chipBoundaries.leftBoundary}
+          rightBoundary={chipBoundaries.rightBoundary}
+          zIndex={1}
+        />
+      )}
       {volumeVisible && (
         <VolumeSlider
           x={sliderX}

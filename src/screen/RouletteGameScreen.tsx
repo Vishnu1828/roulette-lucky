@@ -17,7 +17,7 @@ const RouletteGameScreen = () => {
   return (
     <>
       <RouletteBackground />
-      <Header text="PLACE YOUR BET!" />
+      <Header />
       <GameArea />
       <Footer />
     </>
