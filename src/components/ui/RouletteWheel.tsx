@@ -75,7 +75,7 @@ const RouletteWheel = () => {
     const leftAreaX = SIDE_PADDING;
     const leftAreaW = Math.max(0, tableLeft - 20 - leftAreaX);
     wheelX = leftAreaX + leftAreaW / 2;
-    wheelY = gameAreaTop + (footerTop - gameAreaTop) * 0.5;
+    wheelY = gameAreaTop + (footerTop - gameAreaTop) * 0.45;
   }
 
   return (

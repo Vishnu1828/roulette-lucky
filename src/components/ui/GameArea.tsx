@@ -53,8 +53,8 @@ const GameArea = () => {
 
   return (
     <PixiContainer x={0} y={0}>
-      {gameState === "spinning" && <RouletteWheel />}
-      {gameState === "bonus" && <BonusMultiplierContainer />}
+      {gameState === "bonus" && <RouletteWheel />}
+      {/* {gameState === "bonus" && <BonusMultiplierContainer />} */}
       {gameState === "betting" && (
         <WinningNumberContainer
           x={winningPanelX}
