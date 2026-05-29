@@ -16,6 +16,8 @@ type PixiGraphicProps = {
   onPointerMove?: (e: FederatedPointerEvent) => void;
   onPointerUp?: (e: FederatedPointerEvent) => void;
   onPointerTap?: (e: FederatedPointerEvent) => void;
+  onPointerEnter?: (e: FederatedPointerEvent) => void;
+  onPointerLeave?: (e: FederatedPointerEvent) => void;
 };
 
 export function PixiGraphic({
@@ -29,6 +31,8 @@ export function PixiGraphic({
   onPointerMove,
   onPointerUp,
   onPointerTap,
+  onPointerEnter,
+  onPointerLeave,
 }: PixiGraphicProps) {
   const drawCallback = useCallback(
     (g: Graphics) => {
@@ -50,6 +54,8 @@ export function PixiGraphic({
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerTap={onPointerTap}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
     />
   );
 }
