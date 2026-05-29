@@ -11,7 +11,7 @@ const TABLE_GAP = 8;
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
 
-const MAX_WHEEL_MOBILE_PORTRAIT = 310;
+const MAX_WHEEL_MOBILE_PORTRAIT = 290;
 const MAX_WHEEL_MOBILE_LANDSCAPE = 310;
 const MAX_WHEEL_DESKTOP = 600;
 

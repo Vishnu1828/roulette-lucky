@@ -11,7 +11,7 @@ const TABLE_GAP = 8;
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
 // Badge size caps per layout
-const MAX_BADGE_MOBILE = 92;
+const MAX_BADGE_MOBILE = 100;
 const MAX_BADGE_MOBILE_PORTRAIT = 112;
 const MAX_BADGE_DESKTOP = 180;
 

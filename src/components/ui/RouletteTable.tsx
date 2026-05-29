@@ -10,7 +10,7 @@ import { useGameStateStore } from "../../store/useGameStateStore";
 // Keep in sync with Header.tsx and RouletteWheel.tsx
 const HEADER_BOTTOM_DESKTOP = 42 + 60 / 2;
 const HEADER_BOTTOM_MOBILE = 24 + 32 / 2;
-const HEADER_GAP = 32;
+const HEADER_GAP = 8;
 const SIDE_PADDING = 12;
 const TABLE_GAP = 8;
 
@@ -96,22 +96,23 @@ const RouletteTable = () => {
     if (isMobilePortrait) {
       // Portrait: keep table clear in lower area and never overlap footer.
       tableW = Math.round(clamp(width * 0.46, 200, 280));
-      tableH = Math.round(clamp(tableW * 1.72, 320, 500));
+      tableH = Math.round(clamp(tableW * 0.9, 300, 500));
       tableCX = width / 2;
       const preferredCY = gameAreaTop + (footerTop - gameAreaTop) * 0.72;
-      const footerSafeCY = footerTop - tableH / 2 - 10;
+      const footerSafeCY = footerTop - tableH / 2;
       tableCY = Math.min(preferredCY, footerSafeCY);
     } else {
       // Landscape/Desktop: fixed right panel, shared with bonus/spinning layouts.
       const rightMargin = isDesktop ? 24 : 14;
       tableW = Math.round(
         clamp(
-          width * (isDesktop ? 0.37 : 0.39),
-          isDesktop ? 400 : 250,
-          isDesktop ? 560 : 320,
+          width * (isDesktop ? 0.6 : 0.39),
+          isDesktop ? 800 : 250,
+          isDesktop ? 800 : 320,
         ),
       );
-      tableH = Math.round(tableW * 0.39);
+
+      tableH = Math.round(tableW * 0.45);
       tableCX = width - rightMargin - tableW / 2;
       tableCY = gameAreaCenterY;
     }

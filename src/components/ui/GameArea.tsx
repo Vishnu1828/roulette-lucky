@@ -38,6 +38,7 @@ const GameArea = () => {
     ? barWidth * BAR_ASPECT_PORTRAIT
     : barWidth * BAR_ASPECT_LANDSCAPE;
   const footerTop = height - barHeight - TABLE_GAP;
+  const bettingTableHeight = footerTop - gameAreaTop - TABLE_GAP;
 
   // Vertical centre of the available game area — used for all non-portrait layouts
   const gameAreaCenterY = (gameAreaTop + footerTop) / 2;
@@ -45,7 +46,11 @@ const GameArea = () => {
   // --- WinningNumberContainer ---
   const rightPadding = isDesktop ? 24 : 14;
   const winningPanelWidth = 50;
-  const winningPanelHeight = isDesktop ? 300 : isMobilePortrait ? 250 : 230;
+  const winningPanelHeight = isDesktop
+    ? 300
+    : isMobilePortrait
+      ? 250
+      : Math.max(0, bettingTableHeight);
 
   const winningPanelX = width - rightPadding - winningPanelWidth / 2;
   // Mobile landscape: share the same vertical centre as RouletteTable so they sit in the same row
@@ -53,8 +58,8 @@ const GameArea = () => {
 
   return (
     <PixiContainer x={0} y={0}>
-      {gameState === "bonus" && <RouletteWheel />}
-      {/* {gameState === "bonus" && <BonusMultiplierContainer />} */}
+      {gameState === "spinning" && <RouletteWheel />}
+      {gameState === "bonus" && <BonusMultiplierContainer />}
       {gameState === "betting" && (
         <WinningNumberContainer
           x={winningPanelX}

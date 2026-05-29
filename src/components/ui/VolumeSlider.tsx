@@ -42,7 +42,7 @@ export function VolumeSlider({
   // Spacing - measured from texture
   const leftPadding = isDesktop ? 31 : 26;
   const rightPadding = isDesktop ? 33 : 28;
-  const iconToBarGap = isDesktop ? 17 : 14;
+  const iconToBarGap = isDesktop ? 22 : 20;
 
   // Calculate bar dimensions based on container
   const barWidth =
@@ -108,7 +108,9 @@ export function VolumeSlider({
 
   // Load textures
   const bgTexture = Assets.get("ui-sound-slider-bg");
-  const iconTexture = Assets.get("ui-sound-icon");
+  const iconTexture = Assets.get(
+    currentValue === 0 ? "ui-sound-off" : "ui-sound-icon",
+  );
   const barTexture = Assets.get("ui-sound-bar");
   const barFilledTexture = Assets.get("ui-sound-bar-filled");
   const knobTexture = Assets.get("ui-sound-knob");
@@ -139,6 +141,14 @@ export function VolumeSlider({
         width={iconWidth}
         height={iconHeight}
         anchor={0.5}
+        interactive={true}
+        onPointerTap={() => {
+          if (currentValue !== 0) {
+            setCurrentValue(0);
+          } else {
+            setCurrentValue(100);
+          }
+        }}
       />
 
       {/* Base bar (unfilled) - click to jump to position */}

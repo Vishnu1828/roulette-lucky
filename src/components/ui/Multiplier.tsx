@@ -107,7 +107,7 @@ const Multiplier = ({
 
   const entranceKeyword = MULTIPLIER_KEYWORDS[multiplier];
   const numberFontSize = Math.round(size * 0.32);
-  const multiplierFontSize = Math.round(size * 0.1);
+  const multiplierFontSize = Math.round(size * 0.15);
   const multiplierLabelY = size / 2 + multiplierFontSize * 0.2;
 
   return (

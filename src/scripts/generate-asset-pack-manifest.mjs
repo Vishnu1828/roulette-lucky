@@ -257,6 +257,4 @@ export async function generateAssetPackManifest() {
     manifestPath,
     JSON.stringify({ bundles: finalBundles }, null, 2),
   );
-
-  console.log(`Manifest generated at ${manifestPath}`);
 }

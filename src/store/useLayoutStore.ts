@@ -25,7 +25,6 @@ export const useLayoutStore = create<LayoutState>((set) => ({
         state.height !== height ||
         state.layoutMode !== layoutMode
       ) {
-        console.log(`[Layout] Updated: ${width}×${height} (${layoutMode})`);
         return { width, height, layoutMode };
       }
       return state;
