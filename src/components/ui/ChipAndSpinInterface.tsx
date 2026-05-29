@@ -7,7 +7,6 @@ import ChipPanel from "./ChipPanel";
 import { BITMAP_FONT_FAMILY } from "../../utils/assets";
 import { useGameStateStore } from "../../store/useGameStateStore";
 import { useBetStore } from "../../store/useBetStore";
-import { useWalletStore } from "../../store/useWalletStore";
 import type { PlacedBet } from "../../types/rouletteBetting";
 
 type Props = {
@@ -29,8 +28,7 @@ const ChipAndSpinInterface = ({
 }: Props) => {
   const { layoutMode, height } = useLayoutStore();
   const { setGameState } = useGameStateStore();
-  const { setPlacedBets } = useBetStore();
-  const { setTotalBet } = useWalletStore();
+  const { setPlacedBets, undoLastBet, clearBets, doubleBets } = useBetStore();
   const isMobilePortrait = layoutMode === "mobile-portrait";
   const isMobileLandscape = layoutMode === "mobile-landscape";
   const desktopBarAspectRatio = 161 / 1108;
@@ -122,6 +120,7 @@ const ChipAndSpinInterface = ({
           interactive
           cursor="pointer"
           eventMode="static"
+          onPointerTap={() => clearBets()}
         />
         <PixiSprite
           texture={Assets.get("ui-undo-button-idle")}
@@ -133,6 +132,7 @@ const ChipAndSpinInterface = ({
           interactive
           cursor="pointer"
           eventMode="static"
+          onPointerTap={() => undoLastBet()}
         />
         <ChipPanel
           x={chipPanelX}
@@ -151,6 +151,7 @@ const ChipAndSpinInterface = ({
           interactive
           cursor="pointer"
           eventMode="static"
+          onPointerTap={() => doubleBets()}
         />
         <PixiSprite
           texture={Assets.get("ui-repeat-button-idle")}
@@ -210,13 +211,7 @@ const ChipAndSpinInterface = ({
               },
             ];
 
-            const nextBets: Record<string, PlacedBet> = {};
-            bets.forEach((b) => {
-              nextBets[b.spotKey] = b;
-            });
-
-            setPlacedBets(nextBets);
-            setTotalBet(bets.reduce((acc, b) => acc + b.amount, 0));
+            setPlacedBets(bets);
           }}
         />
 

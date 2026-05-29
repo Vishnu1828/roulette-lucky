@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PixiContainer from "../pixi/PixiContainer";
 import LabelSprite from "./LabelSprite";
 import TableCell from "./TableCell";
@@ -11,11 +11,7 @@ import { useGameStateStore } from "../../store/useGameStateStore";
 import { useChipStore } from "../../store/useChipStore";
 import { useBetStore } from "../../store/useBetStore";
 import { useWalletStore } from "../../store/useWalletStore";
-import {
-  getChipTexture,
-  addChipToStack,
-  sumAmount,
-} from "../../constants/rouletteBetting";
+import { getChipTexture } from "../../constants/rouletteBetting";
 import { buildRouletteBetZones } from "../../utils/rouletteBetZones";
 import type { RouletteBetZone, PlacedBet } from "../../types/rouletteBetting";
 
@@ -138,14 +134,15 @@ const RouletteTable = () => {
   const { setTotalBet } = useWalletStore();
 
   const handlePlaceChip = (zone: RouletteBetZone, chipValue: number) => {
-    const current = placedBets[zone.spotKey];
-    const nextChips = addChipToStack(current?.chips ?? [], chipValue);
-    const amount = sumAmount(nextChips);
+    const currentSpotAmount = placedBets
+      .filter((b) => b.spotKey === zone.spotKey)
+      .reduce((acc, b) => acc + b.amount, 0);
 
-    if (amount > 3000) {
-      // TABLE_MAX_PER_SPOT is 500 in constants but let's see why it's 3000 here or use constant
+    const nextAmount = currentSpotAmount + chipValue;
+
+    if (nextAmount > 3000) {
       console.warn(
-        `[BET REJECTED] spotKey="${zone.spotKey}" — amount ${amount} exceeds limit`,
+        `[BET REJECTED] spotKey="${zone.spotKey}" — amount ${nextAmount} exceeds limit`,
       );
       return;
     }
@@ -154,17 +151,18 @@ const RouletteTable = () => {
       spotKey: zone.spotKey,
       type: zone.type,
       coveredNumbers: zone.coveredNumbers,
-      chips: nextChips,
-      amount,
+      chips: [chipValue],
+      amount: chipValue,
     };
 
-    const nextBets = { ...placedBets, [zone.spotKey]: newBet };
-    setPlacedBets(nextBets);
-
-    // Sync total bet to wallet store
-    const total = Object.values(nextBets).reduce((acc, b) => acc + b.amount, 0);
-    setTotalBet(total);
+    setPlacedBets([...placedBets, newBet]);
   };
+
+  // Keep totalBet in sync with placedBets
+  useEffect(() => {
+    const total = placedBets.reduce((acc, b) => acc + b.amount, 0);
+    setTotalBet(total);
+  }, [placedBets, setTotalBet]);
 
   const [hoveredKey, setHoveredKey] = useState<string | null>(null);
 
@@ -332,26 +330,42 @@ const RouletteTable = () => {
           />
         )}
 
-        {/* Placed bet chips */}
-        {Object.values(placedBets).map((bet) => {
-          const zone = zones.find((z) => z.spotKey === bet.spotKey);
-          if (!zone) return null;
-
-          return (
-            <LabelSprite
-              key={`chip-${bet.spotKey}`}
-              x={zone.position.x - chipSize / 2}
-              y={zone.position.y - chipSize / 2}
-              width={chipSize}
-              height={chipSize}
-              texture={Assets.get(getChipTexture(bet.amount))}
-              value={bet.amount}
-              fontSize={Math.floor(chipSize * 0.28)}
-              labelY={chipSize * 0.52}
-              tint={0xffffff}
-            />
+        {/* Placed bet chips (grouped by spot) */}
+        {(() => {
+          const grouped = placedBets.reduce(
+            (acc, bet) => {
+              if (!acc[bet.spotKey]) {
+                acc[bet.spotKey] = {
+                  spotKey: bet.spotKey,
+                  totalAmount: 0,
+                };
+              }
+              acc[bet.spotKey].totalAmount += bet.amount;
+              return acc;
+            },
+            {} as Record<string, { spotKey: string; totalAmount: number }>,
           );
-        })}
+
+          return Object.values(grouped).map((group) => {
+            const zone = zones.find((z) => z.spotKey === group.spotKey);
+            if (!zone) return null;
+
+            return (
+              <LabelSprite
+                key={`chip-${group.spotKey}`}
+                x={zone.position.x - chipSize / 2}
+                y={zone.position.y - chipSize / 2}
+                width={chipSize}
+                height={chipSize}
+                texture={Assets.get(getChipTexture(group.totalAmount))}
+                value={group.totalAmount}
+                fontSize={Math.floor(chipSize * 0.28)}
+                labelY={chipSize * 0.52}
+                tint={0xffffff}
+              />
+            );
+          });
+        })()}
       </>
     );
   };
