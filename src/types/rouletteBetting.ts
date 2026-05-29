@@ -22,30 +22,32 @@ export type RouletteBetZone = {
     y: number;
   };
   highlightShape:
-    | {
-        kind: "rect";
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-      }
-    | {
-        kind: "diamond";
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-      }
-    | {
-        kind: "circle";
-        x: number;
-        y: number;
-        radius: number;
-      };
+  | {
+    kind: "rect";
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }
+  | {
+    kind: "diamond";
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }
+  | {
+    kind: "circle";
+    x: number;
+    y: number;
+    radius: number;
+  };
 };
 
-export type PlacedBet = RouletteBetZone & {
+export type PlacedBet = {
+  spotKey: string;
+  type: RouletteBetType;
+  coveredNumbers: number[];
   amount: number;
   chips: number[];
-  chipValue: number;
 };

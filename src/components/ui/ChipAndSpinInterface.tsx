@@ -6,6 +6,9 @@ import LabelSprite from "./LabelSprite";
 import ChipPanel from "./ChipPanel";
 import { BITMAP_FONT_FAMILY } from "../../utils/assets";
 import { useGameStateStore } from "../../store/useGameStateStore";
+import { useBetStore } from "../../store/useBetStore";
+import { useWalletStore } from "../../store/useWalletStore";
+import type { PlacedBet } from "../../types/rouletteBetting";
 
 type Props = {
   // Total screen width — used for centering. Bar size is driven by footerHeight,
@@ -26,6 +29,8 @@ const ChipAndSpinInterface = ({
 }: Props) => {
   const { layoutMode, height } = useLayoutStore();
   const { setGameState } = useGameStateStore();
+  const { setPlacedBets } = useBetStore();
+  const { setTotalBet } = useWalletStore();
   const isMobilePortrait = layoutMode === "mobile-portrait";
   const isMobileLandscape = layoutMode === "mobile-landscape";
   const desktopBarAspectRatio = 161 / 1108;
@@ -157,6 +162,62 @@ const ChipAndSpinInterface = ({
           interactive
           cursor="pointer"
           eventMode="static"
+          onPointerDown={() => {
+            const bets: PlacedBet[] = [
+              {
+                spotKey: "trio-0-1-2",
+                type: "trio",
+                coveredNumbers: [0, 1, 2],
+                amount: 5,
+                chips: [5],
+              },
+              {
+                spotKey: "line-2", // Boundary between row 1 (4,5,6) and row 2 (7,8,9)
+                type: "line",
+                coveredNumbers: [4, 5, 6, 7, 8, 9],
+                amount: 10,
+                chips: [10],
+              },
+              {
+                spotKey: "corner-23-24-26-27",
+                type: "corner",
+                coveredNumbers: [23, 24, 26, 27],
+                amount: 5,
+                chips: [5],
+              },
+              {
+                spotKey: "split-22-25",
+                type: "split",
+                coveredNumbers: [22, 25],
+                amount: 5,
+                chips: [5],
+              },
+              {
+                spotKey: "color-red",
+                type: "color",
+                coveredNumbers: [
+                  1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36,
+                ],
+                amount: 5,
+                chips: [5],
+              },
+              {
+                spotKey: "straight-35",
+                type: "straight",
+                coveredNumbers: [35],
+                amount: 5,
+                chips: [5],
+              },
+            ];
+
+            const nextBets: Record<string, PlacedBet> = {};
+            bets.forEach((b) => {
+              nextBets[b.spotKey] = b;
+            });
+
+            setPlacedBets(nextBets);
+            setTotalBet(bets.reduce((acc, b) => acc + b.amount, 0));
+          }}
         />
 
         <LabelSprite
@@ -172,7 +233,7 @@ const ChipAndSpinInterface = ({
           tint={0x007011}
           fontFamily={
             BITMAP_FONT_FAMILY.spinButton[
-              isMobilePortrait ? "mobile" : "desktop"
+            isMobilePortrait ? "mobile" : "desktop"
             ]
           }
           onPointerTap={() => {

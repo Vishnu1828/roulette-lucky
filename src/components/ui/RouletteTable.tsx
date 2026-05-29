@@ -10,9 +10,14 @@ import { useLayoutStore } from "../../store/useLayoutStore";
 import { useGameStateStore } from "../../store/useGameStateStore";
 import { useChipStore } from "../../store/useChipStore";
 import { useBetStore } from "../../store/useBetStore";
-import { getChipTexture } from "../../constants/rouletteBetting";
+import { useWalletStore } from "../../store/useWalletStore";
+import {
+  getChipTexture,
+  addChipToStack,
+  sumAmount,
+} from "../../constants/rouletteBetting";
 import { buildRouletteBetZones } from "../../utils/rouletteBetZones";
-import type { RouletteBetZone } from "../../types/rouletteBetting";
+import type { RouletteBetZone, PlacedBet } from "../../types/rouletteBetting";
 
 // Keep in sync with Header.tsx and RouletteWheel.tsx
 const HEADER_BOTTOM_DESKTOP = 42 + 60 / 2;
@@ -129,7 +134,37 @@ const RouletteTable = () => {
   const { width, height, layoutMode } = useLayoutStore();
   const { gameState } = useGameStateStore();
   const { selectedChip } = useChipStore();
-  const { placedBets, placeChip } = useBetStore();
+  const { placedBets, setPlacedBets } = useBetStore();
+  const { setTotalBet } = useWalletStore();
+
+  const handlePlaceChip = (zone: RouletteBetZone, chipValue: number) => {
+    const current = placedBets[zone.spotKey];
+    const nextChips = addChipToStack(current?.chips ?? [], chipValue);
+    const amount = sumAmount(nextChips);
+
+    if (amount > 3000) {
+      // TABLE_MAX_PER_SPOT is 500 in constants but let's see why it's 3000 here or use constant
+      console.warn(
+        `[BET REJECTED] spotKey="${zone.spotKey}" — amount ${amount} exceeds limit`,
+      );
+      return;
+    }
+
+    const newBet: PlacedBet = {
+      spotKey: zone.spotKey,
+      type: zone.type,
+      coveredNumbers: zone.coveredNumbers,
+      chips: nextChips,
+      amount,
+    };
+
+    const nextBets = { ...placedBets, [zone.spotKey]: newBet };
+    setPlacedBets(nextBets);
+
+    // Sync total bet to wallet store
+    const total = Object.values(nextBets).reduce((acc, b) => acc + b.amount, 0);
+    setTotalBet(total);
+  };
 
   const [hoveredKey, setHoveredKey] = useState<string | null>(null);
 
@@ -279,7 +314,7 @@ const RouletteTable = () => {
                 console.log(
                   `[BET CLICK] zone="${zone.spotKey}" type="${zone.type}" covers=[${zone.coveredNumbers.join(",")}] chipValue=${selectedChip} globalPos=(${Math.round(e.global.x)},${Math.round(e.global.y)})`,
                 );
-                placeChip(zone, selectedChip);
+                handlePlaceChip(zone, selectedChip);
               }}
             />
           );
@@ -298,20 +333,25 @@ const RouletteTable = () => {
         )}
 
         {/* Placed bet chips */}
-        {Object.values(placedBets).map((bet) => (
-          <LabelSprite
-            key={`chip-${bet.spotKey}`}
-            x={bet.position.x - chipSize / 2}
-            y={bet.position.y - chipSize / 2}
-            width={chipSize}
-            height={chipSize}
-            texture={Assets.get(getChipTexture(bet.amount))}
-            value={bet.amount}
-            fontSize={Math.floor(chipSize * 0.28)}
-            labelY={chipSize * 0.52}
-            tint={0xffffff}
-          />
-        ))}
+        {Object.values(placedBets).map((bet) => {
+          const zone = zones.find((z) => z.spotKey === bet.spotKey);
+          if (!zone) return null;
+
+          return (
+            <LabelSprite
+              key={`chip-${bet.spotKey}`}
+              x={zone.position.x - chipSize / 2}
+              y={zone.position.y - chipSize / 2}
+              width={chipSize}
+              height={chipSize}
+              texture={Assets.get(getChipTexture(bet.amount))}
+              value={bet.amount}
+              fontSize={Math.floor(chipSize * 0.28)}
+              labelY={chipSize * 0.52}
+              tint={0xffffff}
+            />
+          );
+        })}
       </>
     );
   };

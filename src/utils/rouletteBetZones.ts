@@ -640,3 +640,21 @@ export function buildRouletteBetZones(metrics: GridMetrics): RouletteBetZone[] {
 
   return zones;
 }
+
+/**
+ * Helper to find the correct spotKey for a set of numbers and bet type.
+ * Useful for "Repeat Bet" functionality where we have raw bet data.
+ */
+export function findSpotKey(
+  type: string,
+  numbers: number[],
+  allZones: RouletteBetZone[],
+): string | null {
+  const targetNums = [...numbers].sort((a, b) => a - b).join(",");
+  const zone = allZones.find((z) => {
+    if (z.type !== type) return false;
+    const zNums = [...z.coveredNumbers].sort((a, b) => a - b).join(",");
+    return zNums === targetNums;
+  });
+  return zone?.spotKey ?? null;
+}

@@ -5,6 +5,7 @@ import Header from "../components/ui/Header";
 import RouletteBackground from "../components/ui/RouletteBackground";
 import { useWalletStore } from "../store/useWalletStore";
 import { useNavigationStore } from "../store/useNavigationStore";
+import { useBetStore } from "../store/useBetStore";
 
 const RouletteGameScreen = () => {
   const { balance } = useWalletStore();
@@ -14,6 +15,8 @@ const RouletteGameScreen = () => {
       showOverlay("balance");
     }
   }, [balance]);
+  const { placedBets } = useBetStore()
+  useEffect(() => { console.log(placedBets, "placeBet") }, [placedBets])
   return (
     <>
       <RouletteBackground />

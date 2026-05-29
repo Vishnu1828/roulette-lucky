@@ -31,9 +31,9 @@ const GameArea = () => {
   const barWidth = isMobilePortrait
     ? width
     : Math.min(
-        width * 0.55,
-        isMobileLandscape ? MAX_BAR_WIDTH_LANDSCAPE : MAX_BAR_WIDTH_DESKTOP,
-      );
+      width * 0.55,
+      isMobileLandscape ? MAX_BAR_WIDTH_LANDSCAPE : MAX_BAR_WIDTH_DESKTOP,
+    );
   const barHeight = isMobilePortrait
     ? barWidth * BAR_ASPECT_PORTRAIT
     : barWidth * BAR_ASPECT_LANDSCAPE;
@@ -41,13 +41,13 @@ const GameArea = () => {
   const bettingTableHeight = footerTop - gameAreaTop - TABLE_GAP;
 
   // Vertical centre of the available game area — used for all non-portrait layouts
-  const gameAreaCenterY = (gameAreaTop + footerTop) / 2;
+  const gameAreaCenterY = isMobileLandscape ? (gameAreaTop + footerTop) * 0.46 : (gameAreaTop + footerTop) * 0.45;
 
   // --- WinningNumberContainer ---
-  const rightPadding = isDesktop ? 24 : 14;
+  const rightPadding = isDesktop ? 50 : isMobilePortrait ? 14 : 50;
   const winningPanelWidth = 50;
   const winningPanelHeight = isDesktop
-    ? 300
+    ? 350
     : isMobilePortrait
       ? 250
       : Math.max(0, bettingTableHeight);
