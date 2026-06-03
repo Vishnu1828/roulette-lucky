@@ -21,6 +21,7 @@ type LabelSpriteProps = {
   labelY?: number;
   onPointerTap?: () => void;
   zIndex?: number;
+  highlighted?: boolean;
 };
 
 const LabelSprite = ({
@@ -39,6 +40,7 @@ const LabelSprite = ({
   labelY = height / 2,
   onPointerTap,
   zIndex = 1,
+  highlighted = false,
 }: LabelSpriteProps) => {
   const { layoutMode } = useLayoutStore();
   fontFamily = fontFamily
@@ -56,6 +58,16 @@ const LabelSprite = ({
       zIndex={zIndex}
     >
       <PixiSprite texture={texture} width={width} height={height} />
+
+      {highlighted && (
+        <pixiGraphics
+          draw={(g) => {
+            g.clear();
+            g.rect(0, 0, width, height);
+            g.fill({ color: 0xffffff, alpha: 0.35 });
+          }}
+        />
+      )}
 
       <PixiBitmapText
         text={value.toString()}

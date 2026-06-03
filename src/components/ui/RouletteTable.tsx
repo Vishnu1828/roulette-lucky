@@ -51,23 +51,6 @@ const NUMBER_ROWS: number[][] = [
   [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34],
 ];
 
-// ── Highlight colour palette per bet type ────────────────────────────────
-const HOVER_COLORS: Record<string, number> = {
-  straight: 0xffd700,
-  split: 0x00e5ff,
-  corner: 0xff6ec7,
-  street: 0x69ff47,
-  line: 0xff9100,
-  trio: 0xaa00ff,
-  dozen: 0xffd700,
-  column: 0xffd700,
-  range: 0xffd700,
-  parity: 0xffd700,
-  color: 0xffd700,
-};
-
-const HOVER_ALPHA = 0.35;
-
 type MultiplierCellFxProps = {
   number: number;
   multiplier: number;
@@ -97,7 +80,10 @@ const MultiplierCellFx = ({
     : "fx-multiplier-reveal-desktop";
   const fxWidth = cellWidth;
   const fxHeight = cellHeight;
-  const textFontSize = Math.max(7, Math.floor(Math.min(cellWidth, cellHeight) * 0.34));
+  const textFontSize = Math.max(
+    7,
+    Math.floor(Math.min(cellWidth, cellHeight) * 0.34),
+  );
 
   return (
     <PixiContainer x={x} y={y} sortableChildren zIndex={5}>
@@ -152,59 +138,46 @@ function drawHighlight(
   hovered: boolean,
 ) {
   g.clear();
-  const color = HOVER_COLORS[zone.type] ?? 0xffffff;
-  const alpha = hovered ? HOVER_ALPHA : 0.001;
 
   const shape = zone.highlightShape;
+
+  // Always draw the full bounding rect so PixiJS has a hit-test area.
+  // Only number cells (straight bets) get a visible fill on hover.
+
   if (shape.kind === "circle") {
-    g.circle(shape.x, shape.y, shape.radius);
+    const hw = shape.radius;
+    g.rect(shape.x - hw, shape.y - hw, hw * 2, hw * 2);
   } else if (shape.kind === "diamond") {
-    const { x, y, width, height } = shape;
-    g.moveTo(x, y - height / 2);
-    g.lineTo(x + width / 2, y);
-    g.lineTo(x, y + height / 2);
-    g.lineTo(x - width / 2, y);
-    g.closePath();
+    g.rect(
+      shape.x - shape.width / 2,
+      shape.y - shape.height / 2,
+      shape.width,
+      shape.height,
+    );
   } else {
+    console.log("[ERROR] Unknown shape kind:", shape);
     g.rect(shape.x, shape.y, shape.width, shape.height);
   }
-  g.fill({ color, alpha });
-
-  // Draw a border when hovered for extra clarity
-  if (hovered) {
-    if (shape.kind === "circle") {
-      g.circle(shape.x, shape.y, shape.radius);
-    } else if (shape.kind === "diamond") {
-      const { x, y, width, height } = shape;
-      g.moveTo(x, y - height / 2);
-      g.lineTo(x + width / 2, y);
-      g.lineTo(x, y + height / 2);
-      g.lineTo(x - width / 2, y);
-      g.closePath();
-    } else {
-      g.rect(shape.x, shape.y, shape.width, shape.height);
-    }
-    g.stroke({ color, alpha: 0.85, width: 2 });
-  }
+  g.fill({ color: 0xffffff, alpha: 0 });
 }
 
 // ── Friendly label for each bet type ────────────────────────────────────
-function betTypeLabel(zone: RouletteBetZone): string {
-  switch (zone.type) {
-    case "straight": return `Straight (${zone.coveredNumbers[0]}) — 35:1`;
-    case "split": return `Split ${zone.label} — 17:1`;
-    case "corner": return `Corner ${zone.label} — 8:1`;
-    case "street": return `Street ${zone.label} — 11:1`;
-    case "line": return `Six Line ${zone.label} — 5:1`;
-    case "trio": return `Trio ${zone.label} — 11:1`;
-    case "dozen": return `Dozen ${zone.label} — 2:1`;
-    case "column": return `Column ${zone.label} — 2:1`;
-    case "range": return `${zone.label} — 1:1`;
-    case "parity": return `${zone.label.toUpperCase()} — 1:1`;
-    case "color": return `${zone.label.charAt(0).toUpperCase() + zone.label.slice(1)} — 1:1`;
-    default: return zone.label;
-  }
-}
+// function betTypeLabel(zone: RouletteBetZone): string {
+//   switch (zone.type) {
+//     case "straight": return `Straight (${zone.coveredNumbers[0]}) — 35:1`;
+//     case "split": return `Split ${zone.label} — 17:1`;
+//     case "corner": return `Corner ${zone.label} — 8:1`;
+//     case "street": return `Street ${zone.label} — 11:1`;
+//     case "line": return `Six Line ${zone.label} — 5:1`;
+//     case "trio": return `Trio ${zone.label} — 11:1`;
+//     case "dozen": return `Dozen ${zone.label} — 2:1`;
+//     case "column": return `Column ${zone.label} — 2:1`;
+//     case "range": return `${zone.label} — 1:1`;
+//     case "parity": return `${zone.label.toUpperCase()} — 1:1`;
+//     case "color": return `${zone.label.charAt(0).toUpperCase() + zone.label.slice(1)} — 1:1`;
+//     default: return zone.label;
+//   }
+// }
 
 type RouletteTableProps = {
   transitionPhase?: number;
@@ -266,20 +239,20 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
   const barWidth = isMobilePortrait
     ? width
     : Math.min(
-      width * 0.55,
-      isMobileLandscape ? MAX_BAR_WIDTH_LANDSCAPE : MAX_BAR_WIDTH_DESKTOP,
-    );
+        width * 0.55,
+        isMobileLandscape ? MAX_BAR_WIDTH_LANDSCAPE : MAX_BAR_WIDTH_DESKTOP,
+      );
   const chipBarHeight = isMobilePortrait
     ? barWidth * BAR_ASPECT_PORTRAIT
     : barWidth * BAR_ASPECT_LANDSCAPE;
 
-  const footerTop = (isBetting || (isMultiplierLaunch && transitionPhase <= 1))
-    ? height - chipBarHeight - TABLE_GAP
-    : height - bettingSettingsHeight - TABLE_GAP;
+  const footerTop =
+    isBetting || (isMultiplierLaunch && transitionPhase <= 1)
+      ? height - chipBarHeight - TABLE_GAP
+      : height - bettingSettingsHeight - TABLE_GAP;
   const bettingFooterTop = height - chipBarHeight - TABLE_GAP;
 
   const gameAreaCenterY = (gameAreaTop + footerTop) / 2;
-  const bettingGameAreaCenterY = (gameAreaTop + bettingFooterTop) / 2;
 
   // --- WinningNumberContainer right boundary (betting state only) ---
   const rightPadding = isDesktop ? 24 : 14;
@@ -307,7 +280,6 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
       return SIDE_PADDING + tableW / 2;
     })();
 
-
     tableCX = targetCX;
     tableCY =
       isMobilePortrait && isMultiplierLaunch && transitionPhase === 1
@@ -322,7 +294,6 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
       const preferredCY = gameAreaTop + (footerTop - gameAreaTop) * 0.72;
       const footerSafeCY = footerTop - tableH / 2;
       tableCY = Math.min(preferredCY, footerSafeCY);
-
     } else {
       const rightMargin = isDesktop ? 24 : 14;
       tableW = Math.round(
@@ -350,9 +321,10 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
       : transitionPhase === 1
         ? 0.65
         : 0.75;
-    const delay = isMobilePortrait && isMultiplierLaunch && transitionPhase === 1
-      ? 0.7
-      : 0.8;
+    const delay =
+      isMobilePortrait && isMultiplierLaunch && transitionPhase === 1
+        ? 0.7
+        : 0.8;
 
     gsap.to(c, {
       x: tableCX,
@@ -408,11 +380,12 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
     ? desktopZones.find((z) => z.spotKey === hoveredKey)
     : null;
 
+  const highlightedNumbers = new Set(hoveredZoneData?.coveredNumbers || []);
+
   // ── renderBetOverlay ──────────────────────────────────────────────────
   const renderBetOverlay = (
     zones: ReturnType<typeof buildRouletteBetZones>,
     chipSize: number,
-    hoveredLabel?: RouletteBetZone | null,
   ) => {
     if (!isBetting) return null;
 
@@ -434,10 +407,19 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
               eventMode={selectedChip ? "static" : "none"}
               cursor={selectedChip ? "pointer" : "default"}
               draw={drawFn}
-              onPointerEnter={() => setHoveredKey(zone.spotKey)}
+              onPointerEnter={() =>
+                !isMobilePortrait && setHoveredKey(zone.spotKey)
+              }
               onPointerLeave={() =>
+                !isMobilePortrait &&
                 setHoveredKey((k) => (k === zone.spotKey ? null : k))
               }
+              onPointerDown={() =>
+                isMobilePortrait && setHoveredKey(zone.spotKey)
+              }
+              onPointerUp={() => isMobilePortrait && setHoveredKey(null)}
+              onPointerUpOutside={() => isMobilePortrait && setHoveredKey(null)}
+              onPointerCancel={() => isMobilePortrait && setHoveredKey(null)}
               onPointerTap={(e) => {
                 if (!selectedChip) return;
                 console.log(
@@ -450,16 +432,6 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
         })}
 
         {/* Floating label shown when hovering a zone */}
-        {hoveredLabel && selectedChip && (
-          <PixiBitmapText
-            text={betTypeLabel(hoveredLabel)}
-            x={hoveredLabel.position.x}
-            y={hoveredLabel.position.y - chipSize * 1.6}
-            anchor={0.5}
-            tint={HOVER_COLORS[hoveredLabel.type] ?? 0xffd700}
-            fontSize={Math.max(10, chipSize * 0.55)}
-          />
-        )}
 
         {/* Placed bet chips (grouped by spot) */}
         {(() => {
@@ -502,7 +474,10 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
   };
 
   if (isMobilePortrait) {
-    const showMultiplierCellFx = (isMultiplierLaunch && transitionPhase >= 1) || gameState === "bonus" || gameState === "spinning";
+    const showMultiplierCellFx =
+      (isMultiplierLaunch && transitionPhase >= 1) ||
+      gameState === "bonus" ||
+      gameState === "spinning";
     const portraitInnerW = Math.round(tableW * 0.94);
     const portraitInnerH = Math.round(tableH * 0.98);
     const pLeft = -Math.round(portraitInnerW / 2);
@@ -543,6 +518,8 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
       ? portraitZones.find((z) => z.spotKey === hoveredKey)
       : null;
 
+    const pHighlightedNumbers = new Set(pHoveredZone?.coveredNumbers || []);
+
     const portraitRows: number[][] = Array.from({ length: 12 }, (_, idx) => [
       idx * 3 + 1,
       idx * 3 + 2,
@@ -550,7 +527,12 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
     ]);
 
     return (
-      <pixiContainer ref={containerRef} x={tableCX} y={tableCY} sortableChildren>
+      <pixiContainer
+        ref={containerRef}
+        x={tableCX}
+        y={tableCY}
+        sortableChildren
+      >
         <PixiContainer x={pGridStartX + pGridW / 2} y={pTop + pTopRowH / 2}>
           <PixiSprite
             texture={Assets.get("table-green-block")}
@@ -581,30 +563,32 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
                 y={rSnap.center}
                 cellWidth={cSnap.size}
                 cellHeight={rSnap.size}
+                highlighted={pHighlightedNumbers.has(number)}
               />
             );
           });
         })}
 
-        {showMultiplierCellFx && MULTIPLIER_NUMBERS.map((multiplierData) => {
-          const rowIdx = Math.floor((multiplierData.number - 1) / 3);
-          const colIdx = (multiplierData.number - 1) % 3;
-          const rSnap = snap(pGridStartY, pGridH, 12, rowIdx);
-          const cSnap = snap(pGridStartX, pGridW, 3, colIdx);
+        {showMultiplierCellFx &&
+          MULTIPLIER_NUMBERS.map((multiplierData) => {
+            const rowIdx = Math.floor((multiplierData.number - 1) / 3);
+            const colIdx = (multiplierData.number - 1) % 3;
+            const rSnap = snap(pGridStartY, pGridH, 12, rowIdx);
+            const cSnap = snap(pGridStartX, pGridW, 3, colIdx);
 
-          return (
-            <MultiplierCellFx
-              key={`p-multiplier-fx-${multiplierData.number}`}
-              number={multiplierData.number}
-              multiplier={multiplierData.multiplier}
-              x={cSnap.center}
-              y={rSnap.center}
-              cellWidth={cSnap.size}
-              cellHeight={rSnap.size}
-              isMobilePortrait={isMobilePortrait}
-            />
-          );
-        })}
+            return (
+              <MultiplierCellFx
+                key={`p-multiplier-fx-${multiplierData.number}`}
+                number={multiplierData.number}
+                multiplier={multiplierData.multiplier}
+                x={cSnap.center}
+                y={rSnap.center}
+                cellWidth={cSnap.size}
+                cellHeight={rSnap.size}
+                isMobilePortrait={isMobilePortrait}
+              />
+            );
+          })}
 
         {["1ST\n12", "2ND\n12", "3RD\n12"].map((label, idx) => {
           const rSnap = snap(pGridStartY, pGridH, 3, idx);
@@ -620,6 +604,7 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
               fontSize={Math.floor(pNumCellH * 0.4)}
               labelY={rSnap.size / 2}
               tint={0xf1be31}
+              highlighted={hoveredKey === `dozen-${idx + 1}`}
             />
           );
         })}
@@ -641,6 +626,17 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
                   texture={Assets.get("table-right-rectangle")}
                   value=""
                   fontSize={Math.floor(rSnap.size * 0.36)}
+                  highlighted={
+                    hoveredKey ===
+                    [
+                      "range-1-18",
+                      "parity-even",
+                      "color-red",
+                      "color-black",
+                      "parity-odd",
+                      "range-19-36",
+                    ][idx]
+                  }
                 />
                 <PixiSprite
                   texture={Assets.get(diamondTexture)}
@@ -666,6 +662,17 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
               fontSize={Math.floor(rSnap.size * 0.2)}
               labelY={rSnap.size * 0.53}
               tint={0xf1be31}
+              highlighted={
+                hoveredKey ===
+                [
+                  "range-1-18",
+                  "parity-even",
+                  "color-red",
+                  "color-black",
+                  "parity-odd",
+                  "range-19-36",
+                ][idx]
+              }
             />
           );
         })}
@@ -684,6 +691,7 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
               fontSize={Math.floor(pBottomRowH * 0.42)}
               labelY={pBottomRowH * 0.56}
               tint={0xf1be31}
+              highlighted={hoveredKey === `column-${idx + 1}`}
             />
           );
         })}
@@ -691,7 +699,6 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
         {renderBetOverlay(
           portraitZones,
           Math.min(pGridW / 3, pGridH / 12) * 0.6,
-          pHoveredZone,
         )}
       </pixiContainer>
     );
@@ -713,6 +720,17 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
                 texture={Assets.get("table-top-rectangle")}
                 value=""
                 fontSize={Math.floor(topRowH * 0.34)}
+                highlighted={
+                  hoveredKey ===
+                  [
+                    "range-1-18",
+                    "parity-even",
+                    "color-red",
+                    "color-black",
+                    "parity-odd",
+                    "range-19-36",
+                  ][idx]
+                }
               />
               <PixiSprite
                 texture={Assets.get(diamondTexture)}
@@ -738,6 +756,17 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
             fontSize={Math.floor(topRowH * 0.6)}
             labelY={topRowH * 0.52}
             tint={0xf1be31}
+            highlighted={
+              hoveredKey ===
+              [
+                "range-1-18",
+                "parity-even",
+                "color-red",
+                "color-black",
+                "parity-odd",
+                "range-19-36",
+              ][idx]
+            }
           />
         );
       })}
@@ -748,6 +777,7 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
         y={gridStartY + gridH / 2}
         cellWidth={zeroColW}
         cellHeight={gridH}
+        highlighted={highlightedNumbers.has(0)}
       />
 
       {NUMBER_ROWS.map((row, rowIdx) => {
@@ -762,32 +792,38 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
               y={rSnap.center}
               cellWidth={cSnap.size}
               cellHeight={rSnap.size}
+              highlighted={highlightedNumbers.has(number)}
             />
           );
         });
       })}
 
-      {((isMultiplierLaunch && transitionPhase >= 1) || gameState === "bonus" || gameState === "spinning") && MULTIPLIER_NUMBERS.map((multiplierData) => {
-        const rowIdx = NUMBER_ROWS.findIndex((row) => row.includes(multiplierData.number));
-        if (rowIdx < 0) return null;
+      {((isMultiplierLaunch && transitionPhase >= 1) ||
+        gameState === "bonus" ||
+        gameState === "spinning") &&
+        MULTIPLIER_NUMBERS.map((multiplierData) => {
+          const rowIdx = NUMBER_ROWS.findIndex((row) =>
+            row.includes(multiplierData.number),
+          );
+          if (rowIdx < 0) return null;
 
-        const colIdx = NUMBER_ROWS[rowIdx].indexOf(multiplierData.number);
-        const rSnap = snap(gridStartY, gridH, 3, rowIdx);
-        const cSnap = snap(gridStartX, gridW, 12, colIdx);
+          const colIdx = NUMBER_ROWS[rowIdx].indexOf(multiplierData.number);
+          const rSnap = snap(gridStartY, gridH, 3, rowIdx);
+          const cSnap = snap(gridStartX, gridW, 12, colIdx);
 
-        return (
-          <MultiplierCellFx
-            key={`multiplier-fx-${multiplierData.number}`}
-            number={multiplierData.number}
-            multiplier={multiplierData.multiplier}
-            x={cSnap.center}
-            y={rSnap.center}
-            cellWidth={cSnap.size}
-            cellHeight={rSnap.size}
-            isMobilePortrait={isMobilePortrait}
-          />
-        );
-      })}
+          return (
+            <MultiplierCellFx
+              key={`multiplier-fx-${multiplierData.number}`}
+              number={multiplierData.number}
+              multiplier={multiplierData.multiplier}
+              x={cSnap.center}
+              y={rSnap.center}
+              cellWidth={cSnap.size}
+              cellHeight={rSnap.size}
+              isMobilePortrait={isMobilePortrait}
+            />
+          );
+        })}
 
       {SIDE_BETS.map((label, idx) => {
         const rSnap = snap(gridStartY, gridH, 3, idx);
@@ -803,6 +839,7 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
             fontSize={Math.floor(numCellH * 0.34)}
             labelY={rSnap.size * 0.54}
             tint={0xf1be31}
+            highlighted={hoveredKey === `column-${3 - idx}`}
           />
         );
       })}
@@ -821,15 +858,12 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
             fontSize={Math.floor(bottomRowH * 0.5)}
             labelY={bottomRowH * 0.58}
             tint={0xf1be31}
+            highlighted={hoveredKey === `dozen-${idx + 1}`}
           />
         );
       })}
 
-      {renderBetOverlay(
-        desktopZones,
-        Math.min(gridW / 12, gridH / 3) * 0.62,
-        hoveredZoneData,
-      )}
+      {renderBetOverlay(desktopZones, Math.min(gridW / 12, gridH / 3) * 0.62)}
     </pixiContainer>
   );
 };

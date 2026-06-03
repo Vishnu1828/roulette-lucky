@@ -15,6 +15,8 @@ type PixiGraphicProps = {
   onPointerDown?: (e: FederatedPointerEvent) => void;
   onPointerMove?: (e: FederatedPointerEvent) => void;
   onPointerUp?: (e: FederatedPointerEvent) => void;
+  onPointerUpOutside?: (e: FederatedPointerEvent) => void;
+  onPointerCancel?: (e: FederatedPointerEvent) => void;
   onPointerTap?: (e: FederatedPointerEvent) => void;
   onPointerEnter?: (e: FederatedPointerEvent) => void;
   onPointerLeave?: (e: FederatedPointerEvent) => void;
@@ -30,6 +32,8 @@ export function PixiGraphic({
   onPointerDown,
   onPointerMove,
   onPointerUp,
+  onPointerUpOutside,
+  onPointerCancel,
   onPointerTap,
   onPointerEnter,
   onPointerLeave,
@@ -53,6 +57,8 @@ export function PixiGraphic({
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
+      onPointerUpOutside={onPointerUpOutside}
+      onPointerCancel={onPointerCancel}
       onPointerTap={onPointerTap}
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}

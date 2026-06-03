@@ -12,6 +12,7 @@ type TableCellProps = {
   x?: number;
   y?: number;
   selected?: boolean;
+  highlighted?: boolean;
   onPointerTap?: (e: FederatedPointerEvent) => void;
 };
 
@@ -27,6 +28,7 @@ const TableCell = ({
   x = 0,
   y = 0,
   selected = false,
+  highlighted = false,
   onPointerTap,
 }: TableCellProps) => {
   const isRed = useMemo(() => FindNumberColor(number), [number]);
@@ -62,6 +64,7 @@ const TableCell = ({
         alpha={selected ? 1 : 0.85}
         tint={0xf1be31}
         labelY={cellHeight * 0.54}
+        highlighted={highlighted}
       />
     </PixiContainer>
   );

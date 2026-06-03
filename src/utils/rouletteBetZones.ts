@@ -202,12 +202,12 @@ export function buildRouletteBetZones(metrics: GridMetrics): RouletteBetZone[] {
     } else {
       pos = {
         x: metrics.rightStartX + metrics.rightBetW / 2,
-        y: metrics.gridStartY + (idx + 0.5) * (metrics.gridH / 3),
+        y: metrics.gridStartY + (2 - idx + 0.5) * (metrics.gridH / 3),
       };
       shape = {
         kind: "rect",
         x: metrics.rightStartX,
-        y: metrics.gridStartY + idx * (metrics.gridH / 3),
+        y: metrics.gridStartY + (2 - idx) * (metrics.gridH / 3),
         width: metrics.rightBetW,
         height: metrics.gridH / 3,
       };
