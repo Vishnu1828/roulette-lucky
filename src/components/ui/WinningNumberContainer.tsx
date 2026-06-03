@@ -1,7 +1,7 @@
-import { useCallback, useRef, useState } from "react";
-import { FederatedPointerEvent, FederatedWheelEvent, Graphics } from "pixi.js";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { FederatedPointerEvent, FederatedWheelEvent, Graphics, Container } from "pixi.js";
+import gsap from "gsap";
 import { WINNING_NUMBERS } from "../../constants/winningNumbers";
-import PixiContainer from "../pixi/PixiContainer";
 import PixiNineSliceSprite from "../pixi/pixiNineSliceSprite";
 import WinningNumber, { WinningNumberData } from "./WinningNumber";
 
@@ -11,6 +11,8 @@ type WinningNumberContainerProps = {
   width?: number;
   height?: number;
   winningNumberData?: WinningNumberData[];
+  visible?: boolean;
+  onHidden?: () => void;
 };
 
 const WinningNumberContainer = ({
@@ -19,7 +21,38 @@ const WinningNumberContainer = ({
   width = 180,
   height = 64,
   winningNumberData = WINNING_NUMBERS,
+  visible = true,
+  onHidden,
 }: WinningNumberContainerProps) => {
+  const containerRef = useRef<Container | null>(null);
+
+  useEffect(() => {
+    const c = containerRef.current;
+    if (!c) return;
+    if (!visible) {
+      gsap.to(c, {
+        x: c.x + 80,
+        alpha: 0,
+        duration: 0.6,
+        ease: "power2.in",
+        onComplete: () => {
+          onHidden?.();
+        },
+      });
+    } else {
+      gsap.killTweensOf(c);
+      c.x = x + 64;
+      c.alpha = 0;
+      gsap.to(c, {
+        x,
+        alpha: 1,
+        duration: 0.55,
+        ease: "power2.out",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
+
   const [scrollY, setScrollY] = useState(0);
   const [mask, setMask] = useState<Graphics | null>(null);
   const dragData = useRef({ isDragging: false, startY: 0, startScrollY: 0 });
@@ -41,8 +74,8 @@ const WinningNumberContainer = ({
     winningNumberData.length === 0
       ? 0
       : itemSize +
-        Math.max(0, winningNumberData.length - 1) * rowStep +
-        multiplierTopOffset;
+      Math.max(0, winningNumberData.length - 1) * rowStep +
+      multiplierTopOffset;
   const contentHeight = totalStackHeight + contentPaddingY * 2;
   const maxScroll = Math.max(0, contentHeight - innerHeight);
 
@@ -104,7 +137,7 @@ const WinningNumberContainer = ({
   );
 
   return (
-    <PixiContainer x={x} y={y}>
+    <pixiContainer x={x} y={y} ref={containerRef}>
       <PixiNineSliceSprite
         texture="recent-winner-strip"
         width={stripWidth}
@@ -152,7 +185,7 @@ const WinningNumberContainer = ({
           );
         })}
       </pixiContainer>
-    </PixiContainer>
+    </pixiContainer>
   );
 };
 

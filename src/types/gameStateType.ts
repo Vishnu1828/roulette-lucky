@@ -1,1 +1,1 @@
-export type GameStateType = "betting" | "spinning" | "result"|"bonus";
+export type GameStateType = "betting" | "spinning" | "result" | "multiplier-launch" | "bonus";

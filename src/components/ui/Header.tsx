@@ -9,8 +9,8 @@ const Header = () => {
   const { gameState } = useGameStateStore();
   const fontSize = layoutMode === "desktop" ? 60 : 32;
   const y = layoutMode === "desktop" ? 42 : 24;
-  const text =
-    GAME_STATES[gameState?.toUpperCase() as keyof typeof GAME_STATES] || "";
+  const textKey = (gameState?.replace("-", "_").toUpperCase() || "") as keyof typeof GAME_STATES;
+  const text = GAME_STATES[textKey] || "";
 
   return (
     <PixiContainer x={width / 2} y={y}>

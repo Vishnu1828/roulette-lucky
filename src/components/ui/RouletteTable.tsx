@@ -1,19 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PixiContainer from "../pixi/PixiContainer";
 import LabelSprite from "./LabelSprite";
 import TableCell from "./TableCell";
 import PixiSprite from "../pixi/PixiSprite";
 import PixiBitmapText from "../pixi/PixiBitmapText";
 import { PixiGraphic } from "../pixi/PixiGraphic";
-import { Assets } from "pixi.js";
+import { Assets, Container } from "pixi.js";
+import gsap from "gsap";
 import { useLayoutStore } from "../../store/useLayoutStore";
 import { useGameStateStore } from "../../store/useGameStateStore";
 import { useChipStore } from "../../store/useChipStore";
 import { useBetStore } from "../../store/useBetStore";
 import { useWalletStore } from "../../store/useWalletStore";
 import { getChipTexture } from "../../constants/rouletteBetting";
+import { MULTIPLIER_NUMBERS } from "../../constants/multipliers";
 import { buildRouletteBetZones } from "../../utils/rouletteBetZones";
 import type { RouletteBetZone, PlacedBet } from "../../types/rouletteBetting";
+import GameAnimation from "./GameAnimation";
 
 // Keep in sync with Header.tsx and RouletteWheel.tsx
 const HEADER_BOTTOM_DESKTOP = 42 + 60 / 2;
@@ -64,6 +67,83 @@ const HOVER_COLORS: Record<string, number> = {
 };
 
 const HOVER_ALPHA = 0.35;
+
+type MultiplierCellFxProps = {
+  number: number;
+  multiplier: number;
+  x: number;
+  y: number;
+  cellWidth: number;
+  cellHeight: number;
+  isMobilePortrait: boolean;
+};
+
+const MultiplierCellFx = ({
+  number,
+  multiplier,
+  x,
+  y,
+  cellWidth,
+  cellHeight,
+  isMobilePortrait,
+}: MultiplierCellFxProps) => {
+  const [revealStarted, setRevealStarted] = useState(false);
+  const [showMultiplierText, setShowMultiplierText] = useState(false);
+  const selectionKeyword = isMobilePortrait
+    ? "fx-lucky-number-selection-mobile-portrait"
+    : "fx-lucky-number-selection-desktop";
+  const revealKeyword = isMobilePortrait
+    ? "fx-multiplier-reveal-mobile"
+    : "fx-multiplier-reveal-desktop";
+  const fxWidth = cellWidth;
+  const fxHeight = cellHeight;
+  const textFontSize = Math.max(7, Math.floor(Math.min(cellWidth, cellHeight) * 0.34));
+
+  return (
+    <PixiContainer x={x} y={y} sortableChildren zIndex={5}>
+      {!revealStarted && (
+        <GameAnimation
+          animationKeyword={selectionKeyword}
+          x={0}
+          y={0}
+          width={fxWidth}
+          height={fxHeight}
+          loop={false}
+          animationSpeed={0.55}
+          restartKey={`select-${number}`}
+          onComplete={() => setRevealStarted(true)}
+        />
+      )}
+      {revealStarted && (
+        <GameAnimation
+          animationKeyword={revealKeyword}
+          x={0}
+          y={0}
+          width={fxWidth}
+          height={fxHeight}
+          loop={false}
+          animationSpeed={0.55}
+          restartKey={`reveal-${number}`}
+          onFrameChange={(currentFrame, totalFrames) => {
+            if (currentFrame >= Math.floor(totalFrames * 0.45)) {
+              setShowMultiplierText(true);
+            }
+          }}
+        />
+      )}
+      {showMultiplierText && (
+        <PixiBitmapText
+          text={`x${multiplier}`}
+          x={0}
+          y={0}
+          fontSize={textFontSize}
+          tint={0xf1be31}
+          anchor={0.5}
+        />
+      )}
+    </PixiContainer>
+  );
+};
 
 // ── Draw a zone highlight shape ──────────────────────────────────────────
 function drawHighlight(
@@ -126,7 +206,11 @@ function betTypeLabel(zone: RouletteBetZone): string {
   }
 }
 
-const RouletteTable = () => {
+type RouletteTableProps = {
+  transitionPhase?: number;
+};
+
+const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
   const { width, height, layoutMode } = useLayoutStore();
   const { gameState } = useGameStateStore();
   const { selectedChip } = useChipStore();
@@ -165,11 +249,13 @@ const RouletteTable = () => {
   }, [placedBets, setTotalBet]);
 
   const [hoveredKey, setHoveredKey] = useState<string | null>(null);
+  const containerRef = useRef<Container | null>(null);
 
   const isMobilePortrait = layoutMode === "mobile-portrait";
   const isMobileLandscape = layoutMode === "mobile-landscape";
   const isDesktop = layoutMode === "desktop";
   const isBetting = gameState === "betting";
+  const isMultiplierLaunch = gameState === "multiplier-launch";
 
   // --- Header bottom boundary ---
   const headerBottom = isDesktop ? HEADER_BOTTOM_DESKTOP : HEADER_BOTTOM_MOBILE;
@@ -187,11 +273,13 @@ const RouletteTable = () => {
     ? barWidth * BAR_ASPECT_PORTRAIT
     : barWidth * BAR_ASPECT_LANDSCAPE;
 
-  const footerTop = isBetting
+  const footerTop = (isBetting || (isMultiplierLaunch && transitionPhase <= 1))
     ? height - chipBarHeight - TABLE_GAP
     : height - bettingSettingsHeight - TABLE_GAP;
+  const bettingFooterTop = height - chipBarHeight - TABLE_GAP;
 
   const gameAreaCenterY = (gameAreaTop + footerTop) / 2;
+  const bettingGameAreaCenterY = (gameAreaTop + bettingFooterTop) / 2;
 
   // --- WinningNumberContainer right boundary (betting state only) ---
   const rightPadding = isDesktop ? 24 : 14;
@@ -205,12 +293,28 @@ const RouletteTable = () => {
   let tableCX: number;
   let tableCY: number;
 
-  if (isBetting) {
+  if (isBetting || (isMultiplierLaunch && transitionPhase <= 1)) {
+    // Phase 1: Keep betting dimensions & horizontal offset
     tableW = tableRightBound - SIDE_PADDING;
     tableH = Math.min(footerTop - gameAreaTop - TABLE_GAP, 500);
-    tableCX = SIDE_PADDING + tableW / 2;
-    tableCY = gameAreaCenterY;
+
+    const targetCX = (() => {
+      // Mobile Portrait centering happens in Phase 1
+      if (isMobilePortrait && isMultiplierLaunch && transitionPhase === 1) {
+        return (SIDE_PADDING + width - rightPadding) / 2;
+      }
+      // Desktop & Mobile Landscape remain at betting offset during Phase 1 reveals
+      return SIDE_PADDING + tableW / 2;
+    })();
+
+
+    tableCX = targetCX;
+    tableCY =
+      isMobilePortrait && isMultiplierLaunch && transitionPhase === 1
+        ? (gameAreaTop + bettingFooterTop) * 0.65
+        : gameAreaCenterY;
   } else {
+    // Phase 2+: Final result layout
     if (isMobilePortrait) {
       tableW = Math.round(clamp(width * 0.46, 200, 280));
       tableH = Math.round(clamp(tableW * 0.9, 300, 500));
@@ -218,13 +322,14 @@ const RouletteTable = () => {
       const preferredCY = gameAreaTop + (footerTop - gameAreaTop) * 0.72;
       const footerSafeCY = footerTop - tableH / 2;
       tableCY = Math.min(preferredCY, footerSafeCY);
+
     } else {
       const rightMargin = isDesktop ? 24 : 14;
       tableW = Math.round(
         clamp(
-          width * (isDesktop ? 0.6 : 0.39),
-          isDesktop ? 800 : 250,
-          isDesktop ? 800 : 320,
+          width * (isDesktop ? 0.6 : 0.45),
+          isDesktop ? 800 : 400,
+          isDesktop ? 800 : 400,
         ),
       );
       tableH = Math.round(tableW * 0.45);
@@ -232,6 +337,32 @@ const RouletteTable = () => {
       tableCY = gameAreaCenterY;
     }
   }
+
+  // --- Smooth GSAP Transitions ---
+  useEffect(() => {
+    const c = containerRef.current;
+    if (!c || tableW <= 0 || tableH <= 0) return;
+
+    const isPortraitMultiplierCentering =
+      isMobilePortrait && isMultiplierLaunch && transitionPhase === 1;
+    const duration = isPortraitMultiplierCentering
+      ? 0.84
+      : transitionPhase === 1
+        ? 0.65
+        : 0.75;
+    const delay = isMobilePortrait && isMultiplierLaunch && transitionPhase === 1
+      ? 0.7
+      : 0.8;
+
+    gsap.to(c, {
+      x: tableCX,
+      y: tableCY,
+      duration: duration,
+      delay,
+      ease: "power2.out",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tableCX, tableCY, transitionPhase]);
 
   if (tableH <= 0 || tableW <= 0) return null;
 
@@ -371,6 +502,7 @@ const RouletteTable = () => {
   };
 
   if (isMobilePortrait) {
+    const showMultiplierCellFx = (isMultiplierLaunch && transitionPhase >= 1) || gameState === "bonus" || gameState === "spinning";
     const portraitInnerW = Math.round(tableW * 0.94);
     const portraitInnerH = Math.round(tableH * 0.98);
     const pLeft = -Math.round(portraitInnerW / 2);
@@ -418,7 +550,7 @@ const RouletteTable = () => {
     ]);
 
     return (
-      <PixiContainer x={tableCX} y={tableCY}>
+      <pixiContainer ref={containerRef} x={tableCX} y={tableCY} sortableChildren>
         <PixiContainer x={pGridStartX + pGridW / 2} y={pTop + pTopRowH / 2}>
           <PixiSprite
             texture={Assets.get("table-green-block")}
@@ -452,6 +584,26 @@ const RouletteTable = () => {
               />
             );
           });
+        })}
+
+        {showMultiplierCellFx && MULTIPLIER_NUMBERS.map((multiplierData) => {
+          const rowIdx = Math.floor((multiplierData.number - 1) / 3);
+          const colIdx = (multiplierData.number - 1) % 3;
+          const rSnap = snap(pGridStartY, pGridH, 12, rowIdx);
+          const cSnap = snap(pGridStartX, pGridW, 3, colIdx);
+
+          return (
+            <MultiplierCellFx
+              key={`p-multiplier-fx-${multiplierData.number}`}
+              number={multiplierData.number}
+              multiplier={multiplierData.multiplier}
+              x={cSnap.center}
+              y={rSnap.center}
+              cellWidth={cSnap.size}
+              cellHeight={rSnap.size}
+              isMobilePortrait={isMobilePortrait}
+            />
+          );
         })}
 
         {["1ST\n12", "2ND\n12", "3RD\n12"].map((label, idx) => {
@@ -541,12 +693,12 @@ const RouletteTable = () => {
           Math.min(pGridW / 3, pGridH / 12) * 0.6,
           pHoveredZone,
         )}
-      </PixiContainer>
+      </pixiContainer>
     );
   }
 
   return (
-    <PixiContainer x={tableCX} y={tableCY}>
+    <pixiContainer ref={containerRef} x={tableCX} y={tableCY} sortableChildren>
       {TOP_BETS.map((label, idx) => {
         const cSnap = snap(gridStartX, gridW, TOP_BETS.length, idx);
 
@@ -615,6 +767,28 @@ const RouletteTable = () => {
         });
       })}
 
+      {((isMultiplierLaunch && transitionPhase >= 1) || gameState === "bonus" || gameState === "spinning") && MULTIPLIER_NUMBERS.map((multiplierData) => {
+        const rowIdx = NUMBER_ROWS.findIndex((row) => row.includes(multiplierData.number));
+        if (rowIdx < 0) return null;
+
+        const colIdx = NUMBER_ROWS[rowIdx].indexOf(multiplierData.number);
+        const rSnap = snap(gridStartY, gridH, 3, rowIdx);
+        const cSnap = snap(gridStartX, gridW, 12, colIdx);
+
+        return (
+          <MultiplierCellFx
+            key={`multiplier-fx-${multiplierData.number}`}
+            number={multiplierData.number}
+            multiplier={multiplierData.multiplier}
+            x={cSnap.center}
+            y={rSnap.center}
+            cellWidth={cSnap.size}
+            cellHeight={rSnap.size}
+            isMobilePortrait={isMobilePortrait}
+          />
+        );
+      })}
+
       {SIDE_BETS.map((label, idx) => {
         const rSnap = snap(gridStartY, gridH, 3, idx);
         return (
@@ -656,7 +830,7 @@ const RouletteTable = () => {
         Math.min(gridW / 12, gridH / 3) * 0.62,
         hoveredZoneData,
       )}
-    </PixiContainer>
+    </pixiContainer>
   );
 };
 export default RouletteTable;

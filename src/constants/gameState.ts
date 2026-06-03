@@ -1,6 +1,7 @@
 export const GAME_STATES = {
   BETTING: "PLACE YOUR BET!",
   SPINNING: "SPINNING...",
-  RESULT: "RESULT",
+  RESULT: "",
+  MULTIPLIER_LAUNCH: "IT'S BONUS TIME!",
   BONUS: "IT'S BONUS TIME!",
 } as const;

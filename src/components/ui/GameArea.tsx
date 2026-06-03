@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLayoutStore } from "../../store/useLayoutStore";
 import PixiContainer from "../pixi/PixiContainer";
 import RouletteTable from "./RouletteTable";
@@ -5,6 +6,7 @@ import RouletteWheel from "./RouletteWheel";
 import WinningNumberContainer from "./WinningNumberContainer";
 import { useGameStateStore } from "../../store/useGameStateStore";
 import BonusMultiplierContainer from "./BonusMultiplierContainer";
+import ResultScreen from "./ResultScreen";
 
 // Keep in sync with RouletteTable.tsx
 const HEADER_BOTTOM_MOBILE = 24 + 32 / 2; // 40
@@ -18,11 +20,91 @@ const MAX_BAR_WIDTH_DESKTOP = 900;
 
 const GameArea = () => {
   const { width, height, layoutMode } = useLayoutStore();
-  const { gameState } = useGameStateStore();
+  const { gameState, setGameState } = useGameStateStore();
 
   const isDesktop = layoutMode === "desktop";
   const isMobilePortrait = layoutMode === "mobile-portrait";
   const isMobileLandscape = layoutMode === "mobile-landscape";
+
+  // transitionPhase: 0=betting/start, 1=centering, 2=final-layout, 3=show-multipliers
+  const [transitionPhase, setTransitionPhase] = useState(0);
+
+  // Track mounting of WinningNumberContainer separately so we can delay
+  // unmounting until the exit animation finishes via onHidden callback
+  const isBetting = gameState === "betting";
+  const [showWinningPanel, setShowWinningPanel] = useState(isBetting);
+
+  useEffect(() => {
+    if (isBetting) {
+      setShowWinningPanel(true);
+    }
+    // When leaving betting: keep mounted (visible=false triggers animation),
+    // WinningNumberContainer calls onHidden to unmount via setShowWinningPanel(false)
+  }, [isBetting]);
+
+  useEffect(() => {
+    if (gameState === "multiplier-launch") {
+      setTransitionPhase(1);
+
+      const timer2 = setTimeout(() => {
+        setTransitionPhase(2);
+      }, 3000);
+
+      const timer3 = setTimeout(() => {
+        setTransitionPhase(3);
+      }, 3900);
+
+      const timer4 = setTimeout(() => {
+        setGameState("bonus");
+      }, 6500);
+
+      return () => {
+        clearTimeout(timer2);
+        clearTimeout(timer3);
+        clearTimeout(timer4);
+      };
+    }
+
+    if (gameState === "bonus") {
+      setTransitionPhase(3);
+
+      const timer = setTimeout(() => {
+        setGameState("spinning");
+      }, 2800);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+
+    if (gameState === "spinning") {
+      setTransitionPhase(3);
+
+      const timer = setTimeout(() => {
+        setGameState("result");
+      }, 4700);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+
+    if (gameState === "result") {
+      setTransitionPhase(3);
+
+      const timer = setTimeout(() => {
+        setGameState("betting");
+      }, 6500);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+
+    if (gameState === "betting") {
+      setTransitionPhase(0);
+    }
+  }, [gameState, setGameState]);
 
   // --- Shared game-area vertical bounds (mirrors RouletteTable.tsx) ---
   const headerBottom = isDesktop ? HEADER_BOTTOM_DESKTOP : HEADER_BOTTOM_MOBILE;
@@ -59,16 +141,21 @@ const GameArea = () => {
   return (
     <PixiContainer x={0} y={0}>
       {gameState === "spinning" && <RouletteWheel />}
-      {gameState === "bonus" && <BonusMultiplierContainer />}
-      {gameState === "betting" && (
+      {gameState === "result" && <ResultScreen />}
+      {(gameState === "multiplier-launch" || gameState === "bonus") && (
+        <BonusMultiplierContainer ready={transitionPhase >= 3 || gameState === "bonus"} />
+      )}
+      {showWinningPanel && (
         <WinningNumberContainer
           x={winningPanelX}
           y={winningPanelY}
           width={winningPanelWidth}
           height={winningPanelHeight}
+          visible={isBetting}
+          onHidden={() => setShowWinningPanel(false)}
         />
       )}
-      <RouletteTable />
+      {gameState !== "result" && <RouletteTable transitionPhase={transitionPhase} />}
     </PixiContainer>
   );
 };

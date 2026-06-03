@@ -11,6 +11,17 @@ import { useGameStateStore } from "../../store/useGameStateStore";
 const Footer = () => {
   const { width, height, layoutMode } = useLayoutStore();
   const { gameState } = useGameStateStore();
+  const isBetting = gameState === "betting";
+  const [showChipPanel, setShowChipPanel] = useState(isBetting);
+
+  useEffect(() => {
+    if (isBetting) {
+      setShowChipPanel(true);
+    }
+    // When leaving betting: keep mounted (visible=false triggers animation),
+    // ChipAndSpinInterface calls onHidden to unmount via setShowChipPanel(false)
+  }, [isBetting]);
+
   const [chipBoundaries, setChipBoundaries] = useState({
     leftBoundary: 0,
     rightBoundary: 0,
@@ -70,12 +81,14 @@ const Footer = () => {
         handleFooterLayout={handleFooterLayout}
         zIndex={isMobilePortrait ? 2 : 0}
       />
-      {gameState === "betting" && (
+      {showChipPanel && (
         <ChipAndSpinInterface
           width={width}
           leftBoundary={chipBoundaries.leftBoundary}
           rightBoundary={chipBoundaries.rightBoundary}
           zIndex={1}
+          visible={isBetting}
+          onHidden={() => setShowChipPanel(false)}
         />
       )}
       {volumeVisible && (

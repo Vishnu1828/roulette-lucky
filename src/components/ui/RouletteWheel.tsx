@@ -1,7 +1,10 @@
 import { Assets } from "pixi.js";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import PixiContainer from "../pixi/PixiContainer";
 import PixiSprite from "../pixi/PixiSprite";
 import { useLayoutStore } from "../../store/useLayoutStore";
+import type { Container } from "pixi.js";
 
 const HEADER_BOTTOM_DESKTOP = 42 + 60 / 2;
 const HEADER_BOTTOM_MOBILE = 24 + 32 / 2;
@@ -17,6 +20,7 @@ const MAX_WHEEL_DESKTOP = 600;
 
 const RouletteWheel = () => {
   const { width, height, layoutMode } = useLayoutStore();
+  const rotatingRef = useRef<Container | null>(null);
 
   const isMobilePortrait = layoutMode === "mobile-portrait";
   const isDesktop = layoutMode === "desktop";
@@ -78,6 +82,22 @@ const RouletteWheel = () => {
     wheelY = gameAreaTop + (footerTop - gameAreaTop) * 0.45;
   }
 
+  useEffect(() => {
+    const rotating = rotatingRef.current;
+    if (!rotating) return;
+
+    gsap.to(rotating, {
+      rotation: Math.PI * 2,
+      duration: 0.85,
+      repeat: -1,
+      ease: "none",
+    });
+
+    return () => {
+      gsap.killTweensOf(rotating);
+    };
+  }, []);
+
   return (
     <PixiContainer x={wheelX} y={wheelY}>
       <PixiSprite
@@ -86,18 +106,20 @@ const RouletteWheel = () => {
         height={wheelSize}
         anchor={0.5}
       />
-      <PixiSprite
-        texture={Assets.get("roulette-wheel-number-ring")}
-        width={numberRingSize}
-        height={numberRingSize}
-        anchor={0.5}
-      />
-      <PixiSprite
-        texture={Assets.get("roulette-wheel-center")}
-        width={centerSize}
-        height={centerSize}
-        anchor={0.5}
-      />
+      <pixiContainer ref={rotatingRef}>
+        <PixiSprite
+          texture={Assets.get("roulette-wheel-number-ring")}
+          width={numberRingSize}
+          height={numberRingSize}
+          anchor={0.5}
+        />
+        <PixiSprite
+          texture={Assets.get("roulette-wheel-center")}
+          width={centerSize}
+          height={centerSize}
+          anchor={0.5}
+        />
+      </pixiContainer>
     </PixiContainer>
   );
 };

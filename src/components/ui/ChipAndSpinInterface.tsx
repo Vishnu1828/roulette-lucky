@@ -1,7 +1,9 @@
+import { useEffect, useRef } from "react";
 import { useLayoutStore } from "../../store/useLayoutStore";
 import PixiContainer from "../pixi/PixiContainer";
 import PixiSprite from "../pixi/PixiSprite";
-import { Assets } from "pixi.js";
+import { Assets, Container } from "pixi.js";
+import gsap from "gsap";
 import LabelSprite from "./LabelSprite";
 import ChipPanel from "./ChipPanel";
 import { BITMAP_FONT_FAMILY } from "../../utils/assets";
@@ -18,6 +20,8 @@ type Props = {
   // Right boundary where safe content ends (before settings icons area)
   rightBoundary: number;
   zIndex?: number;
+  visible?: boolean;
+  onHidden?: () => void;
 };
 
 const ChipAndSpinInterface = ({
@@ -25,10 +29,41 @@ const ChipAndSpinInterface = ({
   leftBoundary,
   rightBoundary,
   zIndex = 1,
+  visible = true,
+  onHidden,
 }: Props) => {
+  const containerRef = useRef<Container | null>(null);
   const { layoutMode, height } = useLayoutStore();
   const { setGameState } = useGameStateStore();
   const { setPlacedBets, undoLastBet, clearBets, doubleBets } = useBetStore();
+
+  useEffect(() => {
+    const c = containerRef.current;
+    if (!c) return;
+    if (!visible) {
+      gsap.to(c, {
+        y: c.y + 80,
+        alpha: 0,
+        duration: 0.6,
+        ease: "power2.in",
+        onComplete: () => {
+          onHidden?.();
+        },
+      });
+    } else {
+      gsap.killTweensOf(c);
+      const targetY = height - (c.height || 0);
+      c.y = targetY + 76;
+      c.alpha = 0;
+      gsap.to(c, {
+        y: targetY,
+        alpha: 1,
+        duration: 0.55,
+        ease: "power2.out",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
   const isMobilePortrait = layoutMode === "mobile-portrait";
   const isMobileLandscape = layoutMode === "mobile-landscape";
   const desktopBarAspectRatio = 161 / 1108;
@@ -100,7 +135,7 @@ const ChipAndSpinInterface = ({
     ? barHeight * 0.01
     : middleRowY - chipPanelHeight * 0.75;
   return (
-    <PixiContainer y={containerY} x={0} zIndex={zIndex}>
+    <pixiContainer ref={containerRef} y={containerY} x={0} zIndex={zIndex}>
       <PixiSprite
         texture={Assets.get(
           isMobilePortrait ? "ui-bar-mobile-portrait" : "ui-bar-desktop",
@@ -232,11 +267,11 @@ const ChipAndSpinInterface = ({
             ]
           }
           onPointerTap={() => {
-            setGameState("bonus");
+            setGameState("multiplier-launch");
           }}
         />
       </PixiContainer>
-    </PixiContainer>
+    </pixiContainer>
   );
 };
 

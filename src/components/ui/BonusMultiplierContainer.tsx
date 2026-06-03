@@ -1,6 +1,7 @@
 import PixiContainer from "../pixi/PixiContainer";
 import Multiplier from "./Multiplier";
 import { useLayoutStore } from "../../store/useLayoutStore";
+import { MULTIPLIER_NUMBERS } from "../../constants/multipliers";
 
 // Keep in sync with RouletteTable.tsx / GameArea.tsx
 const HEADER_BOTTOM_DESKTOP = 42 + 60 / 2; // 72
@@ -15,23 +16,15 @@ const MAX_BADGE_MOBILE = 100;
 const MAX_BADGE_MOBILE_PORTRAIT = 112;
 const MAX_BADGE_DESKTOP = 180;
 
-// Sample data — replace with real game data as needed
-const MULTIPLIERS: {
-  number: number;
-  multiplier: 100 | 500 | 1000 | 2000 | 5000;
-}[] = [
-  { number: 7, multiplier: 2000 },
-  { number: 14, multiplier: 5000 },
-  { number: 3, multiplier: 500 },
-  { number: 22, multiplier: 100 },
-  { number: 36, multiplier: 1000 },
-];
-
 const ITEM_GAP = 12; // px gap between badges
 // Stagger delay between each badge in seconds
 const STAGGER_DELAY = 0.5;
 
-const BonusMultiplierContainer = () => {
+type BonusMultiplierContainerProps = {
+  ready?: boolean;
+};
+
+const BonusMultiplierContainer = ({ ready = true }: BonusMultiplierContainerProps) => {
   const { width, height, layoutMode } = useLayoutStore();
 
   const isMobilePortrait = layoutMode === "mobile-portrait";
@@ -121,7 +114,7 @@ const BonusMultiplierContainer = () => {
 
   return (
     <PixiContainer x={areaX} y={areaY}>
-      {MULTIPLIERS.map((m, i) => (
+      {ready && MULTIPLIER_NUMBERS.map((m, i) => (
         <Multiplier
           key={i}
           number={m.number}
