@@ -3,6 +3,7 @@ import PixiBitmapText from "../pixi/PixiBitmapText";
 import PixiContainer from "../pixi/PixiContainer";
 import GameAnimation from "./GameAnimation";
 import { Ticker } from "pixi.js";
+import { MULTIPLIER_COLORS } from "../../constants/multipliers";
 
 // Valid multiplier values and their asset keyword
 const MULTIPLIER_KEYWORDS: Record<number, string> = {
@@ -109,7 +110,6 @@ const Multiplier = ({
   const numberFontSize = Math.round(size * 0.32);
   const multiplierFontSize = Math.round(size * 0.15);
   const multiplierLabelY = size / 2 + multiplierFontSize * 0.2;
-
   return (
     <PixiContainer x={x} y={y} sortableChildren>
       {/* Badge entrance animation — plays once after delay, holds on last frame */}
@@ -144,7 +144,10 @@ const Multiplier = ({
         x={0}
         y={multiplierLabelY}
         fontSize={multiplierFontSize}
-        tint={0xf1be31}
+        tint={
+          MULTIPLIER_COLORS[multiplier as keyof typeof MULTIPLIER_COLORS] ??
+          0xf1be31
+        }
         anchor={0.5}
         alpha={textAlpha}
       />

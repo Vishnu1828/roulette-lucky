@@ -13,7 +13,10 @@ import { useChipStore } from "../../store/useChipStore";
 import { useBetStore } from "../../store/useBetStore";
 import { useWalletStore } from "../../store/useWalletStore";
 import { getChipTexture } from "../../constants/rouletteBetting";
-import { MULTIPLIER_NUMBERS } from "../../constants/multipliers";
+import {
+  MULTIPLIER_COLORS,
+  MULTIPLIER_NUMBERS,
+} from "../../constants/multipliers";
 import { buildRouletteBetZones } from "../../utils/rouletteBetZones";
 import type { RouletteBetZone, PlacedBet } from "../../types/rouletteBetting";
 import GameAnimation from "./GameAnimation";
@@ -98,6 +101,10 @@ const MultiplierCellFx = ({
           animationSpeed={0.55}
           restartKey={`select-${number}`}
           onComplete={() => setRevealStarted(true)}
+          tint={
+            MULTIPLIER_COLORS[multiplier as keyof typeof MULTIPLIER_COLORS] ??
+            0xffffff
+          }
         />
       )}
       {revealStarted && (
@@ -115,6 +122,10 @@ const MultiplierCellFx = ({
               setShowMultiplierText(true);
             }
           }}
+          tint={
+            MULTIPLIER_COLORS[multiplier as keyof typeof MULTIPLIER_COLORS] ??
+            0xffffff
+          }
         />
       )}
       {showMultiplierText && (
@@ -123,7 +134,7 @@ const MultiplierCellFx = ({
           x={0}
           y={0}
           fontSize={textFontSize}
-          tint={0xf1be31}
+          tint={0xffffff}
           anchor={0.5}
         />
       )}
@@ -132,11 +143,7 @@ const MultiplierCellFx = ({
 };
 
 // ── Draw a zone highlight shape ──────────────────────────────────────────
-function drawHighlight(
-  g: import("pixi.js").Graphics,
-  zone: RouletteBetZone,
-  hovered: boolean,
-) {
+function drawHighlight(g: import("pixi.js").Graphics, zone: RouletteBetZone) {
   g.clear();
 
   const shape = zone.highlightShape;
@@ -155,7 +162,6 @@ function drawHighlight(
       shape.height,
     );
   } else {
-    console.log("[ERROR] Unknown shape kind:", shape);
     g.rect(shape.x, shape.y, shape.width, shape.height);
   }
   g.fill({ color: 0xffffff, alpha: 0 });
@@ -392,14 +398,12 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
     return (
       <>
         {zones.map((zone) => {
-          const isHovered = hoveredKey === zone.spotKey;
-
           // Stable draw fn factory (avoids over-memoisation across zone list)
           // We pass `isHovered` into the draw at render time.
           // useCallback in PixiGraphic will re-run when draw reference changes,
           // which happens whenever hoveredKey changes. That's acceptable.
           const drawFn = (g: import("pixi.js").Graphics) =>
-            drawHighlight(g, zone, isHovered);
+            drawHighlight(g, zone);
 
           return (
             <PixiGraphic
