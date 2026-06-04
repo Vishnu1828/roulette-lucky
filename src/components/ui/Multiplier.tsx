@@ -29,6 +29,8 @@ type MultiplierProps = {
   size?: number;
   /** Seconds to wait before starting the entrance animation */
   delay?: number;
+  /** Called when entrance animation completes (after fade finishes) */
+  onComplete?: () => void;
 };
 
 const Multiplier = ({
@@ -38,6 +40,7 @@ const Multiplier = ({
   y = 0,
   size = 10,
   delay = 0,
+  onComplete,
 }: MultiplierProps) => {
   // ready becomes true after the delay elapses — gates the animation render
   const [ready, setReady] = useState(delay === 0);
@@ -61,10 +64,12 @@ const Multiplier = ({
       if (t >= 1) {
         ticker.remove(onTick);
         fadeRef.current = null;
+        // Notify parent that this badge animation is complete
+        onComplete?.();
       }
     };
     ticker.add(onTick);
-  }, []);
+  }, [onComplete]);
 
   // Stable callback — never changes reference so GameAnimation won't replay
   const handleEntranceComplete = useCallback(() => {

@@ -7,7 +7,7 @@ import gsap from "gsap";
 import LabelSprite from "./LabelSprite";
 import ChipPanel from "./ChipPanel";
 import { BITMAP_FONT_FAMILY } from "../../utils/assets";
-import { useGameStateStore } from "../../store/useGameStateStore";
+import { useEmitGameEvent } from "../../store/useGameFlowStore";
 import { useBetStore } from "../../store/useBetStore";
 import type { PlacedBet } from "../../types/rouletteBetting";
 
@@ -34,19 +34,25 @@ const ChipAndSpinInterface = ({
 }: Props) => {
   const containerRef = useRef<Container | null>(null);
   const { layoutMode, height } = useLayoutStore();
-  const { setGameState } = useGameStateStore();
+  const emitEvent = useEmitGameEvent();
   const { setPlacedBets, undoLastBet, clearBets, doubleBets } = useBetStore();
 
   useEffect(() => {
     const c = containerRef.current;
-    if (!c) return;
+    if (!c) {
+      console.log("[ChipAndSpinInterface] containerRef is null");
+      return;
+    }
+    console.log(`[ChipAndSpinInterface] visible changed to: ${visible}`);
     if (!visible) {
+      console.log("[ChipAndSpinInterface] Animating out");
       gsap.to(c, {
         y: c.y + 80,
         alpha: 0,
         duration: 0.6,
         ease: "power2.in",
         onComplete: () => {
+          console.log("[ChipAndSpinInterface] Hide animation complete");
           onHidden?.();
         },
       });
@@ -232,7 +238,8 @@ const ChipAndSpinInterface = ({
                 spotKey: "color-red",
                 type: "color",
                 coveredNumbers: [
-                  1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36,
+                  1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34,
+                  36,
                 ],
                 amount: 5,
                 chips: [5],
@@ -263,11 +270,11 @@ const ChipAndSpinInterface = ({
           tint={0x007011}
           fontFamily={
             BITMAP_FONT_FAMILY.spinButton[
-            isMobilePortrait ? "mobile" : "desktop"
+              isMobilePortrait ? "mobile" : "desktop"
             ]
           }
           onPointerTap={() => {
-            setGameState("multiplier-launch");
+            emitEvent("SPIN_BUTTON_CLICKED");
           }}
         />
       </PixiContainer>

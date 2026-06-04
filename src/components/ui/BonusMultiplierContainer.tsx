@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef } from "react";
 import PixiContainer from "../pixi/PixiContainer";
 import Multiplier from "./Multiplier";
 import { useLayoutStore } from "../../store/useLayoutStore";
@@ -22,10 +23,42 @@ const STAGGER_DELAY = 0.5;
 
 type BonusMultiplierContainerProps = {
   ready?: boolean;
+  /** Called when all badge entrance animations have completed */
+  onAnimationComplete?: () => void;
 };
 
-const BonusMultiplierContainer = ({ ready = true }: BonusMultiplierContainerProps) => {
+const BonusMultiplierContainer = ({
+  ready = true,
+  onAnimationComplete,
+}: BonusMultiplierContainerProps) => {
   const { width, height, layoutMode } = useLayoutStore();
+
+  // Track how many badges have completed their animation
+  const completedCountRef = useRef(0);
+  const hasNotifiedRef = useRef(false);
+  const totalBadges = MULTIPLIER_NUMBERS.length;
+
+  // Reset counter when ready changes (for subsequent game rounds)
+  useEffect(() => {
+    if (ready) {
+      completedCountRef.current = 0;
+      hasNotifiedRef.current = false;
+    }
+  }, [ready]);
+
+  const handleBadgeComplete = useCallback(() => {
+    completedCountRef.current += 1;
+    console.log(
+      `[BonusMultiplier] Badge completed: ${completedCountRef.current}/${totalBadges}`,
+    );
+    if (completedCountRef.current >= totalBadges && !hasNotifiedRef.current) {
+      hasNotifiedRef.current = true;
+      console.log(
+        "[BonusMultiplier] All badges complete, calling onAnimationComplete",
+      );
+      onAnimationComplete?.();
+    }
+  }, [totalBadges, onAnimationComplete]);
 
   const isMobilePortrait = layoutMode === "mobile-portrait";
   const isMobileLandscape = layoutMode === "mobile-landscape";
@@ -114,17 +147,19 @@ const BonusMultiplierContainer = ({ ready = true }: BonusMultiplierContainerProp
 
   return (
     <PixiContainer x={areaX} y={areaY}>
-      {ready && MULTIPLIER_NUMBERS.map((m, i) => (
-        <Multiplier
-          key={i}
-          number={m.number}
-          multiplier={m.multiplier}
-          x={positions[i].x}
-          y={positions[i].y}
-          size={badgeSize}
-          delay={i * STAGGER_DELAY}
-        />
-      ))}
+      {ready &&
+        MULTIPLIER_NUMBERS.map((m, i) => (
+          <Multiplier
+            key={i}
+            number={m.number}
+            multiplier={m.multiplier}
+            x={positions[i].x}
+            y={positions[i].y}
+            size={badgeSize}
+            delay={i * STAGGER_DELAY}
+            onComplete={handleBadgeComplete}
+          />
+        ))}
     </PixiContainer>
   );
 };

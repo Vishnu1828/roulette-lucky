@@ -1,15 +1,16 @@
 import { GAME_STATES } from "../../constants/gameState";
-import { useGameStateStore } from "../../store/useGameStateStore";
+import { useGameState } from "../../store/useGameFlowStore";
 import { useLayoutStore } from "../../store/useLayoutStore";
 import PixiContainer from "../pixi/PixiContainer";
 import PixiText from "../pixi/PixiText";
 
 const Header = () => {
   const { width, layoutMode } = useLayoutStore();
-  const { gameState } = useGameStateStore();
+  const gameState = useGameState();
   const fontSize = layoutMode === "desktop" ? 60 : 32;
   const y = layoutMode === "desktop" ? 42 : 24;
-  const textKey = (gameState?.replace("-", "_").toUpperCase() || "") as keyof typeof GAME_STATES;
+  const textKey = (gameState?.replace("-", "_").toUpperCase() ||
+    "") as keyof typeof GAME_STATES;
   const text = GAME_STATES[textKey] || "";
 
   return (

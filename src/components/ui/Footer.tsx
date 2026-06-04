@@ -6,12 +6,13 @@ import PixiContainer from "../pixi/PixiContainer";
 import BettingSettings from "./BettingSettings";
 import { VolumeSlider } from "./VolumeSlider";
 import ChipAndSpinInterface from "./ChipAndSpinInterface";
-import { useGameStateStore } from "../../store/useGameStateStore";
+import { useGameState } from "../../store/useGameFlowStore";
 
 const Footer = () => {
   const { width, height, layoutMode } = useLayoutStore();
-  const { gameState } = useGameStateStore();
+  const gameState = useGameState();
   const isBetting = gameState === "betting";
+  console.log(`[Footer] gameState=${gameState}, isBetting=${isBetting}`);
   const [showChipPanel, setShowChipPanel] = useState(isBetting);
 
   useEffect(() => {

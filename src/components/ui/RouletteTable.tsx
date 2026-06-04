@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import PixiContainer from "../pixi/PixiContainer";
 import LabelSprite from "./LabelSprite";
 import TableCell from "./TableCell";
@@ -8,7 +8,7 @@ import { PixiGraphic } from "../pixi/PixiGraphic";
 import { Assets, Container } from "pixi.js";
 import gsap from "gsap";
 import { useLayoutStore } from "../../store/useLayoutStore";
-import { useGameStateStore } from "../../store/useGameStateStore";
+import { useGameState } from "../../store/useGameFlowStore";
 import { useChipStore } from "../../store/useChipStore";
 import { useBetStore } from "../../store/useBetStore";
 import { useWalletStore } from "../../store/useWalletStore";
@@ -62,6 +62,8 @@ type MultiplierCellFxProps = {
   cellWidth: number;
   cellHeight: number;
   isMobilePortrait: boolean;
+  onSelectionComplete?: () => void;
+  onRevealComplete?: () => void;
 };
 
 const MultiplierCellFx = ({
@@ -72,6 +74,8 @@ const MultiplierCellFx = ({
   cellWidth,
   cellHeight,
   isMobilePortrait,
+  onSelectionComplete,
+  onRevealComplete,
 }: MultiplierCellFxProps) => {
   const [revealStarted, setRevealStarted] = useState(false);
   const [showMultiplierText, setShowMultiplierText] = useState(false);
@@ -100,7 +104,10 @@ const MultiplierCellFx = ({
           loop={false}
           animationSpeed={0.55}
           restartKey={`select-${number}`}
-          onComplete={() => setRevealStarted(true)}
+          onComplete={() => {
+            setRevealStarted(true);
+            onSelectionComplete?.();
+          }}
           tint={
             MULTIPLIER_COLORS[multiplier as keyof typeof MULTIPLIER_COLORS] ??
             0xffffff
@@ -117,6 +124,7 @@ const MultiplierCellFx = ({
           loop={false}
           animationSpeed={0.55}
           restartKey={`reveal-${number}`}
+          onComplete={onRevealComplete}
           onFrameChange={(currentFrame, totalFrames) => {
             if (currentFrame >= Math.floor(totalFrames * 0.45)) {
               setShowMultiplierText(true);
@@ -187,14 +195,79 @@ function drawHighlight(g: import("pixi.js").Graphics, zone: RouletteBetZone) {
 
 type RouletteTableProps = {
   transitionPhase?: number;
+  onMultiplierSelectionComplete?: () => void;
+  onMultiplierRevealComplete?: () => void;
 };
 
-const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
+const RouletteTable = ({
+  transitionPhase = 0,
+  onMultiplierSelectionComplete,
+  onMultiplierRevealComplete,
+}: RouletteTableProps) => {
   const { width, height, layoutMode } = useLayoutStore();
-  const { gameState } = useGameStateStore();
+  const gameState = useGameState();
   const { selectedChip } = useChipStore();
   const { placedBets, setPlacedBets } = useBetStore();
   const { setTotalBet } = useWalletStore();
+
+  // Track multiplier animation completions
+  const totalMultipliers = MULTIPLIER_NUMBERS.length;
+  const [selectionsComplete, setSelectionsComplete] = useState(0);
+  const [revealsComplete, setRevealsComplete] = useState(0);
+  const selectionCallbackFiredRef = useRef(false);
+  const revealCallbackFiredRef = useRef(false);
+
+  // Reset tracking when game state changes
+  useEffect(() => {
+    if (gameState === "betting") {
+      setSelectionsComplete(0);
+      setRevealsComplete(0);
+      selectionCallbackFiredRef.current = false;
+      revealCallbackFiredRef.current = false;
+    }
+  }, [gameState]);
+
+  // Callbacks for individual cell animations
+  const handleSelectionComplete = useCallback(() => {
+    setSelectionsComplete((prev) => {
+      console.log(
+        `[RouletteTable] Selection complete: ${prev + 1}/${totalMultipliers}`,
+      );
+      return prev + 1;
+    });
+  }, [totalMultipliers]);
+
+  const handleRevealComplete = useCallback(() => {
+    setRevealsComplete((prev) => {
+      console.log(
+        `[RouletteTable] Reveal complete: ${prev + 1}/${totalMultipliers}`,
+      );
+      return prev + 1;
+    });
+  }, [totalMultipliers]);
+
+  // Fire parent callbacks when all animations complete
+  useEffect(() => {
+    if (
+      selectionsComplete >= totalMultipliers &&
+      !selectionCallbackFiredRef.current
+    ) {
+      selectionCallbackFiredRef.current = true;
+      console.log("[RouletteTable] All selection animations complete");
+      onMultiplierSelectionComplete?.();
+    }
+  }, [selectionsComplete, totalMultipliers, onMultiplierSelectionComplete]);
+
+  useEffect(() => {
+    if (
+      revealsComplete >= totalMultipliers &&
+      !revealCallbackFiredRef.current
+    ) {
+      revealCallbackFiredRef.current = true;
+      console.log("[RouletteTable] All reveal animations complete");
+      onMultiplierRevealComplete?.();
+    }
+  }, [revealsComplete, totalMultipliers, onMultiplierRevealComplete]);
 
   const handlePlaceChip = (zone: RouletteBetZone, chipValue: number) => {
     const currentSpotAmount = placedBets
@@ -253,7 +326,7 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
     : barWidth * BAR_ASPECT_LANDSCAPE;
 
   const footerTop =
-    isBetting || (isMultiplierLaunch && transitionPhase <= 1)
+    isBetting || (isMultiplierLaunch && transitionPhase <= 2)
       ? height - chipBarHeight - TABLE_GAP
       : height - bettingSettingsHeight - TABLE_GAP;
   const bettingFooterTop = height - chipBarHeight - TABLE_GAP;
@@ -272,27 +345,29 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
   let tableCX: number;
   let tableCY: number;
 
-  if (isBetting || (isMultiplierLaunch && transitionPhase <= 1)) {
-    // Phase 1: Keep betting dimensions & horizontal offset
+  // Keep betting dimensions through phase 1 and 2 (during selection & reveal animations)
+  // Only shrink/move at phase 3 (after reveal animation completes)
+  if (isBetting || (isMultiplierLaunch && transitionPhase <= 2)) {
+    // Phase 1-2: Keep betting dimensions & horizontal offset
     tableW = tableRightBound - SIDE_PADDING;
     tableH = Math.min(footerTop - gameAreaTop - TABLE_GAP, 500);
 
     const targetCX = (() => {
       // Mobile Portrait centering happens in Phase 1
-      if (isMobilePortrait && isMultiplierLaunch && transitionPhase === 1) {
+      if (isMobilePortrait && isMultiplierLaunch && transitionPhase >= 1) {
         return (SIDE_PADDING + width - rightPadding) / 2;
       }
-      // Desktop & Mobile Landscape remain at betting offset during Phase 1 reveals
+      // Desktop & Mobile Landscape remain at betting offset during Phase 1-2
       return SIDE_PADDING + tableW / 2;
     })();
 
     tableCX = targetCX;
     tableCY =
-      isMobilePortrait && isMultiplierLaunch && transitionPhase === 1
+      isMobilePortrait && isMultiplierLaunch && transitionPhase >= 1
         ? (gameAreaTop + bettingFooterTop) * 0.65
         : gameAreaCenterY;
   } else {
-    // Phase 2+: Final result layout
+    // Phase 3+: Final result layout (after reveal animation completes)
     if (isMobilePortrait) {
       tableW = Math.round(clamp(width * 0.46, 200, 280));
       tableH = Math.round(clamp(tableW * 0.9, 300, 500));
@@ -321,14 +396,23 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
     if (!c || tableW <= 0 || tableH <= 0) return;
 
     const isPortraitMultiplierCentering =
-      isMobilePortrait && isMultiplierLaunch && transitionPhase === 1;
+      isMobilePortrait && isMultiplierLaunch && transitionPhase >= 1 && transitionPhase <= 2;
+    
+    // Phase 3 is when table shrinks after reveal animation - use longer duration
+    const isPhase3Shrink = isMultiplierLaunch && transitionPhase === 3;
+    
     const duration = isPortraitMultiplierCentering
       ? 0.84
-      : transitionPhase === 1
-        ? 0.65
-        : 0.75;
-    const delay =
-      isMobilePortrait && isMultiplierLaunch && transitionPhase === 1
+      : isPhase3Shrink
+        ? 0.85
+        : transitionPhase === 1
+          ? 0.65
+          : 0.75;
+    
+    // No delay for phase 3 shrink since reveal animation already completed
+    const delay = isPhase3Shrink
+      ? 0
+      : isMobilePortrait && isMultiplierLaunch && transitionPhase === 1
         ? 0.7
         : 0.8;
 
@@ -590,6 +674,8 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
                 cellWidth={cSnap.size}
                 cellHeight={rSnap.size}
                 isMobilePortrait={isMobilePortrait}
+                onSelectionComplete={handleSelectionComplete}
+                onRevealComplete={handleRevealComplete}
               />
             );
           })}
@@ -825,6 +911,8 @@ const RouletteTable = ({ transitionPhase = 0 }: RouletteTableProps) => {
               cellWidth={cSnap.size}
               cellHeight={rSnap.size}
               isMobilePortrait={isMobilePortrait}
+              onSelectionComplete={handleSelectionComplete}
+              onRevealComplete={handleRevealComplete}
             />
           );
         })}
