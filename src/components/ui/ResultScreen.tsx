@@ -1,19 +1,15 @@
-import { Assets, Container, Ticker } from "pixi.js";
+import { Container, Ticker } from "pixi.js";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import PixiBitmapText from "../pixi/PixiBitmapText";
-import PixiContainer from "../pixi/PixiContainer";
-import PixiSprite from "../pixi/PixiSprite";
 import { useLayoutStore } from "../../store/useLayoutStore";
 import GameAnimation from "./GameAnimation";
 
 const HEADER_BOTTOM_DESKTOP = 42 + 60 / 2;
 const HEADER_BOTTOM_MOBILE = 24 + 32 / 2;
 const HEADER_GAP = 32;
-const SIDE_PADDING = 32;
 const TABLE_GAP = 8;
-const WINNING_NUMBER = 24;
-const WINNING_MULTIPLIER = 1000;
+
 const TARGET_PAYOUT = 100000;
 
 const clamp = (value: number, min: number, max: number) =>
@@ -38,10 +34,7 @@ const ResultScreen = () => {
     : isMobilePortrait
       ? clamp(width * 0.78, 250, 320)
       : clamp(width * 0.32, 250, 330);
-  const numberRingSize = wheelSize * 0.75;
-  const centerSize = numberRingSize * 0.55;
 
-  let wheelX = width / 2;
   let wheelY = gameAreaTop + availableHeight * 0.28;
   let resultX = width / 2;
   let messageY = wheelY + wheelSize * 0.66;
@@ -57,9 +50,7 @@ const ResultScreen = () => {
       ),
     );
     const tableLeft = width - rightMargin - tableW;
-    const leftAreaW = Math.max(0, tableLeft - 20 - SIDE_PADDING);
 
-    wheelX = SIDE_PADDING + leftAreaW / 2;
     wheelY = gameAreaTop + availableHeight * 0.45;
     resultX = tableLeft + tableW / 2;
     messageY = wheelY - wheelSize * 0.12;
@@ -68,8 +59,6 @@ const ResultScreen = () => {
 
   const titleFontSize = Math.round(clamp(wheelSize * 0.16, 38, 82));
   const payoutFontSize = Math.round(clamp(wheelSize * 0.14, 34, 72));
-  const numberFontSize = Math.round(wheelSize * 0.2);
-  const multiplierFontSize = Math.round(wheelSize * 0.035);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -120,7 +109,9 @@ const ResultScreen = () => {
     <pixiContainer ref={containerRef}>
       {showWinFx && (
         <GameAnimation
-          animationKeyword={isMobilePortrait ? "fx-win-mobile-portrait" : "fx-win-desktop"}
+          animationKeyword={
+            isMobilePortrait ? "fx-win-mobile-portrait" : "fx-win-desktop"
+          }
           x={width / 2}
           y={height / 2}
           width={width}
@@ -129,7 +120,7 @@ const ResultScreen = () => {
           animationSpeed={0.55}
         />
       )}
-      <PixiContainer x={wheelX} y={wheelY}>
+      {/* <PixiContainer x={wheelX} y={wheelY}>
         <PixiSprite
           texture={Assets.get("roulette-wheel-base")}
           width={wheelSize}
@@ -172,7 +163,7 @@ const ResultScreen = () => {
           tint={0xf1be31}
           anchor={0.5}
         />
-      </PixiContainer>
+      </PixiContainer>  */}
       <PixiBitmapText
         text="YOU WON"
         x={resultX}

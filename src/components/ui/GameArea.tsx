@@ -77,29 +77,29 @@ const GameArea = () => {
       };
     }
 
-    if (gameState === "spinning") {
-      setTransitionPhase(3);
+    // if (gameState === "spinning") {
+    //   setTransitionPhase(3);
 
-      const timer = setTimeout(() => {
-        setGameState("result");
-      }, 4700);
+    //   const timer = setTimeout(() => {
+    //     setGameState("result");
+    //   }, 4700);
 
-      return () => {
-        clearTimeout(timer);
-      };
-    }
+    //   return () => {
+    //     clearTimeout(timer);
+    //   };
+    // }
 
-    if (gameState === "result") {
-      setTransitionPhase(3);
+    // if (gameState === "result") {
+    //   setTransitionPhase(3);
 
-      const timer = setTimeout(() => {
-        setGameState("betting");
-      }, 6500);
+    //   const timer = setTimeout(() => {
+    //     setGameState("betting");
+    //   }, 6500);
 
-      return () => {
-        clearTimeout(timer);
-      };
-    }
+    //   return () => {
+    //     clearTimeout(timer);
+    //   };
+    // }
 
     if (gameState === "betting") {
       setTransitionPhase(0);
@@ -113,9 +113,9 @@ const GameArea = () => {
   const barWidth = isMobilePortrait
     ? width
     : Math.min(
-      width * 0.55,
-      isMobileLandscape ? MAX_BAR_WIDTH_LANDSCAPE : MAX_BAR_WIDTH_DESKTOP,
-    );
+        width * 0.55,
+        isMobileLandscape ? MAX_BAR_WIDTH_LANDSCAPE : MAX_BAR_WIDTH_DESKTOP,
+      );
   const barHeight = isMobilePortrait
     ? barWidth * BAR_ASPECT_PORTRAIT
     : barWidth * BAR_ASPECT_LANDSCAPE;
@@ -123,7 +123,9 @@ const GameArea = () => {
   const bettingTableHeight = footerTop - gameAreaTop - TABLE_GAP;
 
   // Vertical centre of the available game area — used for all non-portrait layouts
-  const gameAreaCenterY = isMobileLandscape ? (gameAreaTop + footerTop) * 0.46 : (gameAreaTop + footerTop) * 0.45;
+  const gameAreaCenterY = isMobileLandscape
+    ? (gameAreaTop + footerTop) * 0.46
+    : (gameAreaTop + footerTop) * 0.45;
 
   // --- WinningNumberContainer ---
   const rightPadding = isDesktop ? 50 : isMobilePortrait ? 14 : 50;
@@ -138,12 +140,21 @@ const GameArea = () => {
   // Mobile landscape: share the same vertical centre as RouletteTable so they sit in the same row
   const winningPanelY = isMobilePortrait ? height * 0.4 : gameAreaCenterY;
 
+  const onSpinComplete = () => {
+    setGameState("result");
+    setTransitionPhase(3);
+  };
+
   return (
     <PixiContainer x={0} y={0}>
-      {gameState === "spinning" && <RouletteWheel />}
+      {(gameState === "spinning" || gameState === "result") && (
+        <RouletteWheel onSpinComplete={onSpinComplete} />
+      )}
       {gameState === "result" && <ResultScreen />}
       {(gameState === "multiplier-launch" || gameState === "bonus") && (
-        <BonusMultiplierContainer ready={transitionPhase >= 3 || gameState === "bonus"} />
+        <BonusMultiplierContainer
+          ready={transitionPhase >= 3 || gameState === "bonus"}
+        />
       )}
       {showWinningPanel && (
         <WinningNumberContainer
@@ -155,7 +166,9 @@ const GameArea = () => {
           onHidden={() => setShowWinningPanel(false)}
         />
       )}
-      {gameState !== "result" && <RouletteTable transitionPhase={transitionPhase} />}
+      {gameState !== "result" && (
+        <RouletteTable transitionPhase={transitionPhase} />
+      )}
     </PixiContainer>
   );
 };

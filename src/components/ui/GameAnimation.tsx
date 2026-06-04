@@ -50,10 +50,25 @@ const GameAnimation = ({
   onFrameChange,
 }: GameAnimationProps) => {
   const spriteRef = useRef<AnimatedSprite | null>(null);
+  const onCompleteRef = useRef(onComplete);
+  const onFrameChangeRef = useRef(onFrameChange);
+
+  // Keep refs updated without triggering re-renders
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
+
+  useEffect(() => {
+    onFrameChangeRef.current = onFrameChange;
+  }, [onFrameChange]);
 
   const animationTextures = useMemo(() => {
     const jsonAlias = findAssetAlias(animationKeyword, ".json");
     const pngAlias = findAssetAlias(animationKeyword, ".png");
+
+    console.log(
+      `[Animation] Looking for ${animationKeyword}: json=${jsonAlias} png=${pngAlias}`,
+    );
 
     if (!jsonAlias || !pngAlias) {
       console.warn(
@@ -69,10 +84,14 @@ const GameAnimation = ({
       console.warn(
         `[Animation] Invalid data for ${animationKeyword}. json=${Boolean(json)} png=${Boolean(
           baseTexture,
-        )}`,
+        )} sprites=${json?.sprites?.length ?? 0}`,
       );
       return [];
     }
+
+    console.log(
+      `[Animation] Loaded ${animationKeyword}: ${json.sprites.length} frames`,
+    );
 
     return json.sprites.map(
       (sprite) =>
@@ -88,21 +107,24 @@ const GameAnimation = ({
     if (!sprite || animationTextures.length === 0) {
       return;
     }
+
+    // Set callbacks using refs so they can update without restarting animation
+    sprite.onComplete = () => {
+      console.log(`[Animation] ${animationKeyword} completed`);
+      onCompleteRef.current?.();
+    };
+    sprite.onFrameChange = (frame: number) => {
+      onFrameChangeRef.current?.(frame, sprite.totalFrames);
+    };
+
+    // Configure and start animation
     sprite.loop = loop;
     sprite.animationSpeed = animationSpeed;
+    console.log(
+      `[Animation] Starting ${animationKeyword}, loop=${loop}, speed=${animationSpeed}, frames=${animationTextures.length}`,
+    );
     sprite.gotoAndPlay(0);
-  }, [animationSpeed, animationTextures, loop, restartKey]);
-
-  // Keep onComplete / onFrameChange up-to-date via ref so they never trigger a replay
-  useEffect(() => {
-    const sprite = spriteRef.current;
-    if (sprite) {
-      sprite.onComplete = onComplete;
-      sprite.onFrameChange = onFrameChange
-        ? (frame: number) => onFrameChange(frame, sprite.totalFrames)
-        : undefined;
-    }
-  }, [onComplete, onFrameChange]);
+  }, [animationSpeed, animationTextures, loop, restartKey, animationKeyword]);
 
   if (animationTextures.length === 0) {
     return null;
