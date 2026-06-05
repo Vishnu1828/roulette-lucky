@@ -11,6 +11,7 @@ import { useEmitGameEvent } from "../../store/useGameFlowStore";
 import { useBetStore } from "../../store/useBetStore";
 import { sfx } from "../../utils/audio";
 import { bets } from "../../constants/rouletteBetting";
+import { useButtonTexture } from "../../utils/getButtonTexture";
 
 type Props = {
   // Total screen width — used for centering. Bar size is driven by footerHeight,
@@ -35,8 +36,72 @@ const ChipAndSpinInterface = ({
 }: Props) => {
   const containerRef = useRef<Container | null>(null);
   const { layoutMode, height } = useLayoutStore();
+  const { placedBets } = useBetStore();
   const emitEvent = useEmitGameEvent();
   const { setPlacedBets, undoLastBet, clearBets, doubleBets } = useBetStore();
+  const {
+    texture: spinTexture,
+    handlers: spinHandlers,
+    interactiveProps: spinInteractiveProps,
+  } = useButtonTexture(
+    {
+      idle: "ui-spin-button-normal",
+      disabled: "ui-spin-button-disabled",
+      pressed: "ui-spin-button-onpress",
+    },
+    placedBets.length === 0,
+  );
+
+  const {
+    texture: undoTexture,
+    handlers: undoHandlers,
+    interactiveProps: undoInteractiveProps,
+  } = useButtonTexture(
+    {
+      idle: "ui-undo-button-idle",
+      disabled: "ui-undo-button-disabled",
+      pressed: "ui-undo-button-pressed",
+    },
+    placedBets.length === 0,
+  );
+
+  const {
+    texture: repeatTexture,
+    handlers: repeatHandlers,
+    interactiveProps: repeatInteractiveProps,
+  } = useButtonTexture(
+    {
+      idle: "ui-repeat-button-idle",
+      disabled: "ui-repeat-button-disabled",
+      pressed: "ui-repeat-button-pressed",
+    },
+    placedBets.length !== 0,
+  );
+
+  const {
+    texture: clearTexture,
+    handlers: clearHandlers,
+    interactiveProps: clearInteractiveProps,
+  } = useButtonTexture(
+    {
+      idle: "ui-clear-bet-button-idle",
+      disabled: "ui-clear-bet-button-disabled",
+      pressed: "ui-clear-bet-button-pressed",
+    },
+    placedBets.length === 0,
+  );
+  const {
+    texture: twoXTexture,
+    handlers: twoXHandlers,
+    interactiveProps: twoXInteractiveProps,
+  } = useButtonTexture(
+    {
+      idle: "ui-2x-button-idle",
+      disabled: "ui-2x-button-disabled",
+      pressed: "ui-2x-button-pressed",
+    },
+    placedBets.length === 0,
+  );
 
   useEffect(() => {
     const c = containerRef.current;
@@ -141,6 +206,7 @@ const ChipAndSpinInterface = ({
   const chipPanelY = isMobilePortrait
     ? barHeight * 0.01
     : middleRowY - chipPanelHeight * 0.75;
+
   return (
     <pixiContainer ref={containerRef} y={containerY} x={0} zIndex={zIndex}>
       <PixiSprite
@@ -153,30 +219,28 @@ const ChipAndSpinInterface = ({
       />
       <PixiContainer x={innerX} y={innerY}>
         <PixiSprite
-          texture={Assets.get("ui-clear-bet-button-idle")}
+          texture={clearTexture}
           x={leftOneX}
           y={middleRowY}
           width={actionSize}
           height={actionSize}
           anchor={0.5}
-          interactive
-          cursor="pointer"
-          eventMode="static"
+          {...clearInteractiveProps}
+          {...clearHandlers}
           onPointerTap={() => {
             clearBets();
             sfx.play("sounds-chip-bet-2");
           }}
         />
         <PixiSprite
-          texture={Assets.get("ui-undo-button-idle")}
+          texture={undoTexture}
           x={leftTwoX}
           y={middleRowY}
           width={actionSize}
           height={actionSize}
           anchor={0.5}
-          interactive
-          cursor="pointer"
-          eventMode="static"
+          {...undoInteractiveProps}
+          {...undoHandlers}
           onPointerTap={() => {
             undoLastBet();
             sfx.play("sounds-chip-taken");
@@ -190,35 +254,33 @@ const ChipAndSpinInterface = ({
         />
 
         <PixiSprite
-          texture={Assets.get("ui-2x-button-idle")}
+          texture={twoXTexture}
           x={isMobilePortrait ? portraitTwoX : rightOneX}
           y={middleRowY}
           width={actionSize}
           height={actionSize}
           anchor={0.5}
-          interactive
-          cursor="pointer"
-          eventMode="static"
+          {...twoXInteractiveProps}
+          {...twoXHandlers}
           onPointerTap={() => doubleBets()}
         />
         <PixiSprite
-          texture={Assets.get("ui-repeat-button-idle")}
+          texture={repeatTexture}
           x={isMobilePortrait ? portraitRepeatX : rightTwoX}
           y={middleRowY}
           width={actionSize}
           height={actionSize}
           anchor={0.5}
-          interactive
-          cursor="pointer"
-          eventMode="static"
-          onPointerDown={() => {
+          {...repeatInteractiveProps}
+          {...repeatHandlers}
+          onPointerTap={() => {
             setPlacedBets(bets);
             sfx.play("sounds-chip-bet-2");
           }}
         />
 
         <LabelSprite
-          texture={Assets.get("ui-spin-button-normal")}
+          texture={spinTexture}
           x={(isMobilePortrait ? portraitSpinCenterX : spinX) - spinWidth / 2}
           y={middleRowY - spinHeight / 2}
           width={spinWidth}
@@ -233,6 +295,8 @@ const ChipAndSpinInterface = ({
               isMobilePortrait ? "mobile" : "desktop"
             ]
           }
+          {...spinInteractiveProps}
+          {...spinHandlers}
           onPointerTap={() => {
             emitEvent("SPIN_BUTTON_CLICKED");
           }}

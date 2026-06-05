@@ -6,9 +6,10 @@ import { useLayoutStore } from "../../store/useLayoutStore";
 import { CHIP_DATA } from "../../constants/chips";
 import { ChipValue } from "../../types/chipTypes";
 import { useChipStore } from "../../store/useChipStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sfx } from "../../utils/audio";
 import GameAnimation from "./GameAnimation";
+import { useWalletStore } from "../../store/useWalletStore";
 
 type ChipPanelProps = {
   x?: number;
@@ -52,6 +53,16 @@ const ChipPanel = ({ x = 0, y = 0, chipContainerWidth }: ChipPanelProps) => {
     setChipAnimTick((prev) => prev + 1);
     sfx.play("sounds-casino-chips-1");
   };
+  const { balance } = useWalletStore();
+
+  useEffect(() => {
+    if (selectedChip === null && balance >= 5) {
+      setSelectedChip(CHIP_DATA[0].value as ChipValue);
+    }
+    if (balance < 5) {
+      setSelectedChip(null);
+    }
+  }, [balance]);
 
   return (
     <PixiContainer x={x} y={y}>
@@ -69,6 +80,10 @@ const ChipPanel = ({ x = 0, y = 0, chipContainerWidth }: ChipPanelProps) => {
         const animSize = chipWidth * 1.45;
         const chipCenterX = chipX + chipWidth / 2;
         const chipCenterY = chipsY + chipHeight / 2;
+        const isAffordable = balance >= chip.value;
+        const texture = Assets.get(
+          isAffordable ? chip.texture : chip.disableTexture,
+        );
 
         return (
           <PixiContainer key={i}>
@@ -85,7 +100,7 @@ const ChipPanel = ({ x = 0, y = 0, chipContainerWidth }: ChipPanelProps) => {
               />
             )}
             <LabelSprite
-              texture={Assets.get(chip.texture)}
+              texture={texture}
               width={chipWidth}
               height={chipHeight}
               x={chipX}
@@ -95,6 +110,9 @@ const ChipPanel = ({ x = 0, y = 0, chipContainerWidth }: ChipPanelProps) => {
               anchor={0.5}
               labelY={chipHeight * 0.55}
               onPointerTap={() => handleChipSelect(chip.value as ChipValue)}
+              tint={isAffordable ? 0xffffff : 0x888888}
+              interactive={isAffordable}
+              cursor={isAffordable ? "pointer" : "not-allowed"}
             />
           </PixiContainer>
         );

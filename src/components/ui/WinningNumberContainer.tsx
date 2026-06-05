@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FederatedPointerEvent, FederatedWheelEvent, Graphics, Container } from "pixi.js";
+import {
+  FederatedPointerEvent,
+  FederatedWheelEvent,
+  Graphics,
+  Container,
+} from "pixi.js";
 import gsap from "gsap";
 import { WINNING_NUMBERS } from "../../constants/winningNumbers";
 import PixiNineSliceSprite from "../pixi/pixiNineSliceSprite";
@@ -74,8 +79,8 @@ const WinningNumberContainer = ({
     winningNumberData.length === 0
       ? 0
       : itemSize +
-      Math.max(0, winningNumberData.length - 1) * rowStep +
-      multiplierTopOffset;
+        Math.max(0, winningNumberData.length - 1) * rowStep +
+        multiplierTopOffset;
   const contentHeight = totalStackHeight + contentPaddingY * 2;
   const maxScroll = Math.max(0, contentHeight - innerHeight);
 
@@ -88,7 +93,9 @@ const WinningNumberContainer = ({
   const onWheel = useCallback(
     (e: FederatedWheelEvent) => {
       if (maxScroll <= 0) return;
-      const dy = e.deltaY ?? 0;
+      e.preventDefault?.();
+      // Normalize wheel delta - browsers return large values (100+), scale down for smooth scrolling
+      const dy = (e.deltaY ?? 0) * 0.3;
       setScrollY((prev) => Math.max(0, Math.min(maxScroll, prev + dy)));
     },
     [maxScroll],
@@ -97,6 +104,7 @@ const WinningNumberContainer = ({
   const onPointerDown = useCallback(
     (e: FederatedPointerEvent) => {
       if (maxScroll <= 0) return;
+      e.stopPropagation();
       dragData.current.isDragging = true;
       dragData.current.startY = e.global.y;
       dragData.current.startScrollY = clampedScrollY;
@@ -104,15 +112,16 @@ const WinningNumberContainer = ({
     [clampedScrollY, maxScroll],
   );
 
-  const onPointerMove = useCallback(
-    (e: FederatedPointerEvent) => {
-      if (!dragData.current.isDragging) return;
-      const dy = e.global.y - dragData.current.startY;
-      const next = dragData.current.startScrollY - dy;
-      setScrollY(Math.max(0, Math.min(maxScroll, next)));
-    },
-    [maxScroll],
-  );
+  // const onPointerMove = useCallback(
+  //   (e: FederatedPointerEvent) => {
+  //     if (!dragData.current.isDragging) return;
+  //     e.stopPropagation();
+  //     const dy = e.global.y - dragData.current.startY;
+  //     const next = dragData.current.startScrollY - dy;
+  //     setScrollY(Math.max(0, Math.min(maxScroll, next)));
+  //   },
+  //   [maxScroll],
+  // );
 
   const onPointerUp = useCallback(() => {
     dragData.current.isDragging = false;
@@ -131,7 +140,8 @@ const WinningNumberContainer = ({
     (g: Graphics) => {
       g.clear();
       g.rect(contentOriginX, contentOriginY, innerWidth, innerHeight);
-      g.fill({ color: 0x000000, alpha: 0.001 });
+      // Use slightly higher alpha for better hit detection while still being invisible
+      g.fill({ color: 0x000000, alpha: 0.01 });
     },
     [contentOriginX, contentOriginY, innerHeight, innerWidth],
   );
@@ -158,7 +168,6 @@ const WinningNumberContainer = ({
         eventMode={maxScroll > 0 ? "static" : "none"}
         cursor={maxScroll > 0 ? "grab" : "default"}
         onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerUpOutside={onPointerUp}
         onWheel={onWheel}
@@ -168,6 +177,7 @@ const WinningNumberContainer = ({
         x={contentOriginX}
         y={contentOriginY - clampedScrollY}
         mask={mask}
+        interactiveChildren={false}
       >
         {winningNumberData.map((winNumberData, index) => {
           const itemY = winNumberData.multiplier

@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { ChipValue } from "../types/chipTypes";
-import { CHIP_VALUES } from "../constants/chips";
 
 interface ChipState {
   selectedChip: ChipValue | null;
@@ -8,6 +7,6 @@ interface ChipState {
 }
 
 export const useChipStore = create<ChipState>((set) => ({
-  selectedChip: CHIP_VALUES[0] as ChipValue,
+  selectedChip: null as ChipValue | null,
   setSelectedChip: (chip: ChipValue | null) => set({ selectedChip: chip }),
 }));
