@@ -109,10 +109,15 @@ const ChipPanel = ({ x = 0, y = 0, chipContainerWidth }: ChipPanelProps) => {
               fontSize={Math.floor(chipWidth * 0.38)}
               anchor={0.5}
               labelY={chipHeight * 0.55}
-              onPointerTap={() => handleChipSelect(chip.value as ChipValue)}
+              onPointerTap={
+                isAffordable
+                  ? () => handleChipSelect(chip.value as ChipValue)
+                  : undefined
+              }
               tint={isAffordable ? 0xffffff : 0x888888}
               interactive={isAffordable}
-              cursor={isAffordable ? "pointer" : "not-allowed"}
+              cursor={isAffordable ? "pointer" : "default"}
+              eventMode={isAffordable ? "static" : "none"}
             />
           </PixiContainer>
         );
