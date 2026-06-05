@@ -36,8 +36,8 @@ export const PORTRAIT_ROWS = [
 ] as const;
 
 export const WHEEL_ORDER = [
-  0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5,
-  24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26,
+  0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24,
+  16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26,
 ];
 
 export function getChipTexture(value: number) {
@@ -108,8 +108,12 @@ export function decomposeAmount(amount: number): number[] {
   return result.reverse();
 }
 
-export function addChipToStack(existingChips: number[], newChip: number): number[] {
-  const totalAmount = existingChips.reduce((sum, val) => sum + val, 0) + newChip;
+export function addChipToStack(
+  existingChips: number[],
+  newChip: number,
+): number[] {
+  const totalAmount =
+    existingChips.reduce((sum, val) => sum + val, 0) + newChip;
 
   const matchingChip = CHIP_OPTIONS.find((c) => c.value === totalAmount);
 
@@ -119,3 +123,50 @@ export function addChipToStack(existingChips: number[], newChip: number): number
 
   return [...existingChips, newChip];
 }
+
+export const bets: PlacedBet[] = [
+  {
+    spotKey: "trio-0-1-2",
+    type: "trio",
+    coveredNumbers: [0, 1, 2],
+    amount: 5,
+    chips: [5],
+  },
+  {
+    spotKey: "line-2", // Boundary between row 1 (4,5,6) and row 2 (7,8,9)
+    type: "line",
+    coveredNumbers: [4, 5, 6, 7, 8, 9],
+    amount: 10,
+    chips: [10],
+  },
+  {
+    spotKey: "corner-23-24-26-27",
+    type: "corner",
+    coveredNumbers: [23, 24, 26, 27],
+    amount: 5,
+    chips: [5],
+  },
+  {
+    spotKey: "split-22-25",
+    type: "split",
+    coveredNumbers: [22, 25],
+    amount: 5,
+    chips: [5],
+  },
+  {
+    spotKey: "color-red",
+    type: "color",
+    coveredNumbers: [
+      1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36,
+    ],
+    amount: 5,
+    chips: [5],
+  },
+  {
+    spotKey: "straight-35",
+    type: "straight",
+    coveredNumbers: [35],
+    amount: 5,
+    chips: [5],
+  },
+];

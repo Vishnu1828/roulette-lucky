@@ -20,6 +20,7 @@ import {
 import { buildRouletteBetZones } from "../../utils/rouletteBetZones";
 import type { RouletteBetZone, PlacedBet } from "../../types/rouletteBetting";
 import GameAnimation from "./GameAnimation";
+import { sfx } from "../../utils/audio";
 
 // Keep in sync with Header.tsx and RouletteWheel.tsx
 const HEADER_BOTTOM_DESKTOP = 42 + 60 / 2;
@@ -107,6 +108,7 @@ const MultiplierCellFx = ({
           onComplete={() => {
             setRevealStarted(true);
             onSelectionComplete?.();
+            sfx.play("sounds-lucky-number");
           }}
           tint={
             MULTIPLIER_COLORS[multiplier as keyof typeof MULTIPLIER_COLORS] ??
@@ -174,24 +176,6 @@ function drawHighlight(g: import("pixi.js").Graphics, zone: RouletteBetZone) {
   }
   g.fill({ color: 0xffffff, alpha: 0 });
 }
-
-// ── Friendly label for each bet type ────────────────────────────────────
-// function betTypeLabel(zone: RouletteBetZone): string {
-//   switch (zone.type) {
-//     case "straight": return `Straight (${zone.coveredNumbers[0]}) — 35:1`;
-//     case "split": return `Split ${zone.label} — 17:1`;
-//     case "corner": return `Corner ${zone.label} — 8:1`;
-//     case "street": return `Street ${zone.label} — 11:1`;
-//     case "line": return `Six Line ${zone.label} — 5:1`;
-//     case "trio": return `Trio ${zone.label} — 11:1`;
-//     case "dozen": return `Dozen ${zone.label} — 2:1`;
-//     case "column": return `Column ${zone.label} — 2:1`;
-//     case "range": return `${zone.label} — 1:1`;
-//     case "parity": return `${zone.label.toUpperCase()} — 1:1`;
-//     case "color": return `${zone.label.charAt(0).toUpperCase() + zone.label.slice(1)} — 1:1`;
-//     default: return zone.label;
-//   }
-// }
 
 type RouletteTableProps = {
   transitionPhase?: number;
@@ -396,11 +380,14 @@ const RouletteTable = ({
     if (!c || tableW <= 0 || tableH <= 0) return;
 
     const isPortraitMultiplierCentering =
-      isMobilePortrait && isMultiplierLaunch && transitionPhase >= 1 && transitionPhase <= 2;
-    
+      isMobilePortrait &&
+      isMultiplierLaunch &&
+      transitionPhase >= 1 &&
+      transitionPhase <= 2;
+
     // Phase 3 is when table shrinks after reveal animation - use longer duration
     const isPhase3Shrink = isMultiplierLaunch && transitionPhase === 3;
-    
+
     const duration = isPortraitMultiplierCentering
       ? 0.84
       : isPhase3Shrink
@@ -408,7 +395,7 @@ const RouletteTable = ({
         : transitionPhase === 1
           ? 0.65
           : 0.75;
-    
+
     // No delay for phase 3 shrink since reveal animation already completed
     const delay = isPhase3Shrink
       ? 0
@@ -513,6 +500,7 @@ const RouletteTable = ({
                 console.log(
                   `[BET CLICK] zone="${zone.spotKey}" type="${zone.type}" covers=[${zone.coveredNumbers.join(",")}] chipValue=${selectedChip} globalPos=(${Math.round(e.global.x)},${Math.round(e.global.y)})`,
                 );
+                sfx.play("sounds-chips-bet");
                 handlePlaceChip(zone, selectedChip);
               }}
             />

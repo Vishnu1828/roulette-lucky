@@ -7,6 +7,7 @@ import { useLayoutStore } from "../../store/useLayoutStore";
 import { useWinningNumberStore } from "../../store/useWinningNumberStore";
 import type { Container } from "pixi.js";
 import WinningNumberWheel from "./WinningNumberWheel";
+import { sfx } from "../../utils/audio";
 
 const HEADER_BOTTOM_DESKTOP = 42 + 60 / 2;
 const HEADER_BOTTOM_MOBILE = 24 + 32 / 2;
@@ -131,6 +132,9 @@ const RouletteWheel = ({ onSpinComplete }: { onSpinComplete: () => void }) => {
 
       setIsSpinning(true);
       setShowResult(false); // Reset result display when starting new spin
+
+      // Play roulette wheel sound
+      sfx.play("sounds-roulette-wheel");
 
       // Kill any existing animations
       if (timelineRef.current) {
